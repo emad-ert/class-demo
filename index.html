@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه حضور و غیاب - نسخه ۲</title>
+    <title>سامانه حضور و غیاب - نسخه ۳</title>
     <style>
         :root {
-            /* تم کلاس الف (آبی) */
             --primary: #4f46e5;
             --primary-light: #e0e7ff;
             --bg: #f4f6f9;
@@ -17,20 +16,16 @@
         }
 
         body.theme-b {
-            /* تم کلاس ب (زرد/خردلی شیک) */
-            --primary: #d97706; /* زرد تیره/نارنجی برای خوانایی روی سفید */
-            --primary-light: #fef08a; /* زرد روشن */
+            --primary: #d97706; 
+            --primary-light: #fef08a; 
         }
 
         body { font-family: Tahoma, system-ui, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; direction: rtl; transition: background-color 0.3s; }
         .container { max-width: 700px; margin: 0 auto; padding-bottom: 80px; }
         
-        .tabs { display: flex; background: white; border-radius: 12px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .tabs { display: flex; background: white; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .tab { flex: 1; text-align: center; padding: 14px; font-weight: bold; color: #6b7280; cursor: pointer; transition: all 0.2s; }
         .tab.active { background: var(--primary); color: white; }
-
-        .projector-toggle { background: white; padding: 12px; border-radius: 10px; margin-bottom: 15px; font-weight: bold; font-size: 14px; color: #374151; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 10px; }
-        .projector-toggle input { transform: scale(1.3); }
 
         .header-card { background: var(--primary); color: white; border-radius: 16px; padding: 20px; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); margin-bottom: 20px; transition: background 0.3s; }
         .header-card h1 { margin: 0 0 10px 0; font-size: 22px; }
@@ -39,19 +34,20 @@
         .btn-scan { background: var(--success); color: white; border: none; width: 100%; padding: 16px; border-radius: 14px; font-size: 17px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4); margin-bottom: 15px; }
         .btn-scan:active { transform: scale(0.98); }
 
-        .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-        .btn-action { border: none; padding: 12px 5px; border-radius: 10px; font-weight: bold; cursor: pointer; color: white; font-size: 12px; }
+        .action-bar { display: grid; grid-template-columns: 5fr 2fr 5fr; gap: 8px; margin-bottom: 20px; }
+        .btn-action { display: flex; justify-content: center; align-items: center; border: none; padding: 12px 5px; border-radius: 10px; font-weight: bold; cursor: pointer; color: white; font-size: 13px; }
         .btn-sms { background: #f59e0b; color: #000; }
-        .btn-tg { background: #0284c7; }
+        .btn-tg { background: #0088cc; box-shadow: 0 4px 6px rgba(0, 136, 204, 0.3); }
         .btn-reset { background: var(--danger); }
 
         .student-grid { display: grid; gap: 10px; }
-        .student-card { background: var(--card-bg); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--danger); }
+        .student-card { background: var(--card-bg); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--danger); transition: border 0.3s, background 0.3s; }
         .student-card.present { border-right-color: var(--success); background: #f0fdf4; }
         .student-info { display: flex; align-items: center; gap: 12px; }
         .student-id { background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 13px; }
         .student-name { font-weight: 600; font-size: 15px; }
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        
+        .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; user-select: none; }
         .badge-present { background: #dcfce7; color: #15803d; }
         .badge-absent { background: #fee2e2; color: #b91c1c; }
 
@@ -69,12 +65,6 @@
         <div class="tab" id="tabB" onclick="switchClass('classB')">کلاس ب (زرد)</div>
     </div>
 
-    <!-- این کلید حل مشکل پرش و همگام‌‌سازی است -->
-    <div class="projector-toggle">
-        <input type="checkbox" id="projectorMode" onchange="toggleProjector()">
-        <label for="projectorMode">🖥️ حالت پروجکتور (دریافت خودکار از سرور)</label>
-    </div>
-
     <div class="header-card">
         <h1 id="classTitle">🏫 کلاس الف (۴/۱)</h1>
         <div class="stats-bar">
@@ -88,7 +78,12 @@
 
     <div class="action-bar">
         <button class="btn-action btn-sms" onclick="sendSmsToPrincipal()">📩 ناظم</button>
-        <button class="btn-action btn-tg" onclick="sendToTelegram()">✈️ تلگرام</button>
+        <!-- دکمه تلگرام با آیکون اصلی -->
+        <button class="btn-action btn-tg" onclick="sendToTelegram()" title="آرشیو در تلگرام">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+            </svg>
+        </button>
         <button class="btn-action btn-reset" onclick="resetAll()">🔄 بازنشانی</button>
     </div>
 
@@ -98,31 +93,29 @@
 </div>
 
 <script>
-    // ⚠️ ۱. آدرس کلادفلر خود را بگذارید:
-    const WORKER_URL = "class-backend.emad-ert-laptop.workers.dev";
-    // ⚠️ ۲. شناسه عددی تلگرام خود را بگذارید:
+    // اطلاعات اتصال
+    const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
     const PRINCIPAL_PHONE = "+989137450434";
 
-    // ⚠️ ۳. لیست جدید را اینجا قرار دهید:
+    // لیست کامل و آپدیت شده دانش‌آموزان
     const defaultData = {
         classA: [
-            {"id": "A01", "name": "حسین ابراهیمی", "present": false}, {"id": "A02", "name": "مهدی احمدپور", "present": false}, {"id": "A03", "name": "سام بهرامی", "present": false}, {"id": "A04", "name": "ارشیا حاج اسماعیلی", "present": false}, {"id": "A05", "name": "علیرضا دهنوی", "present": false}, {"id": "A06", "name": "یاشار رجائی", "present": false}, {"id": "A07", "name": "رامتین رجبی", "present": false}, {"id": "A08", "name": "محمد امین زین الدینی", "present": false}, {"id": "A09", "name": "ارسلان سنایی", "present": false}, {"id": "A10", "name": "محمد صادق سیاهکوهی", "present": false}, {"id": "A11", "name": "علی رنجبر", "present": false}, {"id": "A12", "name": "محمد طاها شهیدی", "present": false}, {"id": "A13", "name": "آرش عباسلو", "present": false}, {"id": "A14", "name": "ارمیا عبداللهی", "present": false}, {"id": "A15", "name": "فرهنگ فتحی", "present": false}, {"id": "A16", "name": "امیرعلی فصیحی", "present": false}, {"id": "A17", "name": "یزدان محمدرضایی", "present": false}, {"id": "A18", "name": "محمد صالح مهدیان", "present": false}, {"id": "A19", "name": "محمدعلی همایون", "present": false}, {"id": "A20", "name": "محمدصدرا یعقوبی", "present": false}
+            {"id": "A01", "name": "حسین ابراهیمی", "present": false}, {"id": "A02", "name": "مهدی  احمدپور", "present": false}, {"id": "A03", "name": "سام بهرامی", "present": false}, {"id": "A04", "name": "ارشیا حاج اسماعیلی", "present": false}, {"id": "A05", "name": "علیرضا دهنوی", "present": false}, {"id": "A06", "name": "یاشار رجائی", "present": false}, {"id": "A07", "name": "رامتین رجبی", "present": false}, {"id": "A08", "name": "محمد امین زین الدینی", "present": false}, {"id": "A09", "name": "ارسلان سنایی", "present": false}, {"id": "A10", "name": "محمد صادق سیاهکوهی", "present": false}, {"id": "A11", "name": "علی  رنجبر", "present": false}, {"id": "A12", "name": "محمد طاها شهیدی", "present": false}, {"id": "A13", "name": "آرش عباسلو", "present": false}, {"id": "A14", "name": "ارمیا عبداللهی", "present": false}, {"id": "A15", "name": "فرهنگ فتحی", "present": false}, {"id": "A16", "name": "امیرعلی فصیحی", "present": false}, {"id": "A17", "name": "یزدان محمدرضایی", "present": false}, {"id": "A18", "name": "محمد صالح مهدیان", "present": false}, {"id": "A19", "name": "محمدعلی همایون", "present": false}, {"id": "A20", "name": "محمدصدرا یعقوبی", "present": false}
         ],
         classB: [
-            {"id": "B01", "name": "میکائیل اسدی", "present": false}, {"id": "B02", "name": "مرتضی امیری", "present": false}, {"id": "B03", "name": "امیرحسین بهرامی", "present": false}, {"id": "B04", "name": "محمدهانی پورسیاهکوی", "present": false}, {"id": "B05", "name": "سید امیرحسین حسینی", "present": false}, {"id": "B06", "name": "محمدطاها دانشور", "present": false}, {"id": "B07", "name": "ابوالفضل رضایی", "present": false}, {"id": "B08", "name": "ایلیا زیدآبادی", "present": false}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه", "present": false}, {"id": "B10", "name": "علی اصغر طاهری", "present": false}, {"id": "B11", "name": "محمدسجاد علیزاده", "present": false}, {"id": "B12", "name": "عرفان علی آبادی", "present": false}, {"id": "B13", "name": "امیرحسین غنی پور", "present": false}, {"id": "B14", "name": "مهراد محمودی", "present": false}, {"id": "B15", "name": "ابوالفضل منظری توکلی", "present": false}, {"id": "B16", "name": "حسین منگلی پور", "present": false}, {"id": "B17", "name": "سید ابوالفضل موسوی", "present": false}, {"id": "B18", "name": "عرشیا نیلی", "present": false}, {"id": "B19", "name": "علی نیلی", "present": false}, {"id": "B20", "name": "امیرعباس وطن پرست", "present": false}, {"id": "B21", "name": "سید علیرضا هاشمی", "present": false}
+            {"id": "B01", "name": "میکائیل  اسدی", "present": false}, {"id": "B02", "name": "مرتضی امیری", "present": false}, {"id": "B03", "name": "امیرحسین بهرامی", "present": false}, {"id": "B04", "name": "محمدهانی پورسیاهکوی", "present": false}, {"id": "B05", "name": "سید امیرحسین حسینی", "present": false}, {"id": "B06", "name": "محمدطاها دانشور", "present": false}, {"id": "B07", "name": "ابوالفضل رضایی", "present": false}, {"id": "B08", "name": "ایلیا زیدآبادی", "present": false}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه", "present": false}, {"id": "B10", "name": "علی اصغر طاهری", "present": false}, {"id": "B11", "name": "محمدسجاد علیزاده", "present": false}, {"id": "B12", "name": "عرفان علی آبادی", "present": false}, {"id": "B13", "name": "امیرحسین غنی پور", "present": false}, {"id": "B14", "name": "مهراد محمودی", "present": false}, {"id": "B15", "name": "ابوالفضل منظری توکلی", "present": false}, {"id": "B16", "name": "حسین منگلی پور", "present": false}, {"id": "B17", "name": "سید ابوالفضل موسوی", "present": false}, {"id": "B18", "name": "عرشیا نیلی", "present": false}, {"id": "B19", "name": "علی نیلی", "present": false}, {"id": "B20", "name": "امیرعباس وطن پرست", "present": false}, {"id": "B21", "name": "سید علیرضا هاشمی", "present": false}
         ]
     };
 
     let db = JSON.parse(JSON.stringify(defaultData));
     let currentClass = 'classA';
     let toastTimer;
-    let syncInterval;
+    let isPushingData = false; // سیستم قفل هوشمند برای جلوگیری از پرش آمار
 
-    // بارگذاری آنی لیست برای جلوگیری از صفحه سفید (رفع باگ اول)
+    // لود اولیه رابط کاربری
     renderList();
-    // سپس یک‌بار از سرور می‌خواند
-    fetchOnceFromCloud();
+    fetchSmartSync();
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     
@@ -135,7 +128,7 @@
             gain.connect(audioCtx.destination);
             osc.type = 'sine';
             osc.frequency.value = freq;
-            gain.gain.setValueAtTime(1.0, startTime); // 🔊 صدای بلندتر و واضح‌تر
+            gain.gain.setValueAtTime(1.0, startTime); 
             gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
             osc.start(startTime);
             osc.stop(startTime + duration);
@@ -153,7 +146,7 @@
         gain.connect(audioCtx.destination);
         osc.type = 'sawtooth';
         osc.frequency.value = 150;
-        gain.gain.setValueAtTime(0.05, audioCtx.currentTime); // 🔈 صدای بسیار ملایم برای عدم آسیب به اسپیکر
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime); 
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.3);
@@ -176,41 +169,31 @@
         if (currentClass === 'classA') {
             document.getElementById('tabA').classList.add('active');
             document.body.classList.remove('theme-b');
-            document.getElementById('classTitle').innerText = "🏫 سامانه حضور و غیاب - کلاس الف";
+            document.getElementById('classTitle').innerText = "🏫 کلاس الف (۴/۱)";
         } else {
             document.getElementById('tabB').classList.add('active');
             document.body.classList.add('theme-b');
-            document.getElementById('classTitle').innerText = "🏫 سامانه حضور و غیاب - کلاس ب";
+            document.getElementById('classTitle').innerText = "🏫 کلاس ب (۴/۲)";
         }
         renderList();
     }
 
-    // رفع باگ تداخل: پروجکتور اطلاعات می‌گیرد، گوشی فقط ارسال می‌کند
-    function toggleProjector() {
-        const isProjector = document.getElementById('projectorMode').checked;
-        if (isProjector) {
-            showToast("حالت پروجکتور فعال شد (دریافت زنده)", true);
-            syncInterval = setInterval(fetchOnceFromCloud, 2000);
-        } else {
-            showToast("حالت اسکنر گوشی فعال شد", true);
-            clearInterval(syncInterval);
-        }
-    }
-
-    async function fetchOnceFromCloud() {
+    // همگام‌سازی هوشمند (دریافت دیتا)
+    async function fetchSmartSync() {
+        if (isPushingData) return; // اگر در حال ارسال هستیم، دریافت متوقف می‌شود تا آمار نپرد
         try {
             let res = await fetch(WORKER_URL + "/api/data");
             let data = await res.json();
-            if (data && data.classA && data.classB) {
+            if (data && data.classA && !isPushingData) {
                 db = data;
                 renderList();
             }
-        } catch (e) {
-            console.error("خطای دریافت", e);
-        }
+        } catch (e) {}
     }
 
+    // ارسال دیتا به سرور
     async function pushDataToCloud() {
+        isPushingData = true; // قفل کردن دریافت
         try {
             await fetch(WORKER_URL + "/api/update", {
                 method: "POST",
@@ -218,8 +201,10 @@
                 body: JSON.stringify(db)
             });
         } catch (e) {
-            showToast("⚠️ آفلاین: بعدا همگام‌سازی می‌شود", false);
+            showToast("⚠️ آفلاین: بعدا ذخیره می‌شود", false);
         }
+        // باز کردن قفل دریافت بعد از ۱.۵ ثانیه
+        setTimeout(() => { isPushingData = false; }, 1500); 
     }
 
     function renderList() {
@@ -330,6 +315,10 @@
             } catch (error) { showToast("خطا در سنسور NFC", false); }
         } else alert("مرورگر شما NFC را پشتیبانی نمی‌کند.");
     }
+
+    // همگام‌سازی بی‌صدا در پس‌زمینه هر ۲ ثانیه (فقط در صورتی که در حال تگ زدن نباشید)
+    setInterval(fetchSmartSync, 2000);
+
 </script>
 
 </body>
