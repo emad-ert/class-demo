@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه حضور و غیاب - نسخه ۳</title>
+    <title>سامانه حضور و غیاب - نسخه نهایی</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -78,7 +78,6 @@
 
     <div class="action-bar">
         <button class="btn-action btn-sms" onclick="sendSmsToPrincipal()">📩 ناظم</button>
-        <!-- دکمه تلگرام با آیکون اصلی -->
         <button class="btn-action btn-tg" onclick="sendToTelegram()" title="آرشیو در تلگرام">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
@@ -93,27 +92,24 @@
 </div>
 
 <script>
-    // اطلاعات اتصال
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
     const PRINCIPAL_PHONE = "+989137450434";
 
-    // لیست کامل و آپدیت شده دانش‌آموزان
     const defaultData = {
         classA: [
-            {"id": "A01", "name": "حسین ابراهیمی", "present": false}, {"id": "A02", "name": "مهدی  احمدپور", "present": false}, {"id": "A03", "name": "سام بهرامی", "present": false}, {"id": "A04", "name": "ارشیا حاج اسماعیلی", "present": false}, {"id": "A05", "name": "علیرضا دهنوی", "present": false}, {"id": "A06", "name": "یاشار رجائی", "present": false}, {"id": "A07", "name": "رامتین رجبی", "present": false}, {"id": "A08", "name": "محمد امین زین الدینی", "present": false}, {"id": "A09", "name": "ارسلان سنایی", "present": false}, {"id": "A10", "name": "محمد صادق سیاهکوهی", "present": false}, {"id": "A11", "name": "علی  رنجبر", "present": false}, {"id": "A12", "name": "محمد طاها شهیدی", "present": false}, {"id": "A13", "name": "آرش عباسلو", "present": false}, {"id": "A14", "name": "ارمیا عبداللهی", "present": false}, {"id": "A15", "name": "فرهنگ فتحی", "present": false}, {"id": "A16", "name": "امیرعلی فصیحی", "present": false}, {"id": "A17", "name": "یزدان محمدرضایی", "present": false}, {"id": "A18", "name": "محمد صالح مهدیان", "present": false}, {"id": "A19", "name": "محمدعلی همایون", "present": false}, {"id": "A20", "name": "محمدصدرا یعقوبی", "present": false}
+            {"id": "A01", "name": "حسین ابراهیمی", "present": false}, {"id": "A02", "name": "مهدی احمدپور", "present": false}, {"id": "A03", "name": "سام بهرامی", "present": false}, {"id": "A04", "name": "امیرمحمد جعفری", "present": false}, {"id": "A05", "name": "ارشیا حاج اسماعیلی", "present": false}, {"id": "A06", "name": "علیرضا دهنوی", "present": false}, {"id": "A07", "name": "یاشار رجائی", "present": false}, {"id": "A08", "name": "رامتین رجبی", "present": false}, {"id": "A09", "name": "محمد امین زین الدینی", "present": false}, {"id": "A10", "name": "ارسلان سنایی", "present": false}, {"id": "A11", "name": "محمد صادق سیاهکوهی", "present": false}, {"id": "A12", "name": "علی رنجبر", "present": false}, {"id": "A13", "name": "محمد طاها شهیدی", "present": false}, {"id": "A14", "name": "آرش عباسلو", "present": false}, {"id": "A15", "name": "ارمیا عبداللهی", "present": false}, {"id": "A16", "name": "فرهنگ فتحی", "present": false}, {"id": "A17", "name": "امیرعلی فصیحی", "present": false}, {"id": "A18", "name": "یزدان محمدرضایی", "present": false}, {"id": "A19", "name": "محمد صالح مهدیان", "present": false}, {"id": "A20", "name": "محمدعلی همایون", "present": false}, {"id": "A21", "name": "محمدصدرا یعقوبی", "present": false}
         ],
         classB: [
-            {"id": "B01", "name": "میکائیل  اسدی", "present": false}, {"id": "B02", "name": "مرتضی امیری", "present": false}, {"id": "B03", "name": "امیرحسین بهرامی", "present": false}, {"id": "B04", "name": "محمدهانی پورسیاهکوی", "present": false}, {"id": "B05", "name": "سید امیرحسین حسینی", "present": false}, {"id": "B06", "name": "محمدطاها دانشور", "present": false}, {"id": "B07", "name": "ابوالفضل رضایی", "present": false}, {"id": "B08", "name": "ایلیا زیدآبادی", "present": false}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه", "present": false}, {"id": "B10", "name": "علی اصغر طاهری", "present": false}, {"id": "B11", "name": "محمدسجاد علیزاده", "present": false}, {"id": "B12", "name": "عرفان علی آبادی", "present": false}, {"id": "B13", "name": "امیرحسین غنی پور", "present": false}, {"id": "B14", "name": "مهراد محمودی", "present": false}, {"id": "B15", "name": "ابوالفضل منظری توکلی", "present": false}, {"id": "B16", "name": "حسین منگلی پور", "present": false}, {"id": "B17", "name": "سید ابوالفضل موسوی", "present": false}, {"id": "B18", "name": "عرشیا نیلی", "present": false}, {"id": "B19", "name": "علی نیلی", "present": false}, {"id": "B20", "name": "امیرعباس وطن پرست", "present": false}, {"id": "B21", "name": "سید علیرضا هاشمی", "present": false}
+            {"id": "B01", "name": "میکائیل اسدی", "present": false}, {"id": "B02", "name": "مرتضی امیری", "present": false}, {"id": "B03", "name": "امیرحسین بهرامی", "present": false}, {"id": "B04", "name": "محمدهانی پورسیاهکوی", "present": false}, {"id": "B05", "name": "سید امیرحسین حسینی", "present": false}, {"id": "B06", "name": "محمدطاها دانشور", "present": false}, {"id": "B07", "name": "ابوالفضل رضایی", "present": false}, {"id": "B08", "name": "ایلیا زیدآبادی", "present": false}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه", "present": false}, {"id": "B10", "name": "علی اصغر طاهری", "present": false}, {"id": "B11", "name": "محمدسجاد علیزاده", "present": false}, {"id": "B12", "name": "عرفان علی آبادی", "present": false}, {"id": "B13", "name": "امیرحسین غنی پور", "present": false}, {"id": "B14", "name": "مهراد فیروزآبادی", "present": false}, {"id": "B15", "name": "مهرداد محمودی", "present": false}, {"id": "B16", "name": "ابوالفضل منظری توکلی", "present": false}, {"id": "B17", "name": "حسین منگلی پور", "present": false}, {"id": "B18", "name": "سید ابوالفضل موسوی", "present": false}, {"id": "B19", "name": "عرشیا نیلی", "present": false}, {"id": "B20", "name": "علی نیلی", "present": false}, {"id": "B21", "name": "امیرعباس وطن پرست", "present": false}, {"id": "B22", "name": "سید علیرضا هاشمی", "present": false}, {"id": "B23", "name": "یوسف یامع مسائدی", "present": false}
         ]
     };
 
     let db = JSON.parse(JSON.stringify(defaultData));
     let currentClass = 'classA';
     let toastTimer;
-    let isPushingData = false; // سیستم قفل هوشمند برای جلوگیری از پرش آمار
+    let isPushingData = false; 
 
-    // لود اولیه رابط کاربری
     renderList();
     fetchSmartSync();
 
@@ -178,9 +174,8 @@
         renderList();
     }
 
-    // همگام‌سازی هوشمند (دریافت دیتا)
     async function fetchSmartSync() {
-        if (isPushingData) return; // اگر در حال ارسال هستیم، دریافت متوقف می‌شود تا آمار نپرد
+        if (isPushingData) return; 
         try {
             let res = await fetch(WORKER_URL + "/api/data");
             let data = await res.json();
@@ -191,9 +186,8 @@
         } catch (e) {}
     }
 
-    // ارسال دیتا به سرور
     async function pushDataToCloud() {
-        isPushingData = true; // قفل کردن دریافت
+        isPushingData = true; 
         try {
             await fetch(WORKER_URL + "/api/update", {
                 method: "POST",
@@ -203,7 +197,6 @@
         } catch (e) {
             showToast("⚠️ آفلاین: بعدا ذخیره می‌شود", false);
         }
-        // باز کردن قفل دریافت بعد از ۱.۵ ثانیه
         setTimeout(() => { isPushingData = false; }, 1500); 
     }
 
@@ -316,7 +309,6 @@
         } else alert("مرورگر شما NFC را پشتیبانی نمی‌کند.");
     }
 
-    // همگام‌سازی بی‌صدا در پس‌زمینه هر ۲ ثانیه (فقط در صورتی که در حال تگ زدن نباشید)
     setInterval(fetchSmartSync, 2000);
 
 </script>
