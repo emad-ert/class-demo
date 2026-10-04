@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه هوشمند حضور و غیاب</title>
+    <title>سامانه حضور و غیاب - نسخه اصلی</title>
     <style>
         :root {
+            /* تم پیش‌فرض (کلاس الف - آبی/نیلی) */
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --card-edge: #4f46e5;
             --bg: #f4f6f9;
             --card-bg: #ffffff;
-            --primary: #4f46e5;
             --success: #10b981;
             --danger: #ef4444;
-            --warning: #f59e0b;
             --text: #1f2937;
+        }
+
+        body.theme-b {
+            /* تم کلاس ب (سبز کله‌غازی/زمردی) */
+            --primary: #0f766e;
+            --primary-light: #ccfbf1;
+            --card-edge: #0f766e;
         }
 
         body {
@@ -22,27 +31,49 @@
             margin: 0;
             padding: 15px;
             direction: rtl;
+            transition: background-color 0.3s;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
+        .container { max-width: 700px; margin: 0 auto; padding-bottom: 80px; }
+
+        /* تب‌های تغییر کلاس */
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
         }
 
         .header-card {
-            background: linear-gradient(135deg, #4f46e5, #3730a3);
+            background: var(--primary);
             color: white;
             border-radius: 16px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
             margin-bottom: 20px;
+            transition: background 0.3s;
         }
 
-        .header-card h1 {
-            margin: 0 0 10px 0;
-            font-size: 22px;
-        }
+        .header-card h1 { margin: 0 0 10px 0; font-size: 22px; }
 
         .stats-bar {
             display: flex;
@@ -55,7 +86,7 @@
         }
 
         .btn-scan {
-            background: #10b981;
+            background: var(--success);
             color: white;
             border: none;
             width: 100%;
@@ -69,9 +100,7 @@
             transition: transform 0.1s;
         }
 
-        .btn-scan:active {
-            transform: scale(0.98);
-        }
+        .btn-scan:active { transform: scale(0.98); }
 
         .action-bar {
             display: grid;
@@ -90,13 +119,10 @@
             font-size: 13px;
         }
 
+        .btn-sms { background: #f59e0b; color: #000; }
         .btn-reset { background: var(--danger); }
-        .btn-export { background: var(--warning); color: #000; }
 
-        .student-grid {
-            display: grid;
-            gap: 10px;
-        }
+        .student-grid { display: grid; gap: 10px; }
 
         .student-card {
             background: var(--card-bg);
@@ -115,25 +141,19 @@
             background: #f0fdf4;
         }
 
-        .student-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .student-info { display: flex; align-items: center; gap: 12px; }
 
         .student-id {
-            background: #e0e7ff;
-            color: #3730a3;
+            background: var(--primary-light);
+            color: var(--primary);
             padding: 4px 8px;
             border-radius: 6px;
             font-weight: bold;
             font-size: 13px;
+            transition: all 0.3s;
         }
 
-        .student-name {
-            font-weight: 600;
-            font-size: 15px;
-        }
+        .student-name { font-weight: 600; font-size: 15px; }
 
         .badge {
             padding: 6px 12px;
@@ -147,63 +167,15 @@
         .badge-present { background: #dcfce7; color: #15803d; }
         .badge-absent { background: #fee2e2; color: #b91c1c; }
 
-        /* نوتیفیکیشن شناور (Toast) بدون ایجاد بلاک روی صفحه */
         #toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #1f2937;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: #1f2937; color: white; padding: 12px 24px; border-radius: 30px;
+            font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000;
+            opacity: 0; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        #toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        /* مدال گزارش غایبین */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            max-width: 500px;
-            width: 100%;
-            text-align: right;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-family: inherit;
-            box-sizing: border-box;
-        }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     </style>
 </head>
 <body>
@@ -211,8 +183,14 @@
 <div id="toast">پیام سیستم</div>
 
 <div class="container">
+    <!-- تب‌های انتخاب کلاس -->
+    <div class="tabs">
+        <div class="tab active" id="tabA" onclick="switchClass('classA')">کلاس الف (۴/۱)</div>
+        <div class="tab" id="tabB" onclick="switchClass('classB')">کلاس ب (۴/۲)</div>
+    </div>
+
     <div class="header-card">
-        <h1>🏫 سامانه هوشمند حضور و غیاب</h1>
+        <h1 id="classTitle">🏫 سامانه حضور و غیاب - کلاس الف</h1>
         <div class="stats-bar">
             <span>کل: <span id="totalCount">۰</span></span>
             <span>حاضر: <span id="presentCount" style="color:#4ade80;">۰</span></span>
@@ -220,65 +198,103 @@
         </div>
     </div>
 
-    <button class="btn-scan" onclick="startNfcScan()">📱 اسکن تگ NFC (آماده‌باش)</button>
+    <button class="btn-scan" onclick="startNfcScan()">📱 اسکن تگ NFC کلاس فعلی</button>
 
     <div class="action-bar">
-        <button class="btn-action btn-export" onclick="exportAbsentList()">📋 خروجی اسامی غایبین</button>
-        <button class="btn-action btn-reset" onclick="resetAll()">🔄 بازنشانی همه به غایب</button>
+        <button class="btn-action btn-sms" onclick="sendSmsToPrincipal()">📩 ارسال آمار به ناظم</button>
+        <button class="btn-action btn-reset" onclick="resetAll()">🔄 بازنشانی غایبین</button>
     </div>
 
     <div class="student-grid" id="studentList">
-        در حال دریافت اطلاعات...
-    </div>
-</div>
-
-<!-- مدال خروجی -->
-<div class="modal" id="exportModal">
-    <div class="modal-content">
-        <h3>📋 لیست دانش‌آموزان غایب</h3>
-        <p>متن زیر کپی شد! می‌توانید آن را در پیام‌رسان پیست کنید:</p>
-        <textarea id="exportText" readonly></textarea>
-        <button class="btn-scan" style="background:#4f46e5; margin:0;" onclick="closeModal()">تایید و بستن</button>
+        در حال بارگذاری لیست...
     </div>
 </div>
 
 <script>
-    // ⚠️ آدرس ورکر کلادفلر خودت را دقیقاً اینجا بگذار (بدون اسلش در آخر)
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
+    const PRINCIPAL_PHONE = "+989137450434";
 
-    // لیست دانش‌آموزان نمونه
-    let students = [
-        { id: "A01", name: "علی محمدی", present: false },
-        { id: "A02", name: "رضا حسینی", present: false },
-        { id: "A03", name: "امیر کوهی", present: false },
-        { id: "A04", name: "محمد کریمی", present: false },
-        { id: "A05", name: "مهدی احمدی", present: false }
-    ];
+    // اطلاعات اصلی و واقعی استخراج شده از اکسل شما
+    const defaultData = {
+        classA: [
+            {"id": "A01", "name": "حسین ابراهیمی", "present": false}, {"id": "A02", "name": "مهدی  احمدپور", "present": false}, {"id": "A03", "name": "سام بهرامی", "present": false}, {"id": "A04", "name": "ارشیا حاج اسماعیلی", "present": false}, {"id": "A05", "name": "علیرضا دهنوی", "present": false}, {"id": "A06", "name": "یاشار رجائی", "present": false}, {"id": "A07", "name": "رامتین رجبی", "present": false}, {"id": "A08", "name": "محمد امین زین الدینی", "present": false}, {"id": "A09", "name": "ارسلان سنایی", "present": false}, {"id": "A10", "name": "محمد صادق سیاهکوهی", "present": false}, {"id": "A11", "name": "علی  رنجبر", "present": false}, {"id": "A12", "name": "محمد طاها شهیدی", "present": false}, {"id": "A13", "name": "آرش عباسلو", "present": false}, {"id": "A14", "name": "ارمیا عبداللهی", "present": false}, {"id": "A15", "name": "فرهنگ فتحی", "present": false}, {"id": "A16", "name": "امیرعلی فصیحی", "present": false}, {"id": "A17", "name": "یزدان محمدرضایی", "present": false}, {"id": "A18", "name": "محمد صالح مهدیان", "present": false}, {"id": "A19", "name": "محمدعلی همایون", "present": false}, {"id": "A20", "name": "محمدصدرا یعقوبی", "present": false}
+        ],
+        classB: [
+            {"id": "B01", "name": "میکائیل اسدی", "present": false}, {"id": "B02", "name": "مرتضی امیری", "present": false}, {"id": "B03", "name": "امیرحسین بهرامی", "present": false}, {"id": "B04", "name": "محمدهانی پورسیاهکوی", "present": false}, {"id": "B05", "name": "سید امیرحسین حسینی", "present": false}, {"id": "B06", "name": "محمدطاها دانشور", "present": false}, {"id": "B07", "name": "ابوالفضل رضایی", "present": false}, {"id": "B08", "name": "ایلیا زیدآبادی", "present": false}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه", "present": false}, {"id": "B10", "name": "علی اصغر طاهری", "present": false}, {"id": "B11", "name": "محمدسجاد علیزاده", "present": false}, {"id": "B12", "name": "عرفان علی آبادی", "present": false}, {"id": "B13", "name": "امیرحسین غنی پور", "present": false}, {"id": "B14", "name": "مهراد محمودی", "present": false}, {"id": "B15", "name": "ابوالفضل منظری توکلی", "present": false}, {"id": "B16", "name": "حسین منگلی پور", "present": false}, {"id": "B17", "name": "سید ابوالفضل موسوی", "present": false}, {"id": "B18", "name": "عرشیا نیلی", "present": false}, {"id": "B19", "name": "علی نیلی", "present": false}, {"id": "B20", "name": "امیرعباس وطن پرست", "present": false}, {"id": "B21", "name": "سید علیرضا هاشمی", "present": false}
+        ]
+    };
 
+    let db = { classA: [], classB: [] };
+    let currentClass = 'classA'; // پیش‌فرض: کلاس الف
     let toastTimer;
+
+    // توابع تولید صدای موفقیت‌آمیز (بدون نیاز به فایل صوتی جانبی)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSuccessBeep() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const playTone = (freq, startTime, duration) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.1, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+        };
+        const now = audioCtx.currentTime;
+        playTone(600, now, 0.1);
+        playTone(800, now + 0.1, 0.2);
+    }
 
     function showToast(message, isSuccess = true) {
         const toast = document.getElementById("toast");
         toast.innerText = message;
         toast.style.background = isSuccess ? "#10b981" : "#ef4444";
         toast.classList.add("show");
-        
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-            toast.classList.remove("show");
-        }, 1800); // محو شدن خودکار بعد از ۱.۸ ثانیه
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function switchClass(className) {
+        currentClass = className;
+        
+        // تغییرات ظاهری (تم و تب‌ها)
+        document.getElementById('tabA').classList.remove('active');
+        document.getElementById('tabB').classList.remove('active');
+        
+        if (currentClass === 'classA') {
+            document.getElementById('tabA').classList.add('active');
+            document.body.classList.remove('theme-b');
+            document.getElementById('classTitle').innerText = "🏫 سامانه حضور و غیاب - کلاس الف";
+        } else {
+            document.getElementById('tabB').classList.add('active');
+            document.body.classList.add('theme-b');
+            document.getElementById('classTitle').innerText = "🏫 سامانه حضور و غیاب - کلاس ب";
+        }
+        renderList();
     }
 
     async function loadData() {
         try {
             let res = await fetch(WORKER_URL + "/api/data");
             let data = await res.json();
-            if (data && Array.isArray(data)) {
-                students = data;
-                renderList();
+            
+            // بررسی می‌کنیم که آیا ساختار دیتابیس قدیمی است یا جدید (دارای دو کلاس)
+            if (data && data.classA && data.classB) {
+                db = data;
+            } else {
+                // اگر دیتابیس خالی یا با فرمت قبلی بود، لیست واقعی را جایگزین می‌کنیم
+                db = JSON.parse(JSON.stringify(defaultData));
+                saveData();
             }
+            renderList();
         } catch (e) {
-            console.error("خطا در دریافت داده", e);
+            console.error("خطا در دریافت", e);
+            db = JSON.parse(JSON.stringify(defaultData));
+            renderList();
         }
     }
 
@@ -288,18 +304,19 @@
             await fetch(WORKER_URL + "/api/update", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(students)
+                body: JSON.stringify(db)
             });
         } catch (e) {
-            showToast("خطا در همگام‌سازی شبکه!", false);
+            showToast("خطا در همگام‌سازی!", false);
         }
     }
 
     function renderList() {
         let html = "";
         let presentCnt = 0;
+        let activeList = db[currentClass];
 
-        students.forEach((s, index) => {
+        activeList.forEach((s, index) => {
             if (s.present) presentCnt++;
             html += `
                 <div class="student-card ${s.present ? 'present' : ''}">
@@ -307,6 +324,7 @@
                         <span class="student-id">${s.id}</span>
                         <span class="student-name">${s.name}</span>
                     </div>
+                    <!-- ثبت حضور دستی با کلیک روی دکمه -->
                     <span class="badge ${s.present ? 'badge-present' : 'badge-absent'}" onclick="togglePresent(${index})">
                         ${s.present ? '✓ حاضر' : '✕ غایب'}
                     </span>
@@ -315,51 +333,52 @@
         });
 
         document.getElementById("studentList").innerHTML = html;
-        document.getElementById("totalCount").innerText = students.length;
+        document.getElementById("totalCount").innerText = activeList.length;
         document.getElementById("presentCount").innerText = presentCnt;
-        document.getElementById("absentCount").innerText = students.length - presentCnt;
+        document.getElementById("absentCount").innerText = activeList.length - presentCnt;
     }
 
     function togglePresent(index) {
-        students[index].present = !students[index].present;
+        db[currentClass][index].present = !db[currentClass][index].present;
         saveData();
-        showToast(`${students[index].name}: ${students[index].present ? 'حاضر' : 'غایب'}`);
+        if (db[currentClass][index].present) playSuccessBeep();
+        showToast(`${db[currentClass][index].name}: ${db[currentClass][index].present ? 'حاضر' : 'غایب'}`);
     }
 
     function resetAll() {
-        if (confirm("آیا مطمئن هستید که می‌خواهید وضعیت همه دانش‌آموزان به «غایب» تغییر کند؟")) {
-            students.forEach(s => s.present = false);
+        if (confirm("آیا غایبین کلاس فعلی بازنشانی شوند؟")) {
+            db[currentClass].forEach(s => s.present = false);
             saveData();
-            showToast("همه دانش‌آموزان غایب شدند", false);
+            showToast("وضعیت کلاس بازنشانی شد", false);
         }
     }
 
-    function exportAbsentList() {
-        const absentees = students.filter(s => !s.present);
-        const today = new Date().toLocaleDateString('fa-IR');
+    // ارسال پیامک خودکار با فرمت درخواستی شما
+    function sendSmsToPrincipal() {
+        const activeList = db[currentClass];
+        const absentees = activeList.filter(s => !s.present);
         
-        let text = `📌 گزارش غایبین کلاس - تاریخ: ${today}\n`;
-        text += `تعداد کل غایبین: ${absentees.length} نفر\n`;
-        text += `------------------------------\n`;
-        
+        const dateStr = new Date().toLocaleDateString('fa-IR');
+        const timeStr = new Date().toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+        const branchName = currentClass === 'classA' ? 'الف' : 'ب';
+
+        let text = `تاریخ: ${dateStr}\n`;
+        text += `شعبه: ${branchName}\n`;
+        text += `زمان حضور و غیاب: ${timeStr}\n`;
+        text += `افراد غایب:\n`;
+
         if (absentees.length === 0) {
-            text += "ماشالله! امروز همه حاضر هستند. 🎉";
+            text += "- همه حاضرند\n";
         } else {
             absentees.forEach((s, i) => {
-                text += `${i + 1}. [${s.id}] ${s.name}\n`;
+                text += `${i + 1}. ${s.name}\n`;
             });
         }
 
-        document.getElementById("exportText").value = text;
-        document.getElementById("exportModal").style.display = "flex";
-        
-        // کپی خودکار در حافظه
-        navigator.clipboard.writeText(text);
-        showToast("لیست غایبین کپی شد!");
-    }
-
-    function closeModal() {
-        document.getElementById("exportModal").style.display = "none";
+        // انتقال به اپلیکیشن پیامک گوشی
+        const smsUrl = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(text)}`;
+        window.location.href = smsUrl;
+        showToast("در حال انتقال به پیامک...");
     }
 
     async function startNfcScan() {
@@ -367,32 +386,47 @@
             try {
                 const ndef = new NDEFReader();
                 await ndef.scan();
-                showToast("سنسور NFC فعال شد. تگ را نزدیک کنید.");
+                showToast("✅ سنسور فعال شد. تگ‌ها را نزدیک کنید.");
                 
                 ndef.addEventListener("reading", ({ message }) => {
                     for (const record of message.records) {
                         const textDecoder = new TextDecoder(record.encoding);
                         const tagId = textDecoder.decode(record.data).trim();
                         
-                        let studentIndex = students.findIndex(s => s.id === tagId);
+                        // جستجو در کلاس فعال (برای جلوگیری از تگ زدن اشتباه کلاس دیگر)
+                        let studentIndex = db[currentClass].findIndex(s => s.id === tagId);
+                        
                         if (studentIndex !== -1) {
-                            students[studentIndex].present = true;
-                            saveData();
-                            showToast(`🟢 ${students[studentIndex].name} حاضر شد`);
+                            if (!db[currentClass][studentIndex].present) {
+                                db[currentClass][studentIndex].present = true;
+                                saveData();
+                                playSuccessBeep();
+                                showToast(`🟢 ${db[currentClass][studentIndex].name}`);
+                            } else {
+                                showToast(`⚠️ ${db[currentClass][studentIndex].name} قبلاً ثبت شده`);
+                            }
                         } else {
-                            showToast(`⚠️ تگ ${tagId} تعریف نشده است`, false);
+                            showToast(`❌ تگ ${tagId} در این کلاس تعریف نشده`, false);
+                            // صدای هشدار کوتاه
+                            if (audioCtx.state === 'suspended') audioCtx.resume();
+                            const osc = audioCtx.createOscillator();
+                            osc.connect(audioCtx.destination);
+                            osc.type = 'sawtooth';
+                            osc.frequency.value = 150;
+                            osc.start();
+                            osc.stop(audioCtx.currentTime + 0.3);
                         }
                     }
                 });
             } catch (error) {
-                showToast("خطا در فعال‌سازی NFC", false);
+                showToast("خطا در فعال‌سازی سنسور NFC", false);
             }
         } else {
-            alert("مرورگر شما از Web NFC پشتیبانی نمی‌کند یا صفحه تحت HTTPS نیست.");
+            alert("مرورگر شما از Web NFC پشتیبانی نمی‌کند.");
         }
     }
 
-    // همگام‌سازی خودکار هر ۲ ثانیه
+    // همگام‌سازی لحظه‌ای
     setInterval(loadData, 2000);
     loadData();
 </script>
