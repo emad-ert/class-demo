@@ -3,81 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه جامع مدیریت کلاس (LMS)</title>
+    <title>سامانه جامع کلاس من</title>
     <style>
         :root {
-            /* رنگ‌های پایه */
-            --bg: #f4f6f9;
-            --text: #1f2937;
+            --bg: #f8fafc;
+            --text: #1e293b;
             --card-bg: #ffffff;
             
-            /* تم الف (آبی/سرمه‌ای) */
-            --a-main: #4f46e5;
-            --a-light: #e0e7ff;
+            /* تم الف (آبی) */
+            --a-main: #3b82f6;
+            --a-shadow: #1d4ed8;
+            --a-light: #dbeafe;
             
-            /* تم ب (نارنجی/زرد خردلی) */
-            --b-main: #d97706;
-            --b-light: #fef08a;
+            /* تم ب (زرد/نارنجی) */
+            --b-main: #f59e0b;
+            --b-shadow: #b45309;
+            --b-light: #fef3c7;
 
-            /* رنگ‌های مشترک */
             --success: #10b981;
             --danger: #ef4444;
-            --warning: #f59e0b;
 
-            /* تم فعال (با جاوا اسکریپت عوض می‌شود) */
             --theme-main: var(--a-main);
+            --theme-shadow: var(--a-shadow);
             --theme-light: var(--a-light);
         }
 
-        body { font-family: Tahoma, system-ui, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; overflow-x: hidden; transition: background-color 0.3s; }
+        /* پس‌زمینه پترن‌دار و شاد کودکانه */
+        body { 
+            font-family: Tahoma, 'Segoe UI', sans-serif; 
+            background-color: var(--bg); 
+            background-image: radial-gradient(var(--theme-light) 3px, transparent 3px), radial-gradient(var(--theme-light) 3px, transparent 3px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: var(--text); 
+            margin: 0; 
+            padding: 15px; 
+            transition: all 0.4s;
+        }
+
         .container { max-width: 800px; margin: 0 auto; padding-bottom: 80px; }
         
-        /* انیمیشن محو شدن صفحات */
-        .page { display: none; opacity: 0; transition: opacity 0.3s ease; }
-        .page.active { display: block; opacity: 1; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page { display: none; opacity: 0; transition: opacity 0.3s; }
+        .page.active { display: block; opacity: 1; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- صفحه انتخاب کلاس --- */
-        .class-selector { display: flex; flex-direction: column; gap: 20px; margin-top: 50px; }
-        .btn-class { padding: 30px; border-radius: 20px; font-size: 24px; font-weight: bold; border: none; cursor: pointer; color: white; display: flex; flex-direction: column; align-items: center; gap: 15px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .btn-class:active { transform: scale(0.95); }
-        .btn-class-a { background: linear-gradient(135deg, var(--a-main), #3730a3); }
-        .btn-class-b { background: linear-gradient(135deg, var(--b-main), #b45309); }
-        
-        /* --- داشبورد اصلی --- */
-        .header { background: var(--theme-main); color: white; padding: 15px 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .header h1 { margin: 0; font-size: 20px; }
-        .btn-home { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .dash-card { background: var(--card-bg); border-radius: 20px; padding: 25px 15px; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.2s; }
-        .dash-card:hover { border-color: var(--theme-main); transform: translateY(-3px); }
-        .dash-card .icon { font-size: 40px; margin-bottom: 10px; display: block; }
-        .dash-card .title { font-size: 16px; font-weight: bold; color: #374151; }
+        /* دکمه‌های سه‌بعدی و جذاب */
+        .btn-3d {
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            box-shadow: 0 8px 0 var(--theme-shadow), 0 15px 20px rgba(0,0,0,0.15);
+        }
+        .btn-3d:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 var(--theme-shadow), 0 5px 10px rgba(0,0,0,0.15);
+        }
 
-        /* --- استایل‌های مشترک صفحات داخلی --- */
-        .sub-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .btn-back { background: var(--theme-light); color: var(--theme-main); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .sub-header h2 { margin: 0; color: var(--theme-main); }
+        /* استایل‌های اختصاصی کلاس‌ها */
+        .btn-class-a { background: var(--a-main); box-shadow: 0 8px 0 var(--a-shadow), 0 15px 20px rgba(0,0,0,0.15); font-size: 24px; padding: 30px; }
+        .btn-class-b { background: var(--b-main); box-shadow: 0 8px 0 var(--b-shadow), 0 15px 20px rgba(0,0,0,0.15); font-size: 24px; padding: 30px; }
+        .btn-class-a:active { transform: translateY(8px); box-shadow: 0 0 0 var(--a-shadow), 0 5px 10px rgba(0,0,0,0.15); }
+        .btn-class-b:active { transform: translateY(8px); box-shadow: 0 0 0 var(--b-shadow), 0 5px 10px rgba(0,0,0,0.15); }
+
+        .header { background: var(--card-bg); border: 4px solid var(--theme-main); border-radius: 20px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .header h1 { margin: 0; font-size: 20px; color: var(--theme-main); }
+        .btn-home { background: var(--theme-light); border: none; color: var(--theme-main); padding: 8px 15px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .dash-card { background: var(--card-bg); border-radius: 25px; padding: 30px 15px; text-align: center; cursor: pointer; border: 4px solid var(--theme-light); transition: all 0.2s; box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+        .dash-card:active { transform: scale(0.95); border-color: var(--theme-main); }
+        .dash-card .icon { font-size: 50px; margin-bottom: 10px; display: block; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1)); }
+        .dash-card .title { font-size: 18px; font-weight: bold; color: #334155; }
+
+        .sub-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: white; padding: 10px; border-radius: 15px; border: 2px solid var(--theme-main); }
+        .btn-back { background: var(--theme-main); color: white; border: none; width: 45px; height: 45px; border-radius: 12px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 var(--theme-shadow); }
+        .btn-back:active { transform: translateY(4px); box-shadow: 0 0 0 var(--theme-shadow); }
         
-        /* دکمه‌های اکشن */
-        .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-        .btn-action { border: none; padding: 12px 5px; border-radius: 10px; font-weight: bold; cursor: pointer; color: white; font-size: 13px; }
-        .btn-scan { background: var(--success); color: white; border: none; width: 100%; padding: 16px; border-radius: 14px; font-size: 17px; font-weight: bold; cursor: pointer; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3); }
+        .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         
-        /* لیست دانش‌آموزان */
-        .student-grid { display: grid; gap: 10px; }
-        .student-card { background: var(--card-bg); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--danger); box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
-        .student-card.present { border-right-color: var(--success); background: #f0fdf4; }
+        .student-card { background: white; border-radius: 15px; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; border: 2px solid #e2e8f0; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .student-info { display: flex; align-items: center; gap: 12px; }
-        .student-id { background: var(--theme-light); color: var(--theme-main); padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 13px; }
-        .student-name { font-weight: 600; font-size: 15px; }
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; user-select: none; }
-        .badge-present { background: #dcfce7; color: #15803d; }
-        .badge-absent { background: #fee2e2; color: #b91c1c; }
+        .student-id { background: var(--theme-light); color: var(--theme-main); padding: 4px 8px; border-radius: 8px; font-weight: bold; }
+        
+        /* دکمه‌های کنترل امتیاز */
+        .score-controls { display: flex; align-items: center; gap: 10px; background: #f1f5f9; padding: 5px; border-radius: 12px; }
+        .btn-score { width: 35px; height: 35px; border-radius: 8px; border: none; font-size: 18px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 rgba(0,0,0,0.2); }
+        .btn-score:active { transform: translateY(3px); box-shadow: none; }
+        .btn-plus { background: var(--success); }
+        .btn-minus { background: var(--danger); }
+        .score-display { font-size: 20px; font-weight: bold; color: #0f172a; min-width: 30px; text-align: center; }
 
-        /* نوتیفیکیشن */
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1f2937; color: white; padding: 12px 24px; border-radius: 30px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; transition: all 0.3s; pointer-events: none; }
+        /* نمودار ستونی (گزارش گروهی) */
+        .chart-container { display: flex; align-items: flex-end; gap: 10px; height: 300px; padding: 20px; background: white; border-radius: 20px; overflow-x: auto; border: 3px solid var(--theme-main); }
+        .bar-wrapper { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 40px; }
+        .bar-value { font-weight: bold; margin-bottom: 5px; color: var(--theme-main); }
+        .bar { width: 100%; background: linear-gradient(to top, var(--theme-shadow), var(--theme-main)); border-radius: 8px 8px 0 0; min-height: 10px; transition: height 0.5s; }
+        .bar-label { margin-top: 10px; font-size: 11px; font-weight: bold; transform: rotate(-45deg); white-space: nowrap; }
+
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 15px 30px; border-radius: 30px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; transition: all 0.3s; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     </style>
 </head>
@@ -89,13 +121,16 @@
     
     <!-- صفحه ۱: انتخاب کلاس -->
     <div id="page-select" class="page active">
-        <h2 style="text-align: center; color: #374151;">کدام کلاس را مدیریت می‌کنید؟</h2>
-        <div class="class-selector">
-            <button class="btn-class btn-class-a" onclick="openDashboard('classA')">
-                <span>🎒 کلاس الف (۴/۱)</span>
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 32px; color: #1e293b;">🚀 سامانه هوشمند کلاس</h1>
+            <p>آماده برای یک روز عالی؟ کلاست رو انتخاب کن!</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            <button class="btn-class-a btn-3d" style="background: var(--a-main);" onclick="openDashboard('classA')">
+                <span style="font-size: 40px;">🎒</span> کلاس الف (۴/۱)
             </button>
-            <button class="btn-class btn-class-b" onclick="openDashboard('classB')">
-                <span>🎒 کلاس ب (۴/۲)</span>
+            <button class="btn-class-b btn-3d" style="background: var(--b-main);" onclick="openDashboard('classB')">
+                <span style="font-size: 40px;">🦁</span> کلاس ب (۴/۲)
             </button>
         </div>
     </div>
@@ -103,8 +138,11 @@
     <!-- صفحه ۲: داشبورد اصلی -->
     <div id="page-dashboard" class="page">
         <div class="header">
-            <h1 id="dashTitle">داشبورد کلاس</h1>
-            <button class="btn-home" onclick="goToPage('page-select')">🔄 تغییر کلاس</button>
+            <h1 id="dashTitle">داشبورد</h1>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-home" style="background: #10b981; color: white;" onclick="fetchSmartSync()">🔄 همگام‌سازی</button>
+                <button class="btn-home" onclick="goToPage('page-select')">🏠 خروج</button>
+            </div>
         </div>
 
         <div class="dashboard-grid">
@@ -112,17 +150,17 @@
                 <span class="icon">📋</span>
                 <span class="title">حضور و غیاب</span>
             </div>
-            <div class="dash-card" style="opacity: 0.5;">
+            <div class="dash-card" onclick="goToPage('page-points-menu')">
                 <span class="icon">⭐️</span>
-                <span class="title">بانک امتیاز (به‌زودی)</span>
+                <span class="title">بانک امتیاز</span>
             </div>
             <div class="dash-card" style="opacity: 0.5;">
                 <span class="icon">👮‍♂️</span>
-                <span class="title">مبصر هفتگی (به‌زودی)</span>
+                <span class="title">مبصر (بزودی)</span>
             </div>
             <div class="dash-card" style="opacity: 0.5;">
                 <span class="icon">⚽️</span>
-                <span class="title">کاپیتان ورزش (به‌زودی)</span>
+                <span class="title">ورزش (بزودی)</span>
             </div>
         </div>
     </div>
@@ -131,51 +169,94 @@
     <div id="page-attendance" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
-            <h2>ثبت حضور و غیاب</h2>
+            <h2 style="margin:0; color: var(--theme-main);">📋 ثبت حضور و غیاب</h2>
         </div>
 
-        <button class="btn-scan" onclick="startNfcScan()">📱 روشن کردن سنسور NFC</button>
+        <button class="btn-3d" style="background: var(--success); width: 100%; margin-bottom: 20px; --theme-shadow: #059669;" onclick="startNfcScan()">📱 روشن کردن NFC گوشی</button>
 
         <div class="action-bar">
-            <button class="btn-action" style="background: #f59e0b; color: #000;" onclick="sendSmsToPrincipal()">📩 پیام ناظم</button>
-            <button class="btn-action" style="background: #0ea5e9;" onclick="sendToCloud()">☁️ آرشیو ابری</button>
-            <button class="btn-action" style="background: var(--danger);" onclick="resetAttendance()">🔄 صفر کردن</button>
+            <button class="btn-3d" style="background: #0ea5e9; padding:10px; font-size:14px; --theme-shadow: #0284c7;" onclick="sendToCloud()">☁️ آرشیو بله/تلگرام</button>
+            <button class="btn-3d" style="background: #f59e0b; padding:10px; font-size:14px; --theme-shadow: #b45309;" onclick="sendSmsToPrincipal()">📩 ارسال ناظم</button>
+            <button class="btn-3d" style="background: var(--danger); padding:10px; font-size:14px; --theme-shadow: #b91c1c;" onclick="resetAttendance()">🔄 صفر کردن</button>
         </div>
 
-        <div class="student-grid" id="studentList">
-            <!-- لیست در اینجا لود می‌شود -->
+        <div id="studentListAtt"></div>
+    </div>
+
+    <!-- صفحه ۴: منوی بانک امتیاز -->
+    <div id="page-points-menu" class="page">
+        <div class="sub-header">
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
+            <h2 style="margin:0; color: var(--theme-main);">⭐️ بانک امتیاز</h2>
+        </div>
+        <div class="dashboard-grid">
+            <div class="dash-card" onclick="goToPage('page-points-register')">
+                <span class="icon">🎯</span>
+                <span class="title">ثبت امتیاز (NFC/دستی)</span>
+            </div>
+            <div class="dash-card" onclick="openReportChart()">
+                <span class="icon">📊</span>
+                <span class="title">گزارش تصویری کلاس</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه ۵: ثبت امتیاز -->
+    <div id="page-points-register" class="page">
+        <div class="sub-header">
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button>
+            <h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
+        </div>
+        
+        <button class="btn-3d" style="background: var(--theme-main); width: 100%; margin-bottom: 20px;" onclick="startNfcScan()">📱 روشن کردن NFC (+۱ سریع)</button>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <button class="btn-3d" style="flex:1; background: var(--success); --theme-shadow: #059669;" onclick="addScoreToAll(1)">+۱ به کل کلاس</button>
+            <button class="btn-3d" style="flex:1; background: var(--danger); --theme-shadow: #b91c1c;" onclick="addScoreToAll(-1)">-۱ از کل کلاس</button>
+        </div>
+
+        <div id="studentListPoints"></div>
+    </div>
+
+    <!-- صفحه ۶: گزارش نموداری امتیازات -->
+    <div id="page-points-report" class="page">
+        <div class="sub-header">
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button>
+            <h2 style="margin:0; color: var(--theme-main);">📊 رقابت ستارگان کلاس</h2>
+        </div>
+        <div class="chart-container" id="pointsChart">
+            <!-- نمودار اینجا رسم می‌شود -->
         </div>
     </div>
 
 </div>
 
 <script>
-    // ⚠️ تنظیمات سرور و پیام‌رسان‌ها
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
-    const BALE_CHAT_ID = "4982879524"; // شناسه کانال یا پیوی بله خود را اینجا بگذار
+    const BALE_CHAT_ID = "608997646"; // شناسه شخصی شما در بله برای تست
     const PRINCIPAL_PHONE = "+989137450434";
 
-    // دیتابیس ارتقا یافته شامل متغیرهای جدید
     const defaultData = {
         classA: [
             {"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}
-        ].map(s => ({ ...s, present: false, score: 0, isMonitor: false, hasBeenMonitor: false, isCaptain: false, hasBeenCaptain: false })),
+        ].map(s => ({ ...s, present: false, score: 0 })),
         
         classB: [
             {"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}
-        ].map(s => ({ ...s, present: false, score: 0, isMonitor: false, hasBeenMonitor: false, isCaptain: false, hasBeenCaptain: false }))
+        ].map(s => ({ ...s, present: false, score: 0 }))
     };
 
     let db = JSON.parse(JSON.stringify(defaultData));
     let currentClass = 'classA';
     let isPushingData = false; 
 
-    // ---- سیستم ناوبری (جابجایی صفحات) ----
+    // جابجایی بین صفحات
     function goToPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-        if (pageId === 'page-attendance') renderAttendanceList();
+        if (pageId === 'page-attendance') renderAttendance();
+        if (pageId === 'page-points-register') renderPoints();
     }
 
     function openDashboard(className) {
@@ -183,30 +264,34 @@
         const r = document.documentElement;
         if (className === 'classA') {
             r.style.setProperty('--theme-main', 'var(--a-main)');
+            r.style.setProperty('--theme-shadow', 'var(--a-shadow)');
             r.style.setProperty('--theme-light', 'var(--a-light)');
-            document.getElementById('dashTitle').innerText = "داشبورد کلاس الف (۴/۱)";
+            document.getElementById('dashTitle').innerText = "داشبورد ۴/۱";
         } else {
             r.style.setProperty('--theme-main', 'var(--b-main)');
+            r.style.setProperty('--theme-shadow', 'var(--b-shadow)');
             r.style.setProperty('--theme-light', 'var(--b-light)');
-            document.getElementById('dashTitle').innerText = "داشبورد کلاس ب (۴/۲)";
+            document.getElementById('dashTitle').innerText = "داشبورد ۴/۲";
         }
         goToPage('page-dashboard');
     }
 
-    // ---- سیستم صوتی و نوتیفیکیشن ----
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    
     function playBeep(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
-        
         if (type === 'success') {
             osc.type = 'sine'; osc.frequency.value = 800;
             gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
             osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+        } else if (type === 'coin') {
+            osc.type = 'square'; osc.frequency.value = 1200;
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
         } else {
             osc.type = 'sawtooth'; osc.frequency.value = 150;
             gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
@@ -216,136 +301,172 @@
     }
 
     let toastTimer;
-    function showToast(message, isSuccess = true) {
+    function showToast(msg, isSuccess = true) {
         const toast = document.getElementById("toast");
-        toast.innerText = message;
+        toast.innerText = msg;
         toast.style.background = isSuccess ? "#10b981" : "#ef4444";
         toast.classList.add("show");
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
-    // ---- همگام‌سازی ابری ----
+    // همگام‌سازی
     async function fetchSmartSync() {
-        if (isPushingData) return; 
+        showToast("در حال دریافت اطلاعات...", true);
         try {
             let res = await fetch(WORKER_URL + "/api/data");
             let data = await res.json();
-            if (data && data.classA && !isPushingData) {
+            if (data && data.classA) {
                 db = data;
-                if(document.getElementById('page-attendance').classList.contains('active')) renderAttendanceList();
+                if(document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
+                if(document.getElementById('page-points-register').classList.contains('active')) renderPoints();
+                if(document.getElementById('page-points-report').classList.contains('active')) openReportChart();
+                showToast("✅ اطلاعات به‌روز شد");
             }
-        } catch (e) {}
+        } catch (e) { showToast("خطا در دریافت", false); }
     }
 
     async function pushDataToCloud() {
         isPushingData = true; 
         try {
-            await fetch(WORKER_URL + "/api/update", {
-                method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db)
-            });
-        } catch (e) { showToast("⚠️ آفلاین: بعدا ذخیره می‌شود", false); }
+            await fetch(WORKER_URL + "/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db) });
+        } catch (e) {}
         setTimeout(() => { isPushingData = false; }, 1500); 
     }
 
-    // ---- بخش حضور و غیاب ----
-    function renderAttendanceList() {
+    // 1. لیست حضور و غیاب
+    function renderAttendance() {
         let html = "";
-        db[currentClass].forEach((s, index) => {
+        db[currentClass].forEach((s, i) => {
             html += `
-                <div class="student-card ${s.present ? 'present' : ''}">
+                <div class="student-card" style="border-right-color: ${s.present ? 'var(--success)' : 'var(--danger)'};">
+                    <div class="student-info">
+                        <span class="student-id">${s.id}</span>
+                        <span class="student-name" style="color: ${s.present ? '#15803d' : '#000'}">${s.name}</span>
+                    </div>
+                    <span class="btn-3d" style="padding: 8px 15px; font-size:14px; background: ${s.present ? 'var(--success)' : 'var(--danger)'}; --theme-shadow: ${s.present ? '#059669' : '#b91c1c'};" onclick="togglePresent(${i})">
+                        ${s.present ? 'حاضر' : 'غایب'}
+                    </span>
+                </div>`;
+        });
+        document.getElementById("studentListAtt").innerHTML = html;
+    }
+
+    function togglePresent(i) {
+        db[currentClass][i].present = !db[currentClass][i].present;
+        renderAttendance(); pushDataToCloud();
+        if (db[currentClass][i].present) playBeep('success');
+    }
+
+    function resetAttendance() {
+        if (confirm("غایبین صفر شوند؟")) { db[currentClass].forEach(s => s.present = false); renderAttendance(); pushDataToCloud(); showToast("صفر شد"); }
+    }
+
+    // 2. لیست ثبت امتیاز
+    function renderPoints() {
+        let html = "";
+        db[currentClass].forEach((s, i) => {
+            html += `
+                <div class="student-card" style="border-right-color: #cbd5e1;">
                     <div class="student-info">
                         <span class="student-id">${s.id}</span>
                         <span class="student-name">${s.name}</span>
                     </div>
-                    <span class="badge ${s.present ? 'badge-present' : 'badge-absent'}" onclick="togglePresent(${index})">
-                        ${s.present ? '✓ حاضر' : '✕ غایب'}
-                    </span>
-                </div>
-            `;
+                    <div class="score-controls">
+                        <button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">-</button>
+                        <span class="score-display">${s.score || 0}</span>
+                        <button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button>
+                    </div>
+                </div>`;
         });
-        document.getElementById("studentList").innerHTML = html;
+        document.getElementById("studentListPoints").innerHTML = html;
     }
 
-    function togglePresent(index) {
-        db[currentClass][index].present = !db[currentClass][index].present;
-        renderAttendanceList();
-        pushDataToCloud();
-        if (db[currentClass][index].present) playBeep('success');
-        showToast(`${db[currentClass][index].name}: ${db[currentClass][index].present ? 'حاضر' : 'غایب'}`);
+    function changeScore(i, val) {
+        if(!db[currentClass][i].score) db[currentClass][i].score = 0;
+        db[currentClass][i].score += val;
+        renderPoints(); pushDataToCloud();
+        if(val > 0) playBeep('coin');
     }
 
-    function resetAttendance() {
-        if (confirm("غایبین این کلاس صفر شوند؟ (امتیازها پاک نمی‌شود)")) {
-            db[currentClass].forEach(s => s.present = false);
-            renderAttendanceList();
-            pushDataToCloud();
-            showToast("حضور و غیاب صفر شد", true);
+    function addScoreToAll(val) {
+        if(confirm(`آیا به همه اعضای کلاس ${val} امتیاز داده شود؟`)) {
+            db[currentClass].forEach(s => { if(!s.score) s.score=0; s.score += val; });
+            renderPoints(); pushDataToCloud(); playBeep('coin');
         }
     }
 
-    // ---- گزارش‌گیری ----
-    function generateReportText() {
-        const absentees = db[currentClass].filter(s => !s.present);
-        const dateStr = new Date().toLocaleDateString('fa-IR');
-        const branchName = currentClass === 'classA' ? 'الف' : 'ب';
-        
-        let text = `📅 تاریخ: ${dateStr}\n🏫 گزارش کلاس: ${branchName}\n\n📋 افراد غایب:\n`;
-        if (absentees.length === 0) text += "- خوشبختانه همه حاضرند ✅\n";
-        else absentees.forEach((s, i) => { text += `${i + 1}. ${s.name}\n`; });
-        return text;
+    // 3. رسم نمودار گروهی
+    function openReportChart() {
+        goToPage('page-points-report');
+        const chartDiv = document.getElementById("pointsChart");
+        let html = "";
+        // پیدا کردن بیشترین امتیاز برای تنظیم ارتفاع ستون‌ها
+        const maxScore = Math.max(...db[currentClass].map(s => s.score || 0), 5); // حداقل 5 در نظر میگیریم که نمودار خالی نباشد
+
+        db[currentClass].forEach(s => {
+            const sc = s.score || 0;
+            const heightPercent = Math.max((sc / maxScore) * 100, 5); // حداقل 5 درصد ارتفاع داشته باشد
+            html += `
+                <div class="bar-wrapper">
+                    <div class="bar-value">${sc}</div>
+                    <div class="bar" style="height: ${heightPercent}%;"></div>
+                    <div class="bar-label">${s.name.split(" ")[0]}</div> <!-- فقط نام کوچک -->
+                </div>`;
+        });
+        chartDiv.innerHTML = html;
     }
 
-    function sendSmsToPrincipal() {
-        window.location.href = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(generateReportText())}`;
-    }
-
-    async function sendToCloud() {
-        showToast("در حال ارسال ابری...");
-        try {
-            let res = await fetch(WORKER_URL + "/api/send-cloud", {
-                method: "POST", headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text: generateReportText(), tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID })
-            });
-            if (res.ok) showToast("✅ در تلگرام و بله آرشیو شد");
-            else showToast("❌ خطا در ارسال", false);
-        } catch (e) { showToast("❌ خطای اینترنت", false); }
-    }
-
-    // ---- اسکنر NFC ----
+    // اسکنر NFC (هوشمند برای دو صفحه مختلف)
     async function startNfcScan() {
         if ('NDEFReader' in window) {
             try {
                 const ndef = new NDEFReader();
                 await ndef.scan();
-                showToast("✅ سنسور NFC روشن شد");
+                showToast("✅ سنسور NFC آماده اسکن است");
                 
                 ndef.addEventListener("reading", ({ message }) => {
-                    // فقط اگر در صفحه حضور و غیاب باشیم عمل کند
-                    if (!document.getElementById('page-attendance').classList.contains('active')) return;
-
                     const tagId = new TextDecoder(message.records[0].encoding).decode(message.records[0].data).trim();
-                    let studentIndex = db[currentClass].findIndex(s => s.id === tagId);
+                    let i = db[currentClass].findIndex(s => s.id === tagId);
                     
-                    if (studentIndex !== -1) {
-                        if (!db[currentClass][studentIndex].present) {
-                            db[currentClass][studentIndex].present = true;
-                            renderAttendanceList();
-                            pushDataToCloud();
-                            playBeep('success');
-                            showToast(`🟢 ${db[currentClass][studentIndex].name} حاضر شد`);
-                        } else showToast(`⚠️ قبلاً ثبت شده`);
+                    if (i !== -1) {
+                        // اگر در صفحه حضور غیاب باشیم
+                        if (document.getElementById('page-attendance').classList.contains('active')) {
+                            if (!db[currentClass][i].present) {
+                                db[currentClass][i].present = true;
+                                renderAttendance(); pushDataToCloud(); playBeep('success');
+                                showToast(`🟢 ${db[currentClass][i].name} حاضر شد`);
+                            } else showToast(`⚠️ قبلاً ثبت شده`);
+                        }
+                        // اگر در صفحه ثبت امتیاز باشیم (فقط +1 میدهد)
+                        else if (document.getElementById('page-points-register').classList.contains('active')) {
+                            changeScore(i, 1);
+                            showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`);
+                        }
                     } else {
-                        playBeep('error');
-                        showToast(`❌ تگ اشتباه است`, false);
+                        playBeep('error'); showToast(`❌ تگ اشتباه است`, false);
                     }
                 });
             } catch (e) { showToast("خطا در سنسور NFC", false); }
         } else alert("مرورگر شما NFC را پشتیبانی نمی‌کند.");
     }
 
-    setInterval(fetchSmartSync, 2000);
-    fetchSmartSync();
+    // ارسال گزارشات
+    function sendSmsToPrincipal() {
+        const abs = db[currentClass].filter(s => !s.present);
+        let txt = `تاریخ: ${new Date().toLocaleDateString('fa-IR')}\nغایبین:\n` + (abs.length===0?"همه حاضرند":abs.map(s=>s.name).join('\n'));
+        window.location.href = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(txt)}`;
+    }
+
+    async function sendToCloud() {
+        const abs = db[currentClass].filter(s => !s.present);
+        let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass==='classA'?'الف':'ب'}\n📋 غایبین:\n` + (abs.length===0?"- همه حاضرند ✅":abs.map((s,i)=>`${i+1}. ${s.name}`).join('\n'));
+        showToast("در حال ارسال...");
+        try {
+            await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) });
+            showToast("✅ در تلگرام و بله آرشیو شد");
+        } catch (e) { showToast("❌ خطای ارسال", false); }
+    }
 </script>
 </body>
 </html>
