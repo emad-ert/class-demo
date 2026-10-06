@@ -34,10 +34,11 @@
         .btn-scan { background: var(--success); color: white; border: none; width: 100%; padding: 16px; border-radius: 14px; font-size: 17px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4); margin-bottom: 15px; }
         .btn-scan:active { transform: scale(0.98); }
 
-        .action-bar { display: grid; grid-template-columns: 5fr 2fr 5fr; gap: 8px; margin-bottom: 20px; }
+        /* ساده‌سازی منوی دکمه‌ها */
+        .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .btn-action { display: flex; justify-content: center; align-items: center; border: none; padding: 12px 5px; border-radius: 10px; font-weight: bold; cursor: pointer; color: white; font-size: 13px; }
         .btn-sms { background: #f59e0b; color: #000; }
-        .btn-tg { background: #0088cc; box-shadow: 0 4px 6px rgba(0, 136, 204, 0.3); }
+        .btn-cloud { background: #0ea5e9; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3); }
         .btn-reset { background: var(--danger); }
 
         .student-grid { display: grid; gap: 10px; }
@@ -77,13 +78,9 @@
     <button class="btn-scan" onclick="startNfcScan()">📱 اسکن تگ NFC</button>
 
     <div class="action-bar">
-        <button class="btn-action btn-sms" onclick="sendSmsToPrincipal()">📩 ناظم</button>
-        <button class="btn-action btn-tg" onclick="sendToTelegram()" title="آرشیو در تلگرام">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
-            </svg>
-        </button>
-        <button class="btn-action btn-reset" onclick="resetAll()">🔄 بازنشانی</button>
+        <button class="btn-action btn-sms" onclick="sendSmsToPrincipal()">📩 پیام به ناظم</button>
+        <button class="btn-action btn-cloud" onclick="sendToCloud()" title="آرشیو در تلگرام و بله">☁️ آرشیو ابری</button>
+        <button class="btn-action btn-reset" onclick="resetAll()">🔄 صفر کردن</button>
     </div>
 
     <div class="student-grid" id="studentList">
@@ -94,6 +91,7 @@
 <script>
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
+    const BALE_CHAT_ID = "608997646"; // chat i bale
     const PRINCIPAL_PHONE = "+989137450434";
 
     const defaultData = {
@@ -261,16 +259,16 @@
         window.location.href = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(text)}`;
     }
 
-    async function sendToTelegram() {
+    async function sendToCloud() {
         const text = generateReportText();
-        showToast("در حال ارسال به تلگرام...");
+        showToast("در حال ارسال ابری...");
         try {
-            let res = await fetch(WORKER_URL + "/api/send-tg", {
+            let res = await fetch(WORKER_URL + "/api/send-cloud", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text: text, chatId: TG_CHAT_ID })
+                body: JSON.stringify({ text: text, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID })
             });
-            if (res.ok) showToast("✅ با موفقیت در تلگرام آرشیو شد");
+            if (res.ok) showToast("✅ گزارش با موفقیت آرشیو شد");
             else showToast("❌ خطا در ارسال", false);
         } catch (e) {
             showToast("❌ خطای اینترنت", false);
@@ -306,7 +304,7 @@
                     }
                 });
             } catch (error) { showToast("خطا در سنسور NFC", false); }
-        } else alert("مرورگر شما NFC را پشتیبانی نمی‌کند.");
+        } else alert("مرورگر شما NFC را پشتیبانی نمی‌‌کند.");
     }
 
     setInterval(fetchSmartSync, 2000);
