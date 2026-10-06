@@ -3,66 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه جامع کلاس من - نسخه کهکشانی</title>
+    <title>سامانه جامع کلاس من</title>
     <style>
         :root {
             --bg: #f8fafc;
             --text: #1e293b;
             --card-bg: rgba(255, 255, 255, 0.95);
             
-            /* تم الف (آبی کهکشانی) */
-            --a-main: #3b82f6;
-            --a-grad: linear-gradient(135deg, #2563eb, #6366f1, #8b5cf6);
-            --a-shadow: #1e3a8a;
-            --a-light: #eff6ff;
-            
-            /* تم ب (زرد/نارنجی کیهانی) */
-            --b-main: #f59e0b;
-            --b-grad: linear-gradient(135deg, #d97706, #f59e0b, #fbbf24);
-            --b-shadow: #92400e;
-            --b-light: #fffbeb;
+            --a-main: #3b82f6; --a-grad: linear-gradient(135deg, #2563eb, #6366f1, #8b5cf6); --a-shadow: #1e3a8a; --a-light: #eff6ff;
+            --b-main: #f59e0b; --b-grad: linear-gradient(135deg, #d97706, #f59e0b, #fbbf24); --b-shadow: #92400e; --b-light: #fffbeb;
 
-            --success: #10b981;
-            --danger: #ef4444;
+            --success: #10b981; --danger: #ef4444;
 
-            --theme-main: var(--a-main);
-            --theme-grad: var(--a-grad);
-            --theme-shadow: var(--a-shadow);
-            --theme-light: var(--a-light);
+            --theme-main: var(--a-main); --theme-grad: var(--a-grad); --theme-shadow: var(--a-shadow); --theme-light: var(--a-light);
         }
 
-        /* پس‌زمینه با پترن‌های آموزشی و شاد */
         body { 
             font-family: Tahoma, 'Segoe UI', sans-serif; 
             background-color: #e0e7ff; 
-            background-image: 
-                url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239ba9c4" fill-opacity="0.15"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>'),
-                linear-gradient(to bottom right, var(--theme-light), var(--bg));
-            color: var(--text); 
-            margin: 0; 
-            padding: 15px; 
-            transition: all 0.5s ease;
+            background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239ba9c4" fill-opacity="0.15"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>'), linear-gradient(to bottom right, var(--theme-light), var(--bg));
+            color: var(--text); margin: 0; padding: 15px; transition: all 0.5s ease;
         }
 
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
-        
         .page { display: none; opacity: 0; transition: opacity 0.3s; }
         .page.active { display: block; opacity: 1; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* دکمه‌های سه‌بعدی */
-        .btn-3d {
-            border: none; border-radius: 20px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; box-shadow: 0 6px 0 var(--theme-shadow), 0 10px 15px rgba(0,0,0,0.1);
-        }
+        .btn-3d { border: none; border-radius: 20px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; box-shadow: 0 6px 0 var(--theme-shadow), 0 10px 15px rgba(0,0,0,0.1); }
         .btn-3d:active { transform: translateY(6px); box-shadow: 0 0 0 var(--theme-shadow), 0 3px 5px rgba(0,0,0,0.1); }
+        .btn-3d:disabled { filter: grayscale(100%); opacity: 0.6; cursor: not-allowed; box-shadow: none; transform: translateY(6px); }
 
-        /* دکمه‌های کلاس (گرادیانت فضایی) */
-        .btn-class-a { background: var(--a-grad); box-shadow: 0 8px 0 var(--a-shadow), 0 15px 25px rgba(37, 99, 235, 0.4); font-size: 26px; padding: 35px; border-radius: 25px; }
-        .btn-class-b { background: var(--b-grad); box-shadow: 0 8px 0 var(--b-shadow), 0 15px 25px rgba(245, 158, 11, 0.4); font-size: 26px; padding: 35px; border-radius: 25px; }
-        .btn-class-a:active { transform: translateY(8px); box-shadow: 0 0 0 var(--a-shadow); }
-        .btn-class-b:active { transform: translateY(8px); box-shadow: 0 0 0 var(--b-shadow); }
+        .btn-class-a { background: var(--a-grad); box-shadow: 0 8px 0 var(--a-shadow); font-size: 26px; padding: 35px; border-radius: 25px; }
+        .btn-class-b { background: var(--b-grad); box-shadow: 0 8px 0 var(--b-shadow); font-size: 26px; padding: 35px; border-radius: 25px; }
 
-        /* داشبورد */
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .dash-card { background: var(--card-bg); border-radius: 25px; padding: 30px 15px; text-align: center; cursor: pointer; border: 3px solid white; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.08); backdrop-filter: blur(5px); }
         .dash-card:active { transform: scale(0.95); border-color: var(--theme-main); }
@@ -71,42 +45,32 @@
 
         .sub-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: rgba(255,255,255,0.9); padding: 12px; border-radius: 20px; border: 2px solid var(--theme-main); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .btn-back { background: var(--theme-grad); color: white; border: none; width: 45px; height: 45px; border-radius: 14px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 var(--theme-shadow); }
-        .btn-back:active { transform: translateY(4px); box-shadow: 0 0 0 var(--theme-shadow); }
         
+        .sync-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         
-        /* دکمه‌های دریافت/ارسال مجزا */
-        .sync-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-
         .student-card { background: white; border-radius: 15px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; }
         .student-info { display: flex; align-items: center; gap: 10px; }
         .student-id { background: var(--theme-light); color: var(--theme-main); padding: 5px 10px; border-radius: 8px; font-weight: bold; font-size: 14px; }
         
-        /* دکمه‌های کنترل امتیاز (کهکشانی) */
-        .score-controls { display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 6px; border-radius: 15px; border: 1px solid #e2e8f0; }
-        .btn-score { width: 40px; height: 40px; border-radius: 12px; border: none; font-size: 22px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,0.2); transition: all 0.1s; }
-        .btn-score:active { transform: translateY(4px); box-shadow: none; }
-        .btn-plus { background: linear-gradient(135deg, #10b981, #059669); }
-        .btn-minus { background: linear-gradient(135deg, #ef4444, #b91c1c); }
-        .score-display { font-size: 22px; font-weight: bold; color: #0f172a; min-width: 35px; text-align: center; }
-
-        /* باکس چراغ‌ها (گزارش لپ‌تاپ) */
-        .light-grid { display: grid; grid-template-columns: 1fr; gap: 8px; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 20px; border: 3px solid var(--theme-main); }
-        .light-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #cbd5e1; }
-        .light-row:last-child { border-bottom: none; }
-        .light-name { width: 120px; font-weight: bold; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #334155; }
+        /* استایل‌های اختصاصی قرعه‌کشی */
+        .draw-box { background: white; border: 4px solid var(--theme-main); border-radius: 25px; padding: 40px 20px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .draw-box.monitor-mode { border-color: #0284c7; } /* آبی پلیسی */
+        .draw-box.captain-mode { border-color: #16a34a; } /* سبز چمنی */
         
-        .lights-container { display: flex; gap: 4px; flex: 1; justify-content: flex-start; }
-        .light-bulb { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #cbd5e1; background: #f1f5f9; transition: all 0.3s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+        .draw-names { font-size: 32px; font-weight: bold; color: #1e293b; min-height: 50px; display: flex; flex-direction: column; gap: 15px; align-items: center; justify-content: center; transition: all 0.1s; }
+        .winner-name { background: var(--theme-light); padding: 10px 25px; border-radius: 15px; border: 2px dashed var(--theme-main); width: 100%; box-sizing: border-box; }
+        .winner-name.highlight { background: var(--theme-main); color: white; border: 2px solid white; transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: pulse 1s infinite; }
         
-        /* چراغ سبز (نئون) */
-        .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 8px #10b981, inset 0 2px 4px rgba(255,255,255,0.5); }
-        /* چراغ قرمز (منفی) */
-        .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 8px #ef4444, inset 0 2px 4px rgba(255,255,255,0.5); }
-        /* چراغ جایزه ویژه (طلا) */
-        .light-bulb.on-gold { background: #fbbf24; border-color: #b45309; box-shadow: 0 0 12px #fbbf24, inset 0 2px 4px rgba(255,255,255,0.8); }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 15px 30px; border-radius: 30px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; transition: all 0.3s; }
+        .report-section { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 2px solid #e2e8f0; }
+        .report-title { font-size: 18px; color: var(--theme-main); border-bottom: 2px dashed #cbd5e1; padding-bottom: 10px; margin-bottom: 15px; }
+        .report-list { display: flex; flex-wrap: wrap; gap: 10px; }
+        .chip { background: #f1f5f9; padding: 8px 12px; border-radius: 10px; font-size: 14px; font-weight: bold; color: #475569; }
+        .chip.done { background: var(--success); color: white; }
+
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 15px 30px; border-radius: 30px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 2000; opacity: 0; transition: all 0.3s; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     </style>
 </head>
@@ -119,42 +83,34 @@
     <!-- صفحه ۱: انتخاب کلاس -->
     <div id="page-select" class="page active">
         <div style="text-align: center; margin-bottom: 40px; margin-top: 20px;">
-            <h1 style="font-size: 32px; color: #1e293b; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">🚀 کلاس من</h1>
+            <h1 style="font-size: 32px; color: #1e293b;">🚀 کلاس من</h1>
             <p style="font-weight: bold; color: #64748b;">امروز با کدوم کلاسیم؟</p>
         </div>
         <div style="display: flex; flex-direction: column; gap: 30px;">
-            <button class="btn-class-a btn-3d" onclick="openDashboard('classA')">
-                <span style="font-size: 50px; margin-bottom: -10px;">✏️</span> کلاس الف (۴/۱)
-            </button>
-            <button class="btn-class-b btn-3d" onclick="openDashboard('classB')">
-                <span style="font-size: 50px; margin-bottom: -10px;">📖</span> کلاس ب (۴/۲)
-            </button>
+            <button class="btn-class-a btn-3d" onclick="openDashboard('classA')"><span style="font-size: 50px; margin-bottom: -10px;">✏️</span> کلاس الف (۴/۱)</button>
+            <button class="btn-class-b btn-3d" onclick="openDashboard('classB')"><span style="font-size: 50px; margin-bottom: -10px;">📖</span> کلاس ب (۴/۲)</button>
         </div>
     </div>
 
     <!-- صفحه ۲: داشبورد اصلی -->
     <div id="page-dashboard" class="page">
-        <div class="sub-header" style="justify-content: space-between;">
+        <div class="sub-header">
             <h1 id="dashTitle" style="margin:0; font-size: 22px; color: var(--theme-main);">داشبورد</h1>
-            <button class="btn-3d" style="background: #64748b; padding: 8px 15px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠 تعویض کلاس</button>
+            <button class="btn-3d" style="background: #64748b; padding: 8px 15px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠 خروج</button>
         </div>
 
         <div class="dashboard-grid">
             <div class="dash-card" onclick="goToPage('page-attendance')">
-                <span class="icon">📋</span>
-                <span class="title">حضور و غیاب</span>
+                <span class="icon">📋</span><span class="title">حضور و غیاب</span>
             </div>
-            <div class="dash-card" onclick="goToPage('page-points-menu')">
-                <span class="icon">⭐️</span>
-                <span class="title">بانک امتیاز</span>
+            <div class="dash-card" onclick="openDrawMenu('monitor')">
+                <span class="icon">👮‍♂️</span><span class="title">مبصر هفتگی</span>
             </div>
-            <div class="dash-card" style="opacity: 0.5;">
-                <span class="icon">👮‍♂️</span>
-                <span class="title">مبصر (بزودی)</span>
+            <div class="dash-card" onclick="openDrawMenu('captain')">
+                <span class="icon">⚽️</span><span class="title">کاپیتان ورزش</span>
             </div>
             <div class="dash-card" style="opacity: 0.5;">
-                <span class="icon">⚽️</span>
-                <span class="title">ورزش (بزودی)</span>
+                <span class="icon">⭐️</span><span class="title">بانک امتیاز (بزودی)</span>
             </div>
         </div>
     </div>
@@ -167,78 +123,72 @@
                 <h2 style="margin:0; color: var(--theme-main);">📋 حضور و غیاب</h2>
             </div>
         </div>
-
         <div class="sync-bar">
             <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت</button>
             <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال</button>
         </div>
-
         <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 18px;" onclick="startNfcScan()">📱 اسکن NFC</button>
-
         <div class="action-bar">
             <button class="btn-3d" style="background: #0ea5e9; padding:10px; font-size:14px; --theme-shadow: #0284c7;" onclick="sendToCloud()">☁️ آرشیو</button>
             <button class="btn-3d" style="background: #f59e0b; padding:10px; font-size:14px; --theme-shadow: #b45309;" onclick="sendSmsToPrincipal()">📩 ناظم</button>
             <button class="btn-3d" style="background: var(--danger); padding:10px; font-size:14px; --theme-shadow: #b91c1c;" onclick="resetAttendance()">🔄 صفر</button>
         </div>
-
         <div id="studentListAtt"></div>
     </div>
 
-    <!-- صفحه ۴: منوی بانک امتیاز -->
-    <div id="page-points-menu" class="page">
+    <!-- صفحه ۴: منوی قرعه‌کشی (مبصر / کاپیتان) -->
+    <div id="page-draw-menu" class="page">
         <div class="sub-header">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
-                <h2 style="margin:0; color: var(--theme-main);">⭐️ بانک امتیاز</h2>
-            </div>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
+            <h2 id="drawMenuTitle" style="margin:0; color: var(--theme-main);">منوی قرعه‌کشی</h2>
         </div>
         <div class="dashboard-grid">
-            <div class="dash-card" onclick="goToPage('page-points-register')">
-                <span class="icon">🎯</span>
-                <span class="title">ثبت امتیاز</span>
+            <div class="dash-card" onclick="goToPage('page-draw-play')" id="btnDrawNew">
+                <span class="icon">🎲</span><span class="title">قرعه‌کشی جدید</span>
             </div>
-            <div class="dash-card" onclick="openReportChart()">
-                <span class="icon">💡</span>
-                <span class="title">گزارش چراغ‌ها (لپ‌تاپ)</span>
+            <div class="dash-card" onclick="openDrawReport()" id="btnDrawReport">
+                <span class="icon">📊</span><span class="title">گزارش و تاریخچه</span>
             </div>
         </div>
     </div>
 
-    <!-- صفحه ۵: ثبت امتیاز -->
-    <div id="page-points-register" class="page">
+    <!-- صفحه ۵: انجام قرعه‌کشی -->
+    <div id="page-draw-play" class="page">
         <div class="sub-header">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button>
-                <h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
+            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button>
+            <h2 id="drawPlayTitle" style="margin:0; color: var(--theme-main);">قرعه‌کشی</h2>
+        </div>
+
+        <div class="draw-box" id="drawBox">
+            <div class="draw-names" id="drawResult">
+                <div class="winner-name">؟</div>
+                <!-- باکس دوم برای کاپیتان اضافه می‌شود -->
             </div>
         </div>
-        
-        <div class="sync-bar">
-            <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت</button>
-            <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال</button>
-        </div>
 
-        <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 18px;" onclick="startNfcScan()">📱 NFC (+۱ سریع)</button>
+        <button id="btnStartDraw" class="btn-3d" style="background: var(--theme-main); width: 100%; margin-bottom: 20px; padding: 20px; font-size: 20px;" onclick="startRoulette()">🎲 شروع قرعه‌کشی!</button>
         
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <button class="btn-3d" style="flex:1; background: var(--success); --theme-shadow: #059669;" onclick="addScoreToAll(1)">+۱ به همه</button>
-            <button class="btn-3d" style="flex:1; background: var(--danger); --theme-shadow: #b91c1c;" onclick="addScoreToAll(-1)">-۱ از همه</button>
+        <div class="sync-bar" id="drawConfirmActions" style="display: none;">
+            <button class="btn-3d" style="background: var(--success); --theme-shadow: #059669;" onclick="saveDrawResult()">✅ ثبت نهایی</button>
+            <button class="btn-3d" style="background: var(--danger); --theme-shadow: #b91c1c;" onclick="resetDraw()">🔄 قرعه‌کشی مجدد</button>
         </div>
-
-        <div id="studentListPoints"></div>
     </div>
 
-    <!-- صفحه ۶: گزارش چراغ‌ها (لپ‌تاپ) -->
-    <div id="page-points-report" class="page">
+    <!-- صفحه ۶: گزارش قرعه‌کشی -->
+    <div id="page-draw-report" class="page">
         <div class="sub-header">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button>
-                <h2 style="margin:0; color: var(--theme-main);">💡 تابلوی افتخارات کلاس</h2>
-            </div>
-            <button class="btn-3d" style="background: #8b5cf6; padding: 8px 15px; --theme-shadow: #5b21b6;" onclick="openReportChart()">⬇️ رفرش</button>
+            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button>
+            <h2 id="drawReportTitle" style="margin:0; color: var(--theme-main);">گزارشات</h2>
         </div>
-        <div class="light-grid" id="pointsChart">
-            <!-- ردیف‌های چراغ اینجا ساخته می‌شوند -->
+        
+        <div class="report-section">
+            <div class="report-title">🏆 انتخاب‌شده‌های قبلی (به ترتیب)</div>
+            <div class="report-list" id="reportSelectedList"></div>
+        </div>
+
+        <div class="report-section">
+            <div class="report-title">⏳ افراد باقی‌مانده در لیست انتظار</div>
+            <div class="report-list" id="reportRemainingList"></div>
         </div>
     </div>
 
@@ -247,120 +197,117 @@
 <script>
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
-    const BALE_CHAT_ID = "4982879524"; // بعد از ادمین شدن ربات در کانال، آیدی کانال را اینجا بگذار
+    const BALE_CHAT_ID = "608997646"; 
     const PRINCIPAL_PHONE = "+989137450434";
 
+    const baseClassA = [
+        {"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}
+    ];
+    const baseClassB = [
+        {"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}
+    ];
+
+    // دیتابیس شامل آرشیو قرعه‌کشی‌ها
     const defaultData = {
-        classA: [
-            {"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}
-        ].map(s => ({ ...s, present: false, score: 0 })),
-        
-        classB: [
-            {"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}
-        ].map(s => ({ ...s, present: false, score: 0 }))
+        classA: baseClassA.map(s => ({ ...s, present: false, score: 0 })),
+        classB: baseClassB.map(s => ({ ...s, present: false, score: 0 })),
+        monitorHistory: { classA: [], classB: [] },
+        captainHistory: { classA: [], classB: [] }
     };
 
     let db = JSON.parse(JSON.stringify(defaultData));
     let currentClass = 'classA';
-    let nfcCooldown = false; // قفل جلوگیری از دوبار ثبت شدن تگ
+    let currentDrawType = 'monitor'; // 'monitor' | 'captain'
+    let currentWinners = []; // موقت برای قرعه‌کشی
 
     function goToPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         if (pageId === 'page-attendance') renderAttendance();
-        if (pageId === 'page-points-register') renderPoints();
+        if (pageId === 'page-draw-play') setupDrawPlayUI();
     }
 
     function openDashboard(className) {
         currentClass = className;
         const r = document.documentElement;
         if (className === 'classA') {
-            r.style.setProperty('--theme-main', 'var(--a-main)');
-            r.style.setProperty('--theme-grad', 'var(--a-grad)');
-            r.style.setProperty('--theme-shadow', 'var(--a-shadow)');
-            r.style.setProperty('--theme-light', 'var(--a-light)');
-            document.getElementById('dashTitle').innerText = "داشبورد کلاس ۴/۱";
+            r.style.setProperty('--theme-main', 'var(--a-main)'); r.style.setProperty('--theme-grad', 'var(--a-grad)'); r.style.setProperty('--theme-shadow', 'var(--a-shadow)'); r.style.setProperty('--theme-light', 'var(--a-light)');
         } else {
-            r.style.setProperty('--theme-main', 'var(--b-main)');
-            r.style.setProperty('--theme-grad', 'var(--b-grad)');
-            r.style.setProperty('--theme-shadow', 'var(--b-shadow)');
-            r.style.setProperty('--theme-light', 'var(--b-light)');
-            document.getElementById('dashTitle').innerText = "داشبورد کلاس ۴/۲";
+            r.style.setProperty('--theme-main', 'var(--b-main)'); r.style.setProperty('--theme-grad', 'var(--b-grad)'); r.style.setProperty('--theme-shadow', 'var(--b-shadow)'); r.style.setProperty('--theme-light', 'var(--b-light)');
         }
         goToPage('page-dashboard');
     }
 
+    // ---- سیستم صوتی ----
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
         if (type === 'success') {
             osc.type = 'sine'; osc.frequency.value = 800;
-            gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            gain.gain.setValueAtTime(1.0, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
             osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-        } else if (type === 'coin') {
-            osc.type = 'square'; osc.frequency.value = 1200;
-            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        } else if (type === 'tick') {
+            osc.type = 'square'; osc.frequency.value = 400;
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'tada') {
+            osc.type = 'sine'; osc.frequency.value = 600;
+            gain.gain.setValueAtTime(1.0, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+            osc.start();
+            setTimeout(() => {
+                const osc2 = audioCtx.createOscillator(); const gain2 = audioCtx.createGain();
+                osc2.connect(gain2); gain2.connect(audioCtx.destination);
+                osc2.type = 'sine'; osc2.frequency.value = 900;
+                gain2.gain.setValueAtTime(1.0, audioCtx.currentTime); gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+                osc2.start(); osc2.stop(audioCtx.currentTime + 0.8);
+            }, 100);
+            osc.stop(audioCtx.currentTime + 0.5);
         } else {
             osc.type = 'sawtooth'; osc.frequency.value = 150;
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
             osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
     }
 
     let toastTimer;
     function showToast(msg, isSuccess = true) {
-        const toast = document.getElementById("toast");
-        toast.innerText = msg;
-        toast.style.background = isSuccess ? "#10b981" : "#ef4444";
-        toast.classList.add("show");
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+        const toast = document.getElementById("toast"); toast.innerText = msg; toast.style.background = isSuccess ? "#10b981" : "#ef4444";
+        toast.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
-    // دکمه‌های مجزای دریافت و ارسال
+    // ---- همگام‌سازی ابری ----
     async function fetchData() {
-        showToast("در حال دریافت (آفلاین می‌ماند)...", true);
+        showToast("در حال دریافت...", true);
         try {
-            let res = await fetch(WORKER_URL + "/api/data");
-            let data = await res.json();
+            let res = await fetch(WORKER_URL + "/api/data"); let data = await res.json();
             if (data && data.classA) {
+                // ارتقای ایمن دیتابیس‌های قدیمی
+                if(!data.monitorHistory) { data.monitorHistory = { classA: [], classB: [] }; data.captainHistory = { classA: [], classB: [] }; }
                 db = data;
                 if(document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
-                if(document.getElementById('page-points-register').classList.contains('active')) renderPoints();
                 showToast("✅ دریافت شد");
             }
         } catch (e) { showToast("خطا در دریافت", false); }
     }
 
     async function pushData() {
-        showToast("در حال ارسال تغییرات...", true);
+        showToast("در حال ارسال...", true);
         try {
             let res = await fetch(WORKER_URL + "/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db) });
-            if(res.ok) showToast("✅ با موفقیت ارسال شد");
-            else showToast("❌ خطا در سرور", false);
-        } catch (e) { showToast("❌ خطای اینترنت", false); }
+            if(res.ok) showToast("✅ ارسال شد"); else showToast("❌ خطا", false);
+        } catch (e) { showToast("❌ آفلاین", false); }
     }
 
-    // حضور و غیاب
+    // ---- حضور و غیاب ----
     function renderAttendance() {
         let html = "";
         db[currentClass].forEach((s, i) => {
             html += `
                 <div class="student-card" style="border-right: 5px solid ${s.present ? 'var(--success)' : 'var(--danger)'};">
-                    <div class="student-info">
-                        <span class="student-id">${s.id}</span>
-                        <span class="student-name">${s.name}</span>
-                    </div>
-                    <span class="btn-3d" style="padding: 8px 15px; font-size:14px; background: ${s.present ? 'var(--success)' : 'var(--danger)'}; --theme-shadow: ${s.present ? '#059669' : '#b91c1c'};" onclick="togglePresent(${i})">
-                        ${s.present ? 'حاضر' : 'غایب'}
-                    </span>
+                    <div class="student-info"><span class="student-id">${s.id}</span><span class="student-name">${s.name}</span></div>
+                    <span class="btn-3d" style="padding: 8px 15px; font-size:14px; background: ${s.present ? 'var(--success)' : 'var(--danger)'}; box-shadow: 0 4px 0 ${s.present ? '#059669' : '#b91c1c'};" onclick="togglePresent(${i})">${s.present ? 'حاضر' : 'غایب'}</span>
                 </div>`;
         });
         document.getElementById("studentListAtt").innerHTML = html;
@@ -376,135 +323,163 @@
         if (confirm("غایبین صفر شوند؟")) { db[currentClass].forEach(s => s.present = false); renderAttendance(); showToast("صفر شد"); }
     }
 
-    // ثبت امتیاز
-    function renderPoints() {
-        let html = "";
-        db[currentClass].forEach((s, i) => {
-            html += `
-                <div class="student-card">
-                    <div class="student-info">
-                        <span class="student-id">${s.id}</span>
-                        <span class="student-name">${s.name}</span>
-                    </div>
-                    <div class="score-controls">
-                        <button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">-</button>
-                        <span class="score-display">${s.score || 0}</span>
-                        <button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button>
-                    </div>
-                </div>`;
-        });
-        document.getElementById("studentListPoints").innerHTML = html;
+    // ---- سیستم قرعه‌کشی پویا (مبصر/کاپیتان) ----
+    function openDrawMenu(type) {
+        currentDrawType = type;
+        const menuTitle = type === 'monitor' ? '👮‍♂️ مبصر هفتگی' : '⚽️ کاپیتان ورزش';
+        document.getElementById('drawMenuTitle').innerText = menuTitle;
+        document.getElementById('drawPlayTitle').innerText = menuTitle;
+        document.getElementById('drawReportTitle').innerText = `گزارش ${menuTitle}`;
+        
+        const drawBox = document.getElementById('drawBox');
+        drawBox.className = 'draw-box ' + (type === 'monitor' ? 'monitor-mode' : 'captain-mode');
+        
+        goToPage('page-draw-menu');
     }
 
-    function changeScore(i, val) {
-        if(!db[currentClass][i].score) db[currentClass][i].score = 0;
-        db[currentClass][i].score += val;
+    function setupDrawPlayUI() {
+        // ریست کردن محیط بازی
+        document.getElementById('btnStartDraw').style.display = 'block';
+        document.getElementById('drawConfirmActions').style.display = 'none';
         
-        // چک کردن جایزه و تنبیه
-        if (db[currentClass][i].score >= 10) showToast(`🏆 ${db[currentClass][i].name} مستحق جایزه است!`, true);
-        if (db[currentClass][i].score <= -2) showToast(`⚠️ ${db[currentClass][i].name} به منفی ۲ رسید (تنبیه)`, false);
-        
-        renderPoints();
-        if(val > 0) playBeep('coin');
+        let slotsHTML = `<div class="winner-name">؟</div>`;
+        if (currentDrawType === 'captain') slotsHTML += `<div class="winner-name">؟</div>`;
+        document.getElementById('drawResult').innerHTML = slotsHTML;
     }
 
-    function addScoreToAll(val) {
-        if(confirm(`آیا به همه ${val} امتیاز داده شود؟`)) {
-            db[currentClass].forEach(s => { if(!s.score) s.score=0; s.score += val; });
-            renderPoints(); playBeep('coin');
+    let rouletteInterval;
+    function startRoulette() {
+        // 1. استخراج افراد واجد شرایط (حاضر + انتخاب نشده در گذشته)
+        const historyList = db[currentDrawType + 'History'][currentClass]; // اسامی انتخاب شده قبلی
+        const eligible = db[currentClass].filter(s => s.present && !historyList.includes(s.name));
+        const requiredCount = currentDrawType === 'captain' ? 2 : 1;
+
+        if (eligible.length < requiredCount) {
+            alert(`⚠️ تعداد افراد واجد شرایط (حاضر و انتخاب‌نشده) کافی نیست!\nلطفاً از بخش گزارش‌ها، تاریخچه را پاک کنید تا چرخه دوباره شروع شود.`);
+            return;
         }
+
+        document.getElementById('btnStartDraw').style.display = 'none';
+        
+        // 2. انیمیشن چرخاندن اسامی
+        let ticks = 0;
+        const maxTicks = 40; // حدود 4 ثانیه (هر 100 میلی ثانیه)
+        const resultDiv = document.getElementById('drawResult');
+        
+        rouletteInterval = setInterval(() => {
+            playBeep('tick');
+            let tempHTML = "";
+            for(let i=0; i<requiredCount; i++) {
+                let randomName = eligible[Math.floor(Math.random() * eligible.length)].name;
+                tempHTML += `<div class="winner-name">${randomName}</div>`;
+            }
+            resultDiv.innerHTML = tempHTML;
+            ticks++;
+            
+            if (ticks >= maxTicks) {
+                clearInterval(rouletteInterval);
+                finishRoulette(eligible, requiredCount);
+            }
+        }, 100);
     }
 
-    // رسم چراغ‌ها (لپ‌تاپ)
-    async function openReportChart() {
-        goToPage('page-points-report');
-        await fetchData(); // همیشه موقع باز کردن این صفحه اطلاعات جدید را از سرور بگیرد
+    function finishRoulette(eligible, count) {
+        playBeep('tada');
+        // انتخاب واقعی و غیرتکراری برندگان
+        let shuffled = eligible.sort(() => 0.5 - Math.random());
+        currentWinners = shuffled.slice(0, count).map(s => s.name);
         
-        const chartDiv = document.getElementById("pointsChart");
-        let html = "";
-        
-        db[currentClass].forEach(s => {
-            const sc = s.score || 0;
-            let lightsHTML = "";
-            
-            // 2 چراغ منفی (سمت راست)
-            for(let i=0; i<2; i++) {
-                let isRed = (sc < 0 && i < Math.abs(sc));
-                lightsHTML += `<div class="light-bulb ${isRed ? 'on-minus' : ''}"></div>`;
-            }
-            
-            lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 20px; margin: 0 5px;"></div>`; // جداکننده
-            
-            // 10 چراغ مثبت (سمت چپ)
-            for(let i=0; i<10; i++) {
-                let isGreen = (sc > 0 && i < sc);
-                let isGold = (sc >= 10 && i === 9); // لامپ دهم طلایی
-                let cl = isGold ? 'on-gold' : (isGreen ? 'on-plus' : '');
-                lightsHTML += `<div class="light-bulb ${cl}"></div>`;
-            }
-
-            html += `
-                <div class="light-row">
-                    <div class="light-name">${s.name.split(" ")[0]} ${s.name.split(" ")[1] || ''}</div>
-                    <div class="lights-container" dir="rtl">${lightsHTML}</div>
-                    <div style="font-weight:bold; width:30px; text-align:center; color:${sc>=0?'var(--success)':'var(--danger)'}">${sc}</div>
-                </div>`;
+        let finalHTML = "";
+        currentWinners.forEach(name => {
+            finalHTML += `<div class="winner-name highlight">🎉 ${name} 🎉</div>`;
         });
-        chartDiv.innerHTML = html;
+        document.getElementById('drawResult').innerHTML = finalHTML;
+        
+        // نمایش دکمه‌های تایید و لغو
+        document.getElementById('drawConfirmActions').style.display = 'grid';
     }
 
-    // اسکنر NFC با قفل جلوگیری از دوبار ثبت
+    function resetDraw() {
+        currentWinners = [];
+        setupDrawPlayUI();
+    }
+
+    function saveDrawResult() {
+        const historyArray = db[currentDrawType + 'History'][currentClass];
+        currentWinners.forEach(name => historyArray.push(name)); // ثبت در آرشیو
+        pushData(); // ذخیره در کلادفلر
+        showToast("✅ در تاریخچه ثبت شد");
+        setTimeout(() => openDrawReport(), 1000); // پرش به گزارش
+    }
+
+    // ---- گزارش قرعه‌کشی ----
+    function openDrawReport() {
+        goToPage('page-draw-report');
+        const historyArray = db[currentDrawType + 'History'][currentClass];
+        const allStudents = db[currentClass].map(s => s.name);
+        
+        // ساخت لیست انتخاب‌شده‌ها
+        let selectedHTML = "";
+        if(historyArray.length === 0) selectedHTML = "<p style='color:#94a3b8;'>هنوز کسی انتخاب نشده است.</p>";
+        else {
+            historyArray.forEach((name, i) => {
+                selectedHTML += `<div class="chip done">${i+1}. ${name}</div>`;
+            });
+        }
+        document.getElementById('reportSelectedList').innerHTML = selectedHTML;
+
+        // ساخت لیست انتظار
+        let remainingHTML = "";
+        const remaining = allStudents.filter(name => !historyArray.includes(name));
+        if(remaining.length === 0) remainingHTML = "<p style='color:#10b981;'>همه افراد کلاس یک‌بار انتخاب شده‌اند!</p>";
+        else {
+            remaining.forEach(name => {
+                remainingHTML += `<div class="chip">${name}</div>`;
+            });
+        }
+        document.getElementById('reportRemainingList').innerHTML = remainingHTML;
+    }
+
+    // ---- اسکنر NFC ----
     async function startNfcScan() {
         if ('NDEFReader' in window) {
             try {
-                const ndef = new NDEFReader();
-                await ndef.scan();
-                showToast("✅ سنسور NFC گوشی روشن شد");
-                
+                const ndef = new NDEFReader(); await ndef.scan(); showToast("✅ سنسور NFC گوشی روشن شد");
                 ndef.addEventListener("reading", ({ message }) => {
-                    if (nfcCooldown) return; // اگر قفل است کاری نکن
-                    
                     const tagId = new TextDecoder(message.records[0].encoding).decode(message.records[0].data).trim();
                     let i = db[currentClass].findIndex(s => s.id === tagId);
-                    
                     if (i !== -1) {
-                        nfcCooldown = true; // قفل کن
-                        setTimeout(() => { nfcCooldown = false; }, 1500); // 1.5 ثانیه بعد باز کن
-
                         if (document.getElementById('page-attendance').classList.contains('active')) {
-                            if (!db[currentClass][i].present) {
-                                db[currentClass][i].present = true;
-                                renderAttendance(); playBeep('success');
-                                showToast(`🟢 ${db[currentClass][i].name} حاضر شد`);
-                            } else showToast(`⚠️ قبلاً ثبت شده`);
+                            if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر شد`); }
+                            else showToast(`⚠️ قبلاً ثبت شده`);
                         }
-                        else if (document.getElementById('page-points-register').classList.contains('active')) {
-                            changeScore(i, 1);
-                            showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`);
-                        }
-                    } else {
-                        playBeep('error'); showToast(`❌ تگ اشتباه است`, false);
-                    }
+                    } else { playBeep('error'); showToast(`❌ تگ اشتباه است`, false); }
                 });
             } catch (e) { showToast("خطا در سنسور NFC", false); }
         } else alert("مرورگر شما NFC را پشتیبانی نمی‌کند.");
     }
 
-    function sendSmsToPrincipal() {
-        const abs = db[currentClass].filter(s => !s.present);
-        let txt = `تاریخ: ${new Date().toLocaleDateString('fa-IR')}\nغایبین:\n` + (abs.length===0?"همه حاضرند":abs.map(s=>s.name).join('\n'));
-        window.location.href = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(txt)}`;
-    }
-
+    // گزارش‌گیری ابری و پیامک
     async function sendToCloud() {
         const abs = db[currentClass].filter(s => !s.present);
         let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass==='classA'?'الف':'ب'}\n📋 غایبین:\n` + (abs.length===0?"- همه حاضرند ✅":abs.map((s,i)=>`${i+1}. ${s.name}`).join('\n'));
         showToast("در حال ارسال...");
         try {
             await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) });
-            showToast("✅ در تلگرام و بله آرشیو شد");
+            showToast("✅ در کانال آرشیو شد");
         } catch (e) { showToast("❌ خطای ارسال", false); }
     }
+    function sendSmsToPrincipal() {
+        const abs = db[currentClass].filter(s => !s.present);
+        let txt = `تاریخ: ${new Date().toLocaleDateString('fa-IR')}\nغایبین:\n` + (abs.length===0?"همه حاضرند":abs.map(s=>s.name).join('\n'));
+        window.location.href = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(txt)}`;
+    }
+
+    // همگام‌سازی بی‌صدا فقط برای خواندن
+    setInterval(() => {
+        if(document.getElementById('page-attendance').classList.contains('active')) fetchData();
+    }, 4000);
+
 </script>
 </body>
 </html>
