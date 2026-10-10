@@ -3,38 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه هوشمند کلاس من</title>
+    <title>سامانه کلاس من - سوپراپ</title>
     <style>
         :root {
             --bg: #f8fafc; --text: #1e293b; --card-bg: rgba(255, 255, 255, 0.95);
-            
             --a-main: #3b82f6; --a-grad: linear-gradient(135deg, #2563eb, #6366f1, #8b5cf6); --a-shadow: #1e3a8a; --a-light: #eff6ff;
             --b-main: #f59e0b; --b-grad: linear-gradient(135deg, #d97706, #f59e0b, #fbbf24); --b-shadow: #92400e; --b-light: #fffbeb;
-            
             --success: #10b981; --danger: #ef4444;
-
             --theme-main: var(--a-main); --theme-grad: var(--a-grad); --theme-shadow: var(--a-shadow); --theme-light: var(--a-light);
         }
 
-        body { 
-            font-family: Tahoma, 'Segoe UI', sans-serif; 
-            background-color: #e0e7ff; 
-            color: var(--text); margin: 0; padding: 15px; 
-            transition: all 0.5s ease;
-            min-height: 100vh;
-        }
-
+        body { font-family: Tahoma, 'Segoe UI', sans-serif; background-color: #e0e7ff; color: var(--text); margin: 0; padding: 15px; transition: all 0.5s ease; min-height: 100vh; }
         body.bg-dashboard { background-image: radial-gradient(var(--theme-light) 3px, transparent 3px), radial-gradient(var(--theme-light) 3px, transparent 3px); background-size: 40px 40px; background-position: 0 0, 20px 20px; }
-        
-        /* پس زمینه‌های پر از استیکر اما محو */
         body.bg-captain { background: linear-gradient(to bottom, #dcfce7, #86efac); }
-        body.bg-captain::before { content: '⚽️ 🥅 🏆 👟 🏃‍♂️ 🥇 ⚽️ 🥅 🏆 👟'; position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 80px; line-height: 2; opacity: 0.08; word-wrap: break-word; z-index: -1; text-align: justify; }
-        
         body.bg-monitor { background: linear-gradient(to bottom, #cffafe, #7dd3fc); }
-        body.bg-monitor::before { content: '🤝 📚 🌱 🕊️ 🌟 🤝 📚 🌱 🕊️ 🌟'; position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 80px; line-height: 2; opacity: 0.12; word-wrap: break-word; z-index: -1; text-align: justify; }
-        
         body.bg-points { background: linear-gradient(to bottom, #f3e8ff, #d8b4fe); }
-        body.bg-points::before { content: '⭐️ 🎯 🎁 🥇 💎 ⭐️ 🎯 🎁 🥇 💎'; position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 80px; line-height: 2; opacity: 0.08; word-wrap: break-word; z-index: -1; text-align: justify; }
 
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
         .page { display: none; opacity: 0; transition: opacity 0.3s; }
@@ -43,12 +26,13 @@
 
         .btn-3d { border: none; border-radius: 20px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; box-shadow: 0 6px 0 var(--theme-shadow), 0 10px 15px rgba(0,0,0,0.1); }
         .btn-3d:active { transform: translateY(6px); box-shadow: 0 0 0 var(--theme-shadow), 0 3px 5px rgba(0,0,0,0.1); }
+        .btn-3d:disabled { filter: grayscale(100%); opacity: 0.5; cursor: not-allowed; transform: translateY(6px); box-shadow: none; }
 
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .dash-card { background: var(--card-bg); border-radius: 25px; padding: 25px 10px; text-align: center; cursor: pointer; border: 3px solid white; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.08); backdrop-filter: blur(5px); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .dash-card { background: var(--card-bg); border-radius: 25px; padding: 20px 10px; text-align: center; cursor: pointer; border: 3px solid white; transition: all 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.08); backdrop-filter: blur(5px); display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .dash-card:active { transform: scale(0.95); border-color: var(--theme-main); }
-        .dash-card .icon { font-size: 55px; margin-bottom: 12px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15)); }
-        .dash-card .title { font-size: 17px; font-weight: bold; color: #1e293b; }
+        .dash-card .icon { font-size: 45px; margin-bottom: 10px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15)); }
+        .dash-card .title { font-size: 16px; font-weight: bold; color: #1e293b; }
 
         .sub-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: rgba(255,255,255,0.9); padding: 12px; border-radius: 20px; border: 2px solid var(--theme-main); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .btn-back { background: var(--theme-grad); color: white; border: none; width: 45px; height: 45px; border-radius: 14px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 var(--theme-shadow); }
@@ -60,29 +44,33 @@
         .student-info { display: flex; align-items: center; gap: 10px; }
         .student-id { background: var(--theme-light); color: var(--theme-main); padding: 5px 10px; border-radius: 8px; font-weight: bold; font-size: 14px; }
         
-        /* دکمه‌های کنترل امتیاز */
-        .score-controls { display: flex; align-items: center; gap: 12px; background: #f8fafc; padding: 6px; border-radius: 15px; border: 1px solid #e2e8f0; }
+        /* کنترل‌های امتیاز و ویرایش */
+        .score-controls { display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 6px; border-radius: 15px; border: 1px solid #e2e8f0; }
         .btn-score { width: 40px; height: 40px; border-radius: 12px; border: none; font-size: 22px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,0.2); }
         .btn-score:active { transform: translateY(4px); box-shadow: none; }
         .btn-plus { background: linear-gradient(135deg, #10b981, #059669); }
         .btn-minus { background: linear-gradient(135deg, #ef4444, #b91c1c); }
-        .score-display { font-size: 22px; font-weight: bold; color: #0f172a; min-width: 35px; text-align: center; }
+        
+        /* اعداد قابل کلیک برای پاک کردن اشتباه */
+        .score-display-group { display:flex; flex-direction:column; align-items:center; min-width:40px; }
+        .val-plus { color:var(--success); font-weight:bold; font-size:18px; cursor:pointer; padding: 2px 8px; border-radius: 6px; transition: background 0.2s; }
+        .val-minus { color:var(--danger); font-size:14px; font-weight:bold; cursor:pointer; padding: 2px 8px; border-radius: 6px; transition: background 0.2s; }
+        .val-plus:hover { background: #dcfce7; } .val-minus:hover { background: #fee2e2; }
 
-        /* باکس هیجان‌انگیز قرعه‌کشی (رولت ماشین) */
+        /* رولت ماشین و گردونه جوایز */
         .draw-box { background: white; border-radius: 25px; padding: 30px 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 5px solid var(--theme-main); position: relative; overflow: hidden; }
         .draw-box.captain-mode { border-color: #16a34a; }
         .draw-box.monitor-mode { border-color: #0284c7; }
+        .draw-box.reward-mode { border-color: #9333ea; background: linear-gradient(to bottom, #fdf4ff, #fae8ff); }
 
         .draw-names { display: flex; flex-direction: column; gap: 15px; align-items: center; justify-content: center; height: 180px; overflow: hidden; }
-        
-        .slot-container { width: 90%; height: 70px; background: #f1f5f9; border-radius: 15px; border: 3px solid #cbd5e1; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 5px 10px rgba(0,0,0,0.1); }
-        .slot-content { font-size: 28px; font-weight: bold; color: #1e293b; position: absolute; transition: transform 0.1s linear; width: 100%; text-align: center; }
-        
+        .slot-container { width: 95%; height: 70px; background: #f1f5f9; border-radius: 15px; border: 3px solid #cbd5e1; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 5px 10px rgba(0,0,0,0.1); }
+        .slot-content { font-size: 24px; font-weight: bold; color: #1e293b; position: absolute; transition: transform 0.1s linear; width: 100%; text-align: center; white-space: pre-wrap; line-height: 1.2; padding: 0 10px; }
         .slot-container.winner-highlight { background: var(--theme-main); border-color: white; box-shadow: 0 0 20px var(--theme-main); animation: pulseWinner 1s infinite; }
-        .slot-container.winner-highlight .slot-content { color: white; transform: translateY(0) !important; font-size: 32px; }
+        .slot-container.winner-highlight .slot-content { color: white; transform: translateY(0) !important; font-size: 26px; }
         @keyframes pulseWinner { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* استایل‌های گزارش و چراغ‌ها (لپ‌تاپ) */
+        /* چراغ‌ها و گزارش */
         .light-grid { display: grid; grid-template-columns: 1fr; gap: 8px; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 20px; border: 3px solid var(--theme-main); }
         .light-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #cbd5e1; }
         .light-name { width: 120px; font-weight: bold; font-size: 15px; color: #334155; }
@@ -91,18 +79,12 @@
         .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 6px #10b981; }
         .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 6px #ef4444; }
 
-        /* نوار پیشرفت کلاس (Progress Bar) */
         .class-progress-bar { width: 100%; height: 25px; background: #e2e8f0; border-radius: 15px; margin: 15px 0; position: relative; overflow: hidden; border: 2px solid #cbd5e1; }
         .class-progress-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); width: 0%; transition: width 1s ease-out; }
         .class-progress-text { position: absolute; width: 100%; text-align: center; font-weight: bold; font-size: 14px; line-height: 25px; color: #1e293b; top: 0; left: 0; }
 
         #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 15px 30px; border-radius: 30px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 2000; opacity: 0; transition: all 0.3s; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        
-        .report-section { background: rgba(255,255,255,0.9); border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 2px solid #e2e8f0; }
-        .report-title { font-size: 18px; font-weight:bold; border-bottom: 2px dashed #cbd5e1; padding-bottom: 10px; margin-bottom: 15px; }
-        .chip { padding: 8px 12px; border-radius: 12px; font-size: 14px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin: 5px; background: #f1f5f9; border: 2px solid #cbd5e1; }
-        .chip.done { background: var(--success); color: white; border-color: #047857; }
     </style>
 </head>
 <body class="bg-dashboard">
@@ -111,10 +93,10 @@
 
 <div class="container">
     
-    <!-- صفحه انتخاب کلاس -->
+    <!-- انتخاب کلاس -->
     <div id="page-select" class="page active">
         <div style="text-align: center; margin-bottom: 40px; margin-top: 20px;">
-            <h1 style="font-size: 32px; color: #1e293b;">🚀 سامانه کلاس من</h1>
+            <h1 style="font-size: 32px; color: #1e293b;">🚀 سامانه سوپراپ</h1>
         </div>
         <div style="display: flex; flex-direction: column; gap: 30px;">
             <button class="btn-3d" style="background: var(--a-grad); box-shadow: 0 8px 0 var(--a-shadow); padding: 35px; font-size: 26px;" onclick="openDashboard('classA')">
@@ -130,12 +112,12 @@
     <div id="page-dashboard" class="page">
         <div class="sub-header">
             <h1 id="dashTitle" style="margin:0; font-size: 22px; color: var(--theme-main);">داشبورد</h1>
-            <button class="btn-3d" style="background: #64748b; padding: 8px 15px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠 تغییر کلاس</button>
+            <button class="btn-3d" style="background: #64748b; padding: 8px 15px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠 تعویض کلاس</button>
         </div>
         <div class="dashboard-grid">
             <div class="dash-card" onclick="goToPage('page-attendance')"><span class="icon">📋</span><span class="title">حضور و غیاب</span></div>
-            <div class="dash-card" onclick="goToPage('page-points-menu')"><span class="icon">⭐️</span><span class="title">بانک امتیاز</span></div>
-            <div class="dash-card" onclick="openDrawMenu('monitor')"><span class="icon">🤝</span><span class="title">مبصر هفتگی</span></div>
+            <div class="dash-card" onclick="goToPage('page-points-menu')"><span class="icon">⭐️</span><span class="title">بانک امتیاز و جوایز</span></div>
+            <div class="dash-card" onclick="openDrawMenu('monitor')"><span class="icon">🤝</span><span class="title">همیار و مبصر</span></div>
             <div class="dash-card" onclick="openDrawMenu('captain')"><span class="icon">⚽️</span><span class="title">کاپیتان ورزش</span></div>
         </div>
     </div>
@@ -143,16 +125,15 @@
     <!-- حضور و غیاب -->
     <div id="page-attendance" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
-            <h2 style="margin:0; color: var(--theme-main);">📋 حضور و غیاب</h2>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color: var(--theme-main);">📋 حضور و غیاب</h2>
         </div>
         <div class="sync-bar">
-            <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت</button>
-            <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال</button>
+            <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت ابری</button>
+            <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال ابری</button>
         </div>
         <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 18px;" onclick="startNfcScan()">📱 اسکن NFC</button>
         <div class="action-bar">
-            <button class="btn-3d" style="background: #0ea5e9; --theme-shadow: #0284c7;" onclick="sendToCloud()">☁️ آرشیو</button>
+            <button class="btn-3d" style="background: #0ea5e9; --theme-shadow: #0284c7;" onclick="sendToCloud()">☁️ آرشیو بله</button>
             <button class="btn-3d" style="background: #f59e0b; --theme-shadow: #b45309;" onclick="sendSmsToPrincipal()">📩 ناظم</button>
             <button class="btn-3d" style="background: var(--danger); --theme-shadow: #b91c1c;" onclick="resetAttendance()">🔄 صفر</button>
         </div>
@@ -162,27 +143,28 @@
     <!-- منوی بانک امتیاز -->
     <div id="page-points-menu" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
-            <h2 style="margin:0; color: var(--theme-main);">⭐️ بانک امتیاز</h2>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color: var(--theme-main);">⭐️ بانک امتیاز</h2>
         </div>
         <div class="dashboard-grid">
             <div class="dash-card" onclick="goToPage('page-points-register')"><span class="icon">🎯</span><span class="title">ثبت مثبت/منفی</span></div>
-            <div class="dash-card" onclick="openPointsReport()"><span class="icon">📊</span><span class="title">گزارش کلاس (لپ‌تاپ)</span></div>
+            <div class="dash-card" onclick="openPointsReport()"><span class="icon">📊</span><span class="title">وضعیت کلاس</span></div>
+            <div class="dash-card" onclick="openRewardShop()" style="grid-column: span 2; border-color:#a855f7;"><span class="icon">🎁</span><span class="title">گردونه جوایز (خرید با ۳ سبز)</span></div>
         </div>
     </div>
 
-    <!-- ثبت امتیاز -->
+    <!-- ثبت امتیاز (قابلیت Undo) -->
     <div id="page-points-register" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button>
-            <h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
         </div>
         <div class="sync-bar">
             <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت</button>
             <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال</button>
         </div>
+        <p style="background: #fffbeb; padding: 10px; border-radius: 10px; font-size: 12px; font-weight:bold; color: #b45309; border: 1px dashed #f59e0b; text-align: center;">
+            💡 راهنما: برای پاک کردن امتیاز اشتباه، روی خود عدد (سبز یا قرمز) کلیک کنید.
+        </p>
         <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 18px;" onclick="startNfcScan()">📱 NFC (+۱ سریع)</button>
-        
         <div style="display: flex; gap: 10px; margin-bottom: 20px;">
             <button class="btn-3d" style="flex:1; background: var(--success); --theme-shadow: #059669;" onclick="addScoreToAll(1)">+۱ به همه</button>
             <button class="btn-3d" style="flex:1; background: var(--danger); --theme-shadow: #b91c1c;" onclick="addScoreToAll(-1)">-۱ از همه</button>
@@ -190,74 +172,75 @@
         <div id="studentListPoints"></div>
     </div>
 
-    <!-- گزارش چراغ‌ها و نوار کلاس -->
+    <!-- گزارش امتیازات و نوار -->
     <div id="page-points-report" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button>
-            <h2 style="margin:0; color: var(--theme-main);">💡 وضعیت کلاس</h2>
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">💡 تابلوی افتخارات</h2>
             <button class="btn-3d" style="background: #8b5cf6; padding: 5px 15px; --theme-shadow: #5b21b6;" onclick="openPointsReport()">⬇️ رفرش</button>
         </div>
-        
-        <!-- نوار پیشرفت گروهی کلاس (هدف: 200) -->
         <div style="background: white; padding: 15px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--theme-main);">
-            <h3 style="margin:0 0 10px 0; font-size:16px; text-align:center;">🏆 هدف کلاسی (جایزه بزرگ)</h3>
+            <h3 style="margin:0 0 10px 0; font-size:16px; text-align:center;">🏆 جایزه بزرگ گروهی (۲۰۰تایی)</h3>
             <div class="class-progress-bar">
                 <div class="class-progress-fill" id="classProgressFill"></div>
                 <div class="class-progress-text" id="classProgressText">0 / 200</div>
             </div>
         </div>
-
         <div class="light-grid" id="pointsChart"></div>
     </div>
 
-    <!-- منوی قرعه‌کشی -->
+    <!-- صفحه خرید و گردونه جوایز -->
+    <div id="page-reward-shop" class="page">
+        <div class="sub-header">
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: #9333ea;">🎁 گردونه جوایز</h2>
+        </div>
+        <p style="background: white; padding: 10px; border-radius: 10px; font-size: 13px; font-weight:bold; color: #7e22ce;">هر دانش‌آموزی که حداقل ۳ چراغ سبز داشته باشد، می‌تواند گردونه را بچرخاند.</p>
+        
+        <div class="draw-box reward-mode" id="rewardDrawBox" style="display:none;">
+            <h3 id="rewardTargetName" style="margin-top:0; color:#9333ea;">گردونه برای: ؟</h3>
+            <div class="draw-names" id="rewardResult">
+                <div class="slot-container"><div class="slot-content" style="transform:translateY(0);">؟</div></div>
+            </div>
+        </div>
+        
+        <div id="rewardStudentList"></div>
+    </div>
+
+    <!-- منو، بازی و گزارش قرعه‌کشی‌های عمومی (مبصر/کاپیتان) -->
     <div id="page-draw-menu" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button>
-            <h2 id="drawMenuTitle" style="margin:0; color: var(--theme-main);">انتخاب هوشمند</h2>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 id="drawMenuTitle" style="margin:0; color: var(--theme-main);">انتخاب هوشمند</h2>
         </div>
         <div class="dashboard-grid">
             <div class="dash-card" onclick="goToPage('page-draw-play')" id="btnDrawNew"><span class="icon">🎲</span><span class="title">قرعه‌کشی جدید</span></div>
-            <div class="dash-card" onclick="openDrawReport()" id="btnDrawReport"><span class="icon">⚙️</span><span class="title">مدیریت لیست</span></div>
+            <div class="dash-card" onclick="openDrawReport()" id="btnDrawReport"><span class="icon">⚙️</span><span class="title">گزارش و لیست‌ها</span></div>
         </div>
     </div>
 
-    <!-- انجام قرعه‌کشی (رولت ماشین) -->
     <div id="page-draw-play" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button>
-            <h2 id="drawPlayTitle" style="margin:0; color: var(--theme-main);">قرعه‌کشی</h2>
+            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button><h2 id="drawPlayTitle" style="margin:0; color: var(--theme-main);">قرعه‌کشی</h2>
         </div>
-
-        <div style="background: white; padding: 10px 15px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: bold; border: 2px solid #e2e8f0;">
+        <div style="background: white; padding: 10px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: bold;">
             <input type="checkbox" id="drawOnlyPresent" checked style="transform: scale(1.5);">
-            <label for="drawOnlyPresent">فقط حاضرین امروز در قرعه‌کشی باشند.</label>
+            <label for="drawOnlyPresent">فقط حاضرین امروز شرکت کنند.</label>
         </div>
-
         <div class="draw-box" id="drawBox">
-            <div class="draw-names" id="drawResult">
-                <!-- اسلات‌ها اینجا ساخته می‌شوند -->
-            </div>
+            <div class="draw-names" id="drawResult"></div>
         </div>
-
         <button id="btnStartDraw" class="btn-3d" style="background: var(--theme-main); width: 100%; margin-bottom: 20px; padding: 20px; font-size: 20px;" onclick="startRoulette()">🎲 چرخاندن گردونه!</button>
-        
         <div class="sync-bar" id="drawConfirmActions" style="display: none;">
-            <button class="btn-3d" style="background: var(--success); --theme-shadow: #059669;" onclick="saveDrawResult()">✅ تایید و ثبت</button>
-            <button class="btn-3d" style="background: var(--danger); --theme-shadow: #b91c1c;" onclick="resetDraw()">🔄 لغو و قرعه مجدد</button>
+            <button class="btn-3d" style="background: var(--success); --theme-shadow: #059669;" onclick="saveDrawResult()">✅ تایید نهایی</button>
+            <button class="btn-3d" style="background: var(--danger); --theme-shadow: #b91c1c;" onclick="resetDraw()">🔄 قرعه مجدد</button>
         </div>
     </div>
 
-    <!-- گزارش قرعه‌کشی -->
     <div id="page-draw-report" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button>
-            <h2 style="margin:0; color: var(--theme-main);">مدیریت لیست‌ها</h2>
+            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">مدیریت افراد</h2>
         </div>
-        <p style="background: #fef9c3; padding: 10px; border-radius: 10px; font-size: 13px; color: #854d0e; border: 1px solid #fef08a;">💡 برای جابجایی دانش‌آموزان بین لیست انتظار و انتخاب‌شده‌ها، روی نام آن‌ها کلیک کنید.</p>
-        
+        <p style="background: #fef9c3; padding: 10px; border-radius: 10px; font-size: 13px;">💡 برای جابجایی دانش‌آموزان بین دو لیست، روی نام آن‌ها کلیک کنید.</p>
         <div class="report-section">
-            <div class="report-title" style="color: var(--success);">✅ انتخاب‌شده‌های قبلی</div>
+            <div class="report-title" style="color: var(--success);">✅ قبلاً انتخاب شده‌اند</div>
             <div id="reportSelectedList"></div>
         </div>
         <div class="report-section">
@@ -271,15 +254,11 @@
 <script>
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
-    const BALE_CHAT_ID = "608997646"; 
+    const BALE_CHAT_ID = "4982879524"; // آیدی کانال شما ثبت شد. (فراموش نکنید ربات ادمین شود)
     const PRINCIPAL_PHONE = "+989137450434";
 
-    const baseClassA = [
-        {"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}
-    ];
-    const baseClassB = [
-        {"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}
-    ];
+    const baseClassA = [{"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}];
+    const baseClassB = [{"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}];
 
     const defaultData = {
         classA: baseClassA.map(s => ({ ...s, present: false, scorePlus: 0, scoreMinus: 0 })),
@@ -293,14 +272,13 @@
     let currentDrawType = 'monitor'; 
     let currentWinners = [];
 
+    // گزینه‌های گردونه جایزه
+    const REWARD_PRIZES = ["🎁 یک کارت جایزه", "🔄 شانس دوباره", "💨 متاسفانه پوچ", "🏖️ یک روز بدون تکلیف", "🛡️ کارت بخشش تنبیه", "⚽️ یک روز کاپیتان", "🤝 یک هفته مبصر", "🪑 انتخاب صندلی دلخواه", "🎫 کارت +۲ اهدایی"];
+
     function changeBackground(pageId) {
         document.body.className = 'bg-dashboard';
-        if (pageId === 'page-draw-play' || pageId === 'page-draw-report') {
-            document.body.className = currentDrawType === 'captain' ? 'bg-captain' : 'bg-monitor';
-        }
-        if (pageId === 'page-points-menu' || pageId === 'page-points-register' || pageId === 'page-points-report') {
-            document.body.className = 'bg-points';
-        }
+        if (pageId === 'page-draw-play' || pageId === 'page-draw-report') document.body.className = currentDrawType === 'captain' ? 'bg-captain' : 'bg-monitor';
+        if (pageId.includes('points') || pageId === 'page-reward-shop') document.body.className = 'bg-points';
     }
 
     function goToPage(pageId) {
@@ -313,81 +291,54 @@
     }
 
     function openDashboard(className) {
-        currentClass = className;
-        const r = document.documentElement;
-        if (className === 'classA') {
-            r.style.setProperty('--theme-main', 'var(--a-main)'); r.style.setProperty('--theme-grad', 'var(--a-grad)'); r.style.setProperty('--theme-shadow', 'var(--a-shadow)'); r.style.setProperty('--theme-light', 'var(--a-light)');
-        } else {
-            r.style.setProperty('--theme-main', 'var(--b-main)'); r.style.setProperty('--theme-grad', 'var(--b-grad)'); r.style.setProperty('--theme-shadow', 'var(--b-shadow)'); r.style.setProperty('--theme-light', 'var(--b-light)');
-        }
+        currentClass = className; const r = document.documentElement;
+        if (className === 'classA') { r.style.setProperty('--theme-main', 'var(--a-main)'); r.style.setProperty('--theme-grad', 'var(--a-grad)'); r.style.setProperty('--theme-shadow', 'var(--a-shadow)'); r.style.setProperty('--theme-light', 'var(--a-light)'); document.getElementById('dashTitle').innerText = "داشبورد الف ۴/۱"; } 
+        else { r.style.setProperty('--theme-main', 'var(--b-main)'); r.style.setProperty('--theme-grad', 'var(--b-grad)'); r.style.setProperty('--theme-shadow', 'var(--b-shadow)'); r.style.setProperty('--theme-light', 'var(--b-light)'); document.getElementById('dashTitle').innerText = "داشبورد ب ۴/۲"; }
         goToPage('page-dashboard');
     }
 
+    // صداها
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
-        if (type === 'success') {
-            osc.type = 'sine'; osc.frequency.value = 800; gain.gain.setValueAtTime(1.0, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-        } else if (type === 'tick') {
-            osc.type = 'square'; osc.frequency.value = 400; gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-        } else if (type === 'tada') {
-            osc.type = 'sine'; osc.frequency.value = 500; gain.gain.setValueAtTime(1.0, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6); osc.start();
-            setTimeout(() => { const osc2 = audioCtx.createOscillator(); const gain2 = audioCtx.createGain(); osc2.connect(gain2); gain2.connect(audioCtx.destination); osc2.type = 'triangle'; osc2.frequency.value = 800; gain2.gain.setValueAtTime(1.0, audioCtx.currentTime); gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.0); osc2.start(); osc2.stop(audioCtx.currentTime + 1.0); }, 150);
-            osc.stop(audioCtx.currentTime + 0.6);
-        } else if (type === 'coin') {
-            osc.type = 'square'; osc.frequency.value = 1200; gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1); osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-        } else {
-            osc.type = 'sawtooth'; osc.frequency.value = 150; gain.gain.setValueAtTime(0.3, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3); osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-        }
+        if (type === 'success') { osc.type='sine'; osc.frequency.value=800; gain.gain.setValueAtTime(1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.2); osc.start(); osc.stop(audioCtx.currentTime+0.2); }
+        else if (type === 'tick') { osc.type='square'; osc.frequency.value=400; gain.gain.setValueAtTime(0.1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.05); osc.start(); osc.stop(audioCtx.currentTime+0.05); }
+        else if (type === 'tada') { osc.type='sine'; osc.frequency.value=500; gain.gain.setValueAtTime(1, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.6); osc.start(); setTimeout(()=>{const o2=audioCtx.createOscillator(); const g2=audioCtx.createGain(); o2.connect(g2); g2.connect(audioCtx.destination); o2.type='triangle'; o2.frequency.value=800; g2.gain.setValueAtTime(1, audioCtx.currentTime); g2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1); o2.start(); o2.stop(audioCtx.currentTime+1);},150); osc.stop(audioCtx.currentTime+0.6); }
+        else if (type === 'coin') { osc.type='square'; osc.frequency.value=1200; gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.1); osc.start(); osc.stop(audioCtx.currentTime+0.1); }
+        else { osc.type='sawtooth'; osc.frequency.value=150; gain.gain.setValueAtTime(0.3, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.3); osc.start(); osc.stop(audioCtx.currentTime+0.3); }
     }
 
-    let toastTimer;
-    function showToast(msg, isSuccess = true) {
-        const toast = document.getElementById("toast"); toast.innerText = msg; toast.style.background = isSuccess ? "#10b981" : "#ef4444";
-        toast.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
-    }
+    let toastTimer; function showToast(msg, isSuccess=true) { const t=document.getElementById("toast"); t.innerText=msg; t.style.background=isSuccess?"#10b981":"#ef4444"; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"), 1800); }
 
-    // همگام‌سازی
     async function fetchData() {
-        showToast("در حال دریافت...", true);
-        try {
-            let res = await fetch(WORKER_URL + "/api/data"); let data = await res.json();
+        showToast("در حال دریافت ابری...", true);
+        try { let res = await fetch(WORKER_URL + "/api/data"); let data = await res.json();
             if (data && data.classA) {
-                // ارتقای ساختار قدیمی به جدید (تفکیک مثبت و منفی)
-                data.classA.forEach(s => { if(s.scorePlus === undefined) { s.scorePlus = s.score>0?s.score:0; s.scoreMinus = s.score<0?Math.abs(s.score):0; } });
-                data.classB.forEach(s => { if(s.scorePlus === undefined) { s.scorePlus = s.score>0?s.score:0; s.scoreMinus = s.score<0?Math.abs(s.score):0; } });
+                data.classA.forEach(s => { if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} });
+                data.classB.forEach(s => { if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} });
                 db = data;
                 if(document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
                 if(document.getElementById('page-points-register').classList.contains('active')) renderPoints();
                 showToast("✅ دریافت شد");
             }
-        } catch (e) { showToast("خطا در دریافت", false); }
+        } catch(e) { showToast("خطا در اینترنت", false); }
     }
-
-    async function pushData() {
-        showToast("در حال ارسال...", true);
-        try { await fetch(WORKER_URL + "/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db) }); showToast("✅ ارسال شد"); } 
-        catch (e) { showToast("❌ خطای اینترنت", false); }
-    }
+    async function pushData() { showToast("ارسال...", true); try { await fetch(WORKER_URL + "/api/update", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(db) }); showToast("✅ ارسال شد"); } catch(e){showToast("❌ خطا", false);} }
 
     // حضور و غیاب
     function renderAttendance() {
         let html = "";
         db[currentClass].forEach((s, i) => {
-            html += `
-                <div class="student-card" style="border-right: 5px solid ${s.present ? 'var(--success)' : 'var(--danger)'};">
-                    <div class="student-info"><span class="student-id">${s.id}</span><span class="student-name">${s.name}</span></div>
-                    <span class="btn-3d" style="padding: 8px 15px; font-size:14px; background: ${s.present ? 'var(--success)' : 'var(--danger)'}; box-shadow: 0 4px 0 ${s.present ? '#059669' : '#b91c1c'};" onclick="togglePresent(${i})">${s.present ? 'حاضر' : 'غایب'}</span>
-                </div>`;
+            html += `<div class="student-card" style="border-right: 5px solid ${s.present?'var(--success)':'var(--danger)'};"><div class="student-info"><span class="student-id">${s.id}</span><span class="student-name">${s.name}</span></div><span class="btn-3d" style="padding: 8px 15px; font-size:14px; background: ${s.present?'var(--success)':'var(--danger)'};" onclick="togglePresent(${i})">${s.present?'حاضر':'غایب'}</span></div>`;
         });
         document.getElementById("studentListAtt").innerHTML = html;
     }
     function togglePresent(i) { db[currentClass][i].present = !db[currentClass][i].present; renderAttendance(); if (db[currentClass][i].present) playBeep('success'); }
     function resetAttendance() { if (confirm("غایبین صفر شوند؟")) { db[currentClass].forEach(s => s.present = false); renderAttendance(); showToast("صفر شد"); } }
 
-    // ثبت امتیاز (سیستم جدید تفکیک شده)
+    // ثبت امتیاز (با قابلیت Undo)
     function renderPoints() {
         let html = "";
         db[currentClass].forEach((s, i) => {
@@ -397,9 +348,9 @@
                     <div class="student-info"><span class="student-id">${s.id}</span><span class="student-name">${s.name}</span></div>
                     <div class="score-controls">
                         <button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">-</button>
-                        <div style="display:flex; flex-direction:column; align-items:center; min-width:40px;">
-                            <span style="color:var(--success); font-weight:bold; font-size:16px;">${sp}</span>
-                            <span style="color:var(--danger); font-size:12px;">${sm > 0 ? '-'+sm : '0'}</span>
+                        <div class="score-display-group">
+                            <span class="val-plus" onclick="reduceScore(${i}, 'plus')" title="پاک کردن یک مثبت">${sp}</span>
+                            <span class="val-minus" onclick="reduceScore(${i}, 'minus')" title="پاک کردن یک منفی">${sm > 0 ? '-'+sm : '0'}</span>
                         </div>
                         <button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button>
                     </div>
@@ -409,189 +360,155 @@
     }
 
     function changeScore(i, val) {
-        if(!db[currentClass][i].scorePlus) db[currentClass][i].scorePlus = 0;
-        if(!db[currentClass][i].scoreMinus) db[currentClass][i].scoreMinus = 0;
-        
-        if(val > 0) {
-            db[currentClass][i].scorePlus += 1; playBeep('coin');
-        } else {
-            db[currentClass][i].scoreMinus += 1; playBeep('error');
-            if(db[currentClass][i].scoreMinus >= 3) {
-                alert(`⚠️ اخطار: دانش‌آموز ${db[currentClass][i].name} ۳ چراغ قرمز (منفی) دریافت کرد!\nطبق قوانین باید جریمه شود.`);
-            }
-        }
+        if(val > 0) { db[currentClass][i].scorePlus++; playBeep('coin'); } 
+        else { db[currentClass][i].scoreMinus++; playBeep('error'); if(db[currentClass][i].scoreMinus >= 3) alert(`⚠️ اخطار: ${db[currentClass][i].name} ۳ چراغ قرمز دریافت کرد!\nطبق قوانین باید جریمه شود.`); }
         renderPoints();
     }
+    function reduceScore(i, type) {
+        if (type === 'plus' && db[currentClass][i].scorePlus > 0) { db[currentClass][i].scorePlus--; playBeep('tick'); renderPoints(); }
+        if (type === 'minus' && db[currentClass][i].scoreMinus > 0) { db[currentClass][i].scoreMinus--; playBeep('tick'); renderPoints(); }
+    }
     function addScoreToAll(val) {
-        if(confirm(`آیا به همه ${val>0?'+۱':'-۱'} داده شود؟`)) {
-            db[currentClass].forEach(s => { 
-                if(!s.scorePlus) s.scorePlus=0; if(!s.scoreMinus) s.scoreMinus=0;
-                if(val>0) s.scorePlus++; else s.scoreMinus++; 
-            });
-            renderPoints(); playBeep('coin');
+        if(confirm(`آیا به همه ${val>0?'+۱':'-۱'} داده شود؟`)) { db[currentClass].forEach(s => { if(val>0) s.scorePlus++; else s.scoreMinus++; }); renderPoints(); playBeep('coin'); }
+    }
+
+    // گزارش چراغ‌ها
+    async function openPointsReport() {
+        goToPage('page-points-report'); await fetchData();
+        let totalClassScore = 0; let html = "";
+        db[currentClass].forEach(s => {
+            let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0; totalClassScore += sp;
+            let lightsHTML = "";
+            for(let i=0; i<3; i++) { lightsHTML += `<div class="light-bulb ${i<sm ? 'on-minus' : ''}"></div>`; }
+            lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 16px; margin: 0 5px;"></div>`;
+            let displayGreen = sp % 10; if (displayGreen === 0 && sp > 0) displayGreen = 10;
+            for(let i=0; i<10; i++) { lightsHTML += `<div class="light-bulb ${i<displayGreen ? 'on-plus' : ''}"></div>`; }
+            let stars = Math.floor(sp / 10) > 0 ? (sp % 10 === 0 && sp > 0 ? Math.floor(sp/10)-1 : Math.floor(sp/10)) : 0;
+            html += `<div class="light-row"><div class="light-name">${s.name.split(" ")[0]} ${s.name.split(" ")[1]||''}</div><div class="lights-container" dir="rtl">${lightsHTML} ${stars>0?`🌟x${stars}`:''}</div><div style="font-weight:bold; width:20px; color:var(--success)">${sp}</div></div>`;
+        });
+        document.getElementById("pointsChart").innerHTML = html;
+        let percent = Math.min((totalClassScore / 200) * 100, 100);
+        document.getElementById("classProgressFill").style.width = percent + "%";
+        document.getElementById("classProgressText").innerText = `${totalClassScore} / 200 ${totalClassScore>=200?'🏆':''}`;
+    }
+
+    // گردونه جوایز (خرید بلیت)
+    function openRewardShop() {
+        goToPage('page-reward-shop');
+        let html = "";
+        db[currentClass].forEach((s, i) => {
+            let sp = s.scorePlus || 0;
+            let canBuy = sp >= 3;
+            html += `
+                <div class="student-card">
+                    <div class="student-info"><span class="student-id" style="background:#f3e8ff; color:#9333ea;">${sp} سبز</span><span class="student-name">${s.name}</span></div>
+                    <button class="btn-3d" style="padding: 8px 15px; font-size:14px; background: ${canBuy?'#a855f7':'#cbd5e1'}; --theme-shadow: ${canBuy?'#7e22ce':'#94a3b8'};" ${canBuy?'':'disabled'} onclick="buyTicket(${i})">🎟️ خرید (۳)</button>
+                </div>`;
+        });
+        document.getElementById("rewardStudentList").innerHTML = html;
+        document.getElementById("rewardDrawBox").style.display = "none";
+    }
+
+    let rewardInterval;
+    function buyTicket(i) {
+        const s = db[currentClass][i];
+        if(confirm(`آیا ۳ امتیاز از "${s.name}" کسر شود تا گردونه بچرخد؟`)) {
+            db[currentClass][i].scorePlus -= 3;
+            pushData(); // آپدیت سرور
+            openRewardShop(); // رفرش لیست
+            
+            // نمایش گردونه جوایز
+            const drawBox = document.getElementById("rewardDrawBox");
+            drawBox.style.display = "block";
+            document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
+            const resultDiv = document.getElementById('rewardResult');
+            resultDiv.innerHTML = `<div class="slot-container" id="r-slot"><div class="slot-content" id="r-slot-content">چرخش...</div></div>`;
+            
+            // انیمیشن رولت جوایز
+            let ticks = 0; const maxTicks = 40;
+            let slotContent = document.getElementById('r-slot-content');
+            rewardInterval = setInterval(() => {
+                playBeep('tick');
+                slotContent.innerText = REWARD_PRIZES[Math.floor(Math.random() * REWARD_PRIZES.length)];
+                ticks++;
+                if (ticks >= maxTicks) {
+                    clearInterval(rewardInterval);
+                    playBeep('tada');
+                    // جایزه نهایی
+                    let finalPrize = REWARD_PRIZES[Math.floor(Math.random() * REWARD_PRIZES.length)];
+                    slotContent.innerText = finalPrize;
+                    document.getElementById('r-slot').classList.add('winner-highlight');
+                }
+            }, 80);
+            
+            // اسکرول به گردونه
+            drawBox.scrollIntoView({ behavior: 'smooth' });
         }
     }
 
-    // گزارش چراغ‌ها و نوار کلاس (لپ‌تاپ)
-    async function openPointsReport() {
-        goToPage('page-points-report');
-        await fetchData();
-        
-        let totalClassScore = 0;
-        let html = "";
-        
-        db[currentClass].forEach(s => {
-            let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0;
-            totalClassScore += sp; // فقط مثبت‌ها برای نوار گروهی جمع می‌شوند
-            
-            let lightsHTML = "";
-            // 3 چراغ قرمز
-            for(let i=0; i<3; i++) {
-                let isRed = i < sm;
-                lightsHTML += `<div class="light-bulb ${isRed ? 'on-minus' : ''}"></div>`;
-            }
-            lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 16px; margin: 0 5px;"></div>`;
-            // 10 چراغ سبز (نشان دادن هر 10 تا)
-            let displayGreen = sp % 10; // باقیمانده برای پر کردن لاین فعلی
-            if (displayGreen === 0 && sp > 0) displayGreen = 10; // اگر مضرب 10 بود، کامل پر نشان دهد
-            
-            for(let i=0; i<10; i++) {
-                let isGreen = i < displayGreen;
-                lightsHTML += `<div class="light-bulb ${isGreen ? 'on-plus' : ''}"></div>`;
-            }
-            
-            // نمایش تعداد ده‌های پر شده (ستاره)
-            let stars = Math.floor(sp / 10) > 0 ? (sp % 10 === 0 && sp > 0 ? Math.floor(sp/10)-1 : Math.floor(sp/10)) : 0;
-            let starHTML = stars > 0 ? `<span style="font-size:12px;">🌟x${stars}</span>` : '';
-
-            html += `
-                <div class="light-row">
-                    <div class="light-name">${s.name.split(" ")[0]} ${s.name.split(" ")[1] || ''}</div>
-                    <div class="lights-container" dir="rtl">${lightsHTML} ${starHTML}</div>
-                    <div style="font-weight:bold; width:20px; text-align:center; color:var(--success)">${sp}</div>
-                </div>`;
-        });
-        document.getElementById("pointsChart").innerHTML = html;
-
-        // آپدیت نوار کلاس
-        const maxScore = 200;
-        let percent = Math.min((totalClassScore / maxScore) * 100, 100);
-        document.getElementById("classProgressFill").style.width = percent + "%";
-        document.getElementById("classProgressText").innerText = `${totalClassScore} / ${maxScore}`;
-        if(totalClassScore >= maxScore) document.getElementById("classProgressText").innerText += " 🏆 (جایزه گروهی!)";
-    }
-
-    // قرعه‌کشی (رولت ماشین پیشرفته)
+    // قرعه‌کشی عمومی (مبصر و کاپیتان)
     function openDrawMenu(type) {
         currentDrawType = type;
-        const menuTitle = type === 'monitor' ? '🤝 همیار معلم' : '⚽️ کاپیتان ورزش';
-        document.getElementById('drawMenuTitle').innerText = menuTitle;
-        document.getElementById('drawPlayTitle').innerText = menuTitle;
-        
-        const drawBox = document.getElementById('drawBox');
-        drawBox.className = 'draw-box ' + (type === 'monitor' ? 'monitor-mode' : 'captain-mode');
+        document.getElementById('drawMenuTitle').innerText = type==='monitor' ? '🤝 همیار معلم' : '⚽️ کاپیتان ورزش';
+        document.getElementById('drawPlayTitle').innerText = document.getElementById('drawMenuTitle').innerText;
+        document.getElementById('drawBox').className = 'draw-box ' + (type==='monitor' ? 'monitor-mode' : 'captain-mode');
         goToPage('page-draw-menu');
     }
 
     function setupDrawPlayUI() {
         document.getElementById('btnStartDraw').style.display = 'flex';
         document.getElementById('drawConfirmActions').style.display = 'none';
-        
         const req = currentDrawType === 'captain' ? 2 : 1;
-        let html = "";
-        for(let i=0; i<req; i++) {
-            html += `<div class="slot-container"><div class="slot-content" style="transform:translateY(0);">؟</div></div>`;
-        }
+        let html = ""; for(let i=0; i<req; i++) html += `<div class="slot-container"><div class="slot-content" style="transform:translateY(0);">؟</div></div>`;
         document.getElementById('drawResult').innerHTML = html;
     }
 
     let slotIntervals = [];
     function startRoulette() {
         const historyList = db[currentDrawType + 'History'][currentClass];
-        const onlyPresent = document.getElementById('drawOnlyPresent').checked;
-        
         let eligible = db[currentClass].filter(s => !historyList.includes(s.name));
-        if (onlyPresent) eligible = eligible.filter(s => s.present);
+        if (document.getElementById('drawOnlyPresent').checked) eligible = eligible.filter(s => s.present);
         
-        const requiredCount = currentDrawType === 'captain' ? 2 : 1;
-        if (eligible.length < requiredCount) {
-            alert(`⚠️ افراد واجد شرایط کافی نیستند.\nیا تیک حاضرین را بردارید، یا از بخش مدیریت، افراد قبلی را پاک کنید.`); return;
-        }
+        const req = currentDrawType === 'captain' ? 2 : 1;
+        if (eligible.length < req) { alert(`⚠️ افراد واجد شرایط کافی نیستند.\nیا تیک حاضرین را بردارید، یا از بخش مدیریت، افراد قبلی را پاک کنید.`); return; }
 
         document.getElementById('btnStartDraw').style.display = 'none';
-        
-        // انتخاب برندگان نهایی
         let shuffled = eligible.sort(() => 0.5 - Math.random());
-        currentWinners = shuffled.slice(0, requiredCount).map(s => s.name);
+        currentWinners = shuffled.slice(0, req).map(s => s.name);
         
-        // ایجاد اسلات‌ها
-        let html = "";
-        for(let i=0; i<requiredCount; i++) {
-            html += `<div class="slot-container" id="slot-${i}"><div class="slot-content" id="slot-content-${i}"></div></div>`;
-        }
+        let html = ""; for(let i=0; i<req; i++) html += `<div class="slot-container" id="slot-${i}"><div class="slot-content" id="slot-content-${i}"></div></div>`;
         document.getElementById('drawResult').innerHTML = html;
 
-        // انیمیشن رولت ماشین
-        for(let i=0; i<requiredCount; i++) {
+        for(let i=0; i<req; i++) {
             let slotContent = document.getElementById(`slot-content-${i}`);
-            let yPos = 0; let speed = 20 + (i*10); // سرعت متفاوت برای هر اسلات
-            let isStopping = false;
-            
+            let yPos = 0; let speed = 20 + (i*10); let isStopping = false;
             let inv = setInterval(() => {
-                if(!isStopping) {
-                    yPos -= speed;
-                    if(yPos < -50) { yPos = 50; slotContent.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; playBeep('tick'); }
-                    slotContent.style.transform = `translateY(${yPos}px)`;
-                }
+                if(!isStopping) { yPos -= speed; if(yPos < -50) { yPos = 50; slotContent.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; playBeep('tick'); } slotContent.style.transform = `translateY(${yPos}px)`; }
             }, 30);
             slotIntervals.push(inv);
             
-            // زمان توقف (اسلات اول زودتر از دوم می‌ایستد)
             setTimeout(() => {
-                isStopping = true;
-                clearInterval(slotIntervals[i]);
-                slotContent.style.transform = `translateY(0)`;
-                slotContent.innerText = currentWinners[i];
+                isStopping = true; clearInterval(slotIntervals[i]);
+                slotContent.style.transform = `translateY(0)`; slotContent.innerText = currentWinners[i];
                 document.getElementById(`slot-${i}`).classList.add('winner-highlight');
-                
-                if (i === requiredCount - 1) { // وقتی آخری ایستاد
-                    playBeep('tada');
-                    document.getElementById('drawConfirmActions').style.display = 'grid';
-                }
+                if (i === req - 1) { playBeep('tada'); document.getElementById('drawConfirmActions').style.display = 'grid'; }
             }, 2500 + (i * 1200)); 
         }
     }
+    function resetDraw() { slotIntervals.forEach(i => clearInterval(i)); slotIntervals=[]; currentWinners=[]; setupDrawPlayUI(); }
+    function saveDrawResult() { const h = db[currentDrawType + 'History'][currentClass]; currentWinners.forEach(n => { if(!h.includes(n)) h.push(n); }); pushData(); showToast("✅ ثبت شد"); setTimeout(() => openDrawReport(), 1000); }
 
-    function resetDraw() { slotIntervals.forEach(inv => clearInterval(inv)); slotIntervals = []; currentWinners = []; setupDrawPlayUI(); }
-
-    function saveDrawResult() {
-        const historyArray = db[currentDrawType + 'History'][currentClass];
-        currentWinners.forEach(name => { if(!historyArray.includes(name)) historyArray.push(name); });
-        pushData(); showToast("✅ ثبت شد"); setTimeout(() => openDrawReport(), 1000);
-    }
-
-    // گزارش و ویرایش قرعه‌کشی
     function openDrawReport() {
         goToPage('page-draw-report');
-        const historyArray = db[currentDrawType + 'History'][currentClass];
-        const allStudents = db[currentClass].map(s => s.name);
-        
-        let sHTML = ""; historyArray.forEach(name => { sHTML += `<div class="chip done" onclick="toggleHistory('${name}')">✅ ${name}</div>`; });
+        const h = db[currentDrawType + 'History'][currentClass]; const all = db[currentClass].map(s => s.name);
+        let sHTML = ""; h.forEach(n => { sHTML += `<div class="chip done" onclick="toggleHistory('${n}')">✅ ${n}</div>`; });
         document.getElementById('reportSelectedList').innerHTML = sHTML || "<p>خالی است</p>";
-
-        let rHTML = ""; allStudents.filter(n => !historyArray.includes(n)).forEach(name => { rHTML += `<div class="chip" onclick="toggleHistory('${name}')">⏳ ${name}</div>`; });
+        let rHTML = ""; all.filter(n => !h.includes(n)).forEach(n => { rHTML += `<div class="chip" onclick="toggleHistory('${n}')">⏳ ${n}</div>`; });
         document.getElementById('reportRemainingList').innerHTML = rHTML || "<p>خالی است</p>";
     }
+    function toggleHistory(n) { const h = db[currentDrawType + 'History'][currentClass]; const i = h.indexOf(n); if (i > -1) { h.splice(i, 1); showToast(`به لیست انتظار رفت`); } else { h.push(n); showToast(`ثبت شد`); } pushData(); openDrawReport(); }
 
-    function toggleHistory(name) {
-        const historyArray = db[currentDrawType + 'History'][currentClass];
-        const index = historyArray.indexOf(name);
-        if (index > -1) { historyArray.splice(index, 1); showToast(`«${name}» به لیست انتظار رفت`); } 
-        else { historyArray.push(name); showToast(`«${name}» انتخاب‌شده شد`); }
-        pushData(); openDrawReport();
-    }
-
-    // اسکنر NFC
+    // NFC اسکنر
     let nfcCooldown = false;
     async function startNfcScan() {
         if ('NDEFReader' in window) {
@@ -603,24 +520,19 @@
                     let i = db[currentClass].findIndex(s => s.id === tagId);
                     if (i !== -1) {
                         nfcCooldown = true; setTimeout(() => { nfcCooldown = false; }, 1500);
-                        if (document.getElementById('page-attendance').classList.contains('active')) {
-                            if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); }
-                        }
-                        else if (document.getElementById('page-points-register').classList.contains('active')) {
-                            changeScore(i, 1); showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`);
-                        }
+                        if (document.getElementById('page-attendance').classList.contains('active')) { if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); } }
+                        else if (document.getElementById('page-points-register').classList.contains('active')) { changeScore(i, 1); showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`); }
                     } else { playBeep('error'); showToast(`❌ تگ ناشناس`, false); }
                 });
             } catch (e) { showToast("خطا در سنسور", false); }
         } else alert("مرورگر شما NFC را پشتیبانی نمی‌کند.");
     }
 
-    // ارسال ابری
     async function sendToCloud() {
         const abs = db[currentClass].filter(s => !s.present);
         let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass==='classA'?'الف':'ب'}\n📋 غایبین:\n` + (abs.length===0?"- همه حاضرند ✅":abs.map((s,i)=>`${i+1}. ${s.name}`).join('\n'));
         showToast("ارسال...");
-        try { await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) }); showToast("✅ ارسال شد"); } 
+        try { await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) }); showToast("✅ در کانال ارسال شد"); } 
         catch (e) { showToast("❌ خطا", false); }
     }
     function sendSmsToPrincipal() {
