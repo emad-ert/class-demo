@@ -44,20 +44,17 @@
         .student-info { display: flex; align-items: center; gap: 10px; }
         .student-id { background: var(--theme-light); color: var(--theme-main); padding: 5px 10px; border-radius: 8px; font-weight: bold; font-size: 14px; }
         
-        /* کنترل‌های امتیاز و ویرایش */
         .score-controls { display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 6px; border-radius: 15px; border: 1px solid #e2e8f0; }
         .btn-score { width: 40px; height: 40px; border-radius: 12px; border: none; font-size: 22px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,0.2); }
         .btn-score:active { transform: translateY(4px); box-shadow: none; }
         .btn-plus { background: linear-gradient(135deg, #10b981, #059669); }
         .btn-minus { background: linear-gradient(135deg, #ef4444, #b91c1c); }
         
-        /* اعداد قابل کلیک برای پاک کردن اشتباه */
         .score-display-group { display:flex; flex-direction:column; align-items:center; min-width:40px; }
         .val-plus { color:var(--success); font-weight:bold; font-size:18px; cursor:pointer; padding: 2px 8px; border-radius: 6px; transition: background 0.2s; }
         .val-minus { color:var(--danger); font-size:14px; font-weight:bold; cursor:pointer; padding: 2px 8px; border-radius: 6px; transition: background 0.2s; }
         .val-plus:hover { background: #dcfce7; } .val-minus:hover { background: #fee2e2; }
 
-        /* رولت ماشین و گردونه جوایز */
         .draw-box { background: white; border-radius: 25px; padding: 30px 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 5px solid var(--theme-main); position: relative; overflow: hidden; }
         .draw-box.captain-mode { border-color: #16a34a; }
         .draw-box.monitor-mode { border-color: #0284c7; }
@@ -70,7 +67,6 @@
         .slot-container.winner-highlight .slot-content { color: white; transform: translateY(0) !important; font-size: 26px; }
         @keyframes pulseWinner { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* چراغ‌ها و گزارش */
         .light-grid { display: grid; grid-template-columns: 1fr; gap: 8px; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 20px; border: 3px solid var(--theme-main); }
         .light-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #cbd5e1; }
         .light-name { width: 120px; font-weight: bold; font-size: 15px; color: #334155; }
@@ -85,11 +81,24 @@
 
         #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 15px 30px; border-radius: 30px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 2000; opacity: 0; transition: all 0.3s; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* پاپ‌آپ جوایز */
+        #prizeModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; align-items:center; justify-content:center; }
+        .modal-content { background:white; padding:20px; border-radius:20px; width:85%; max-width:400px; text-align:center; border: 5px solid #9333ea; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body class="bg-dashboard">
 
 <div id="toast">پیام سیستم</div>
+
+<!-- پاپ‌آپ لیست جوایز -->
+<div id="prizeModal">
+    <div class="modal-content">
+        <h3 style="color:#9333ea; margin-top:0; font-size:20px;">🎁 صندوقچه جوایز</h3>
+        <ul style="text-align:right; color:#1e293b; font-weight:bold; line-height:2.2; list-style:none; padding:0; font-size: 15px;" id="prizeListUl"></ul>
+        <button class="btn-3d" style="background:#ef4444; --theme-shadow:#b91c1c; width:100%; margin-top:20px;" onclick="document.getElementById('prizeModal').style.display='none'">بستن پنجره</button>
+    </div>
+</div>
 
 <div class="container">
     
@@ -114,6 +123,14 @@
             <h1 id="dashTitle" style="margin:0; font-size: 22px; color: var(--theme-main);">داشبورد</h1>
             <button class="btn-3d" style="background: #64748b; padding: 8px 15px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠 تعویض کلاس</button>
         </div>
+        
+        <!-- دکمه‌های بک‌آپ آفلاین -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; background: rgba(255,255,255,0.8); padding: 15px; border-radius: 20px; border: 2px dashed #94a3b8;">
+            <button class="btn-3d" style="background: #475569; --theme-shadow: #334155; font-size:13px; padding: 10px;" onclick="downloadBackup()">💾 دانلود بک‌آپ آفلاین</button>
+            <input type="file" id="restoreFile" style="display:none" accept=".json" onchange="restoreBackup(event)">
+            <button class="btn-3d" style="background: #64748b; --theme-shadow: #475569; font-size:13px; padding: 10px;" onclick="document.getElementById('restoreFile').click()">📂 بازیابی فایل بک‌آپ</button>
+        </div>
+
         <div class="dashboard-grid">
             <div class="dash-card" onclick="goToPage('page-attendance')"><span class="icon">📋</span><span class="title">حضور و غیاب</span></div>
             <div class="dash-card" onclick="goToPage('page-points-menu')"><span class="icon">⭐️</span><span class="title">بانک امتیاز و جوایز</span></div>
@@ -152,7 +169,7 @@
         </div>
     </div>
 
-    <!-- ثبت امتیاز (قابلیت Undo) -->
+    <!-- ثبت امتیاز (Undo) -->
     <div id="page-points-register" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
@@ -161,7 +178,7 @@
             <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت</button>
             <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال</button>
         </div>
-        <p style="background: #fffbeb; padding: 10px; border-radius: 10px; font-size: 12px; font-weight:bold; color: #b45309; border: 1px dashed #f59e0b; text-align: center;">
+        <p style="background: #fffbeb; padding: 10px; border-radius: 10px; font-size: 13px; font-weight:bold; color: #b45309; border: 1px dashed #f59e0b; text-align: center;">
             💡 راهنما: برای پاک کردن امتیاز اشتباه، روی خود عدد (سبز یا قرمز) کلیک کنید.
         </p>
         <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 18px;" onclick="startNfcScan()">📱 NFC (+۱ سریع)</button>
@@ -188,11 +205,14 @@
         <div class="light-grid" id="pointsChart"></div>
     </div>
 
-    <!-- صفحه خرید و گردونه جوایز -->
+    <!-- صفحه گردونه جوایز -->
     <div id="page-reward-shop" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: #9333ea;">🎁 گردونه جوایز</h2>
         </div>
+        
+        <button class="btn-3d" style="background: #9333ea; --theme-shadow: #7e22ce; width:100%; margin-bottom: 15px; font-size: 15px;" onclick="showPrizes()">🎁 مشاهده لیست جوایز گردونه</button>
+
         <p style="background: white; padding: 10px; border-radius: 10px; font-size: 13px; font-weight:bold; color: #7e22ce;">هر دانش‌آموزی که حداقل ۳ چراغ سبز داشته باشد، می‌تواند گردونه را بچرخاند.</p>
         
         <div class="draw-box reward-mode" id="rewardDrawBox" style="display:none;">
@@ -254,7 +274,7 @@
 <script>
     const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
     const TG_CHAT_ID = "624712746"; 
-    const BALE_CHAT_ID = "4982879524"; // آیدی کانال شما ثبت شد. (فراموش نکنید ربات ادمین شود)
+    const BALE_CHAT_ID = "4982879524"; // کانال شما ثبت شد
     const PRINCIPAL_PHONE = "+989137450434";
 
     const baseClassA = [{"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}];
@@ -272,7 +292,6 @@
     let currentDrawType = 'monitor'; 
     let currentWinners = [];
 
-    // گزینه‌های گردونه جایزه
     const REWARD_PRIZES = ["🎁 یک کارت جایزه", "🔄 شانس دوباره", "💨 متاسفانه پوچ", "🏖️ یک روز بدون تکلیف", "🛡️ کارت بخشش تنبیه", "⚽️ یک روز کاپیتان", "🤝 یک هفته مبصر", "🪑 انتخاب صندلی دلخواه", "🎫 کارت +۲ اهدایی"];
 
     function changeBackground(pageId) {
@@ -297,7 +316,6 @@
         goToPage('page-dashboard');
     }
 
-    // صداها
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -311,6 +329,30 @@
     }
 
     let toastTimer; function showToast(msg, isSuccess=true) { const t=document.getElementById("toast"); t.innerText=msg; t.style.background=isSuccess?"#10b981":"#ef4444"; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"), 1800); }
+
+    // بک‌آپ آفلاین
+    function downloadBackup() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db));
+        const dlAnchorElem = document.createElement('a');
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", `class_backup_${new Date().toLocaleDateString('fa-IR').replace(/\//g,'-')}.json`);
+        dlAnchorElem.click();
+    }
+
+    function restoreBackup(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const newDb = JSON.parse(e.target.result);
+                if(newDb.classA && newDb.classB) {
+                    db = newDb; pushData(); showToast("✅ بک‌آپ با موفقیت بازیابی شد", true);
+                } else showToast("❌ فایل نامعتبر است", false);
+            } catch(err) { showToast("❌ خطا در خواندن فایل", false); }
+        };
+        reader.readAsText(file);
+    }
 
     async function fetchData() {
         showToast("در حال دریافت ابری...", true);
@@ -361,7 +403,7 @@
 
     function changeScore(i, val) {
         if(val > 0) { db[currentClass][i].scorePlus++; playBeep('coin'); } 
-        else { db[currentClass][i].scoreMinus++; playBeep('error'); if(db[currentClass][i].scoreMinus >= 3) alert(`⚠️ اخطار: ${db[currentClass][i].name} ۳ چراغ قرمز دریافت کرد!\nطبق قوانین باید جریمه شود.`); }
+        else { db[currentClass][i].scoreMinus++; playBeep('error'); if(db[currentClass][i].scoreMinus >= 5) alert(`⚠️ اخطار: ${db[currentClass][i].name} ۵ چراغ قرمز دریافت کرد!\nطبق قوانین باید جریمه شود.`); }
         renderPoints();
     }
     function reduceScore(i, type) {
@@ -379,7 +421,7 @@
         db[currentClass].forEach(s => {
             let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0; totalClassScore += sp;
             let lightsHTML = "";
-            for(let i=0; i<3; i++) { lightsHTML += `<div class="light-bulb ${i<sm ? 'on-minus' : ''}"></div>`; }
+            for(let i=0; i<5; i++) { lightsHTML += `<div class="light-bulb ${i<sm ? 'on-minus' : ''}"></div>`; }
             lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 16px; margin: 0 5px;"></div>`;
             let displayGreen = sp % 10; if (displayGreen === 0 && sp > 0) displayGreen = 10;
             for(let i=0; i<10; i++) { lightsHTML += `<div class="light-bulb ${i<displayGreen ? 'on-plus' : ''}"></div>`; }
@@ -390,6 +432,13 @@
         let percent = Math.min((totalClassScore / 200) * 100, 100);
         document.getElementById("classProgressFill").style.width = percent + "%";
         document.getElementById("classProgressText").innerText = `${totalClassScore} / 200 ${totalClassScore>=200?'🏆':''}`;
+    }
+
+    // پاپ‌آپ لیست جوایز
+    function showPrizes() {
+        const ul = document.getElementById('prizeListUl');
+        ul.innerHTML = REWARD_PRIZES.map(p => `<li>${p}</li>`).join('');
+        document.getElementById('prizeModal').style.display = 'flex';
     }
 
     // گردونه جوایز (خرید بلیت)
@@ -414,17 +463,15 @@
         const s = db[currentClass][i];
         if(confirm(`آیا ۳ امتیاز از "${s.name}" کسر شود تا گردونه بچرخد؟`)) {
             db[currentClass][i].scorePlus -= 3;
-            pushData(); // آپدیت سرور
-            openRewardShop(); // رفرش لیست
+            pushData(); 
+            openRewardShop(); 
             
-            // نمایش گردونه جوایز
             const drawBox = document.getElementById("rewardDrawBox");
             drawBox.style.display = "block";
             document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
             const resultDiv = document.getElementById('rewardResult');
             resultDiv.innerHTML = `<div class="slot-container" id="r-slot"><div class="slot-content" id="r-slot-content">چرخش...</div></div>`;
             
-            // انیمیشن رولت جوایز
             let ticks = 0; const maxTicks = 40;
             let slotContent = document.getElementById('r-slot-content');
             rewardInterval = setInterval(() => {
@@ -432,16 +479,12 @@
                 slotContent.innerText = REWARD_PRIZES[Math.floor(Math.random() * REWARD_PRIZES.length)];
                 ticks++;
                 if (ticks >= maxTicks) {
-                    clearInterval(rewardInterval);
-                    playBeep('tada');
-                    // جایزه نهایی
+                    clearInterval(rewardInterval); playBeep('tada');
                     let finalPrize = REWARD_PRIZES[Math.floor(Math.random() * REWARD_PRIZES.length)];
                     slotContent.innerText = finalPrize;
                     document.getElementById('r-slot').classList.add('winner-highlight');
                 }
             }, 80);
-            
-            // اسکرول به گردونه
             drawBox.scrollIntoView({ behavior: 'smooth' });
         }
     }
