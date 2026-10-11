@@ -19,22 +19,21 @@
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
-        /* بهینه سازی انیمیشن پس‌زمینه */
         body { font-family: var(--font); color: var(--text); margin: 0; padding: 15px; min-height: 100vh; position: relative; overflow-x: hidden;
                background-size: 200% 200%; animation: bgShift 25s ease infinite; transition: background 0.4s ease; }
         @keyframes bgShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
         body.bg-dashboard { background-image: linear-gradient(120deg, #e0e7ff, #fce7f3, #dbeafe); }
         body.bg-attendance { background-image: linear-gradient(120deg, #ecfeff, #dbeafe, #e0f2fe); }
         body.bg-captain { background-image: linear-gradient(120deg, #dcfce7, #bbf7d0, #a7f3d0); }
         body.bg-monitor { background-image: linear-gradient(120deg, #cffafe, #bae6fd, #c7d2fe); }
         body.bg-points { background-image: linear-gradient(120deg, #f3e8ff, #fae8ff, #ddd6fe); }
+        body.bg-profile { background-image: linear-gradient(120deg, #fef3c7, #fef08a, #fde047); }
         body.theme-b.bg-dashboard { background-image: linear-gradient(120deg, #fef3c7, #ffedd5, #fce7f3); }
 
         #floaties { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-        /* کاهش بلور برای بهینه سازی رندر روی موبایل */
         .floatie { position: absolute; bottom: -60px; opacity: 0.15; animation: floatUp linear infinite; filter: blur(0px); will-change: transform; }
         @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-110vh) rotate(360deg); } }
-
         #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3000; }
 
         .container { max-width: 900px; margin: 0 auto; padding-bottom: 90px; position: relative; z-index: 1; }
@@ -42,8 +41,8 @@
         .page.active { display: block; opacity: 1; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: none; } }
 
-        .btn-3d { font-family: var(--font); border: none; border-radius: 20px; color: white; font-weight: 800; font-size: 16px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s;
-                  display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background: var(--theme-grad);
+        .btn-3d { font-family: var(--font); border: none; border-radius: 18px; color: white; font-weight: 800; font-size: 15px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s;
+                  display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px; background: var(--theme-grad);
                   box-shadow: 0 6px 0 var(--theme-shadow), 0 10px 15px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
         .btn-3d::after { content: ""; position: absolute; top: 0; left: -80%; width: 50%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-20deg); }
         .btn-3d:hover::after { animation: shine 0.6s; }
@@ -51,108 +50,94 @@
         .btn-3d:active { transform: translateY(6px); box-shadow: 0 0 0 var(--theme-shadow), 0 3px 5px rgba(0,0,0,0.1); }
         .btn-3d:disabled { filter: grayscale(100%); opacity: 0.5; cursor: not-allowed; transform: translateY(6px); box-shadow: none; }
 
-        .hero { text-align: center; margin: 20px 0 30px; }
-        .hero .logo { font-size: 65px; display: inline-block; animation: rocket 3s ease-in-out infinite; filter: drop-shadow(0 8px 8px rgba(79,70,229,0.3)); will-change: transform; }
+        .hero { text-align: center; margin: 15px 0 25px; }
+        .hero .logo { font-size: 60px; display: inline-block; animation: rocket 3s ease-in-out infinite; filter: drop-shadow(0 8px 8px rgba(79,70,229,0.3)); }
         @keyframes rocket { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-10px) rotate(4deg); } }
-        .hero h1 { font-size: 34px; font-weight: 900; margin: 5px 0 0; background: linear-gradient(90deg, #4f46e5, #db2777, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero p { margin: 6px 0 0; color: #475569; font-weight: 600; }
-        .class-btn { padding: 25px 20px; font-size: 24px; border-radius: 25px; justify-content: space-between; }
-        .class-btn .em { font-size: 50px; }
-        .class-btn small { display: block; font-size: 14px; font-weight: 600; opacity: 0.9; }
+        .hero h1 { font-size: 32px; font-weight: 900; margin: 5px 0 0; background: linear-gradient(90deg, #4f46e5, #db2777, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { margin: 6px 0 0; color: #475569; font-weight: 600; font-size: 14px; }
+        .class-btn { padding: 22px 15px; font-size: 22px; border-radius: 25px; justify-content: space-between; margin-bottom: 20px;}
+        .class-btn .em { font-size: 45px; }
 
         .sub-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; background: rgba(255,255,255,0.95); padding: 12px; border-radius: 20px; border: 3px solid var(--theme-main); box-shadow: 0 6px 12px rgba(0,0,0,0.05); }
-        .sub-header h1, .sub-header h2 { font-weight: 900; font-size: 20px;}
+        .sub-header h1, .sub-header h2 { font-weight: 900; font-size: 18px; margin: 0; color: var(--theme-main); }
         .btn-back { background: var(--theme-grad); color: white; border: none; width: 44px; height: 44px; border-radius: 14px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 var(--theme-shadow); flex-shrink: 0; }
         .btn-back:active { transform: translateY(4px); box-shadow: none; }
 
         .stats-strip { display: flex; gap: 8px; margin-bottom: 15px; }
-        .stat-pill { flex: 1; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 10px; text-align: center; font-weight: 800; font-size: 12px; border: 2px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-        .stat-pill b { display: block; font-size: 20px; color: var(--theme-main); }
+        .stat-pill { flex: 1; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 10px; text-align: center; font-weight: 800; font-size: 11px; border: 2px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .stat-pill b { display: block; font-size: 18px; color: var(--theme-main); }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .dash-card { --c1: #6366f1; --c2: #8b5cf6; background: var(--card-bg); border-radius: 24px; padding: 20px 10px 15px; text-align: center; cursor: pointer; border: 3px solid white; transition: transform 0.2s, box-shadow 0.2s;
-                     box-shadow: 0 8px 16px rgba(0,0,0,0.06); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; position: relative; overflow: hidden; }
+        .dash-card { --c1: #6366f1; --c2: #8b5cf6; background: var(--card-bg); border-radius: 24px; padding: 15px 8px; text-align: center; cursor: pointer; border: 3px solid white; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 8px 16px rgba(0,0,0,0.06); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; position: relative; overflow: hidden; }
         .dash-card::before { content: ""; position: absolute; inset: auto -20% -55% -20%; height: 70%; background: radial-gradient(closest-side, var(--c1), transparent); opacity: 0.15; }
         .dash-card:active { transform: scale(0.95); }
-        .dash-card .icon { width: 70px; height: 70px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 38px; margin-bottom: 5px; background: linear-gradient(135deg, var(--c1), var(--c2)); box-shadow: 0 6px 0 rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3); }
-        .dash-card .title { font-size: 15px; font-weight: 900; color: #1e293b; }
-        .dash-card .sub { font-size: 11px; color: #64748b; font-weight: 600; }
+        .dash-card .icon { width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 5px; background: linear-gradient(135deg, var(--c1), var(--c2)); box-shadow: 0 6px 0 rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3); }
+        .dash-card .title { font-size: 14px; font-weight: 900; color: #1e293b; }
+        .dash-card .sub { font-size: 10px; color: #64748b; font-weight: 600; }
 
         .sync-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
 
         .student-card { background: white; border-radius: 18px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border: 2px solid #eef2f7; transition: transform 0.2s; gap: 8px; }
         .student-info { display: flex; align-items: center; gap: 8px; min-width: 0; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 14px; flex-shrink: 0; box-shadow: 0 3px 0 rgba(0,0,0,0.15); }
-        .student-name { font-weight: 800; font-size: 14px; }
-        .student-id { background: var(--theme-light); color: var(--theme-main); padding: 4px 8px; border-radius: 8px; font-weight: 800; font-size: 12px; }
-        .present-btn { padding: 8px 12px; font-size: 13px; min-width: 70px; border-radius: 14px; }
+        .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 13px; flex-shrink: 0; box-shadow: 0 3px 0 rgba(0,0,0,0.15); }
+        .student-name { font-weight: 800; font-size: 13px; }
+        .student-id { background: var(--theme-light); color: var(--theme-main); padding: 3px 6px; border-radius: 6px; font-weight: 800; font-size: 11px; }
+        
+        .present-btn { padding: 8px 12px; font-size: 12px; min-width: 70px; border-radius: 14px; }
         .present-btn.in { background: linear-gradient(135deg,#34d399,#059669); --theme-shadow: #047857; }
         .present-btn.out { background: linear-gradient(135deg,#f87171,#dc2626); --theme-shadow: #991b1b; }
-        .student-card.is-in { background: linear-gradient(90deg, #f0fdf4, white); border-color: #bbf7d0; }
-        .student-card.is-out { border-color: #fee2e2; }
-
-        .att-progress { height: 14px; border-radius: 8px; background: #fee2e2; overflow: hidden; border: 2px solid white; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .att-progress > div { height: 100%; background: linear-gradient(90deg, #34d399, #10b981); width: 0; transition: width 0.5s ease; }
 
         .score-controls { display: flex; align-items: center; gap: 6px; background: #f8fafc; padding: 5px; border-radius: 16px; border: 2px solid #e2e8f0; }
-        .btn-score { width: 38px; height: 38px; border-radius: 12px; border: none; font-size: 22px; font-weight: 900; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,0.2); }
+        .btn-score { width: 35px; height: 35px; border-radius: 12px; border: none; font-size: 20px; font-weight: 900; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 rgba(0,0,0,0.2); }
         .btn-score:active { transform: translateY(4px); box-shadow: none; }
         .btn-plus { background: linear-gradient(135deg, #34d399, #059669); }
         .btn-minus { background: linear-gradient(135deg, #f87171, #b91c1c); }
-        .score-display-group { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
-        .val-plus { color: var(--success); font-weight: 900; font-size: 18px; cursor: pointer; padding: 1px 6px; border-radius: 6px; }
-        .val-minus { color: var(--danger); font-size: 13px; font-weight: 800; cursor: pointer; padding: 1px 6px; border-radius: 6px; }
-        .bump { animation: bump 0.4s ease; }
-        @keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.5); } 100% { transform: scale(1); } }
-        .shake { animation: shake 0.4s; }
-        @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
-        .tip { background: #fffbeb; padding: 10px; border-radius: 14px; font-size: 12px; font-weight: 800; color: #b45309; border: 2px dashed #f59e0b; text-align: center; }
-
+        .score-display-group { display: flex; flex-direction: column; align-items: center; min-width: 35px; }
+        .val-plus { color: var(--success); font-weight: 900; font-size: 16px; cursor: pointer; padding: 1px 4px; border-radius: 6px; }
+        .val-minus { color: var(--danger); font-size: 12px; font-weight: 800; cursor: pointer; padding: 1px 4px; border-radius: 6px; }
+        
         .draw-box { background: white; border-radius: 25px; padding: 25px 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid var(--theme-main); position: relative; overflow: hidden; }
         .draw-box.captain-mode { border-color: #16a34a; }
         .draw-box.monitor-mode { border-color: #0284c7; }
-        .draw-box.reward-mode { border-color: #9333ea; background: linear-gradient(to bottom, #fdf4ff, #fae8ff); }
         .draw-names { display: flex; flex-direction: column; gap: 12px; align-items: center; justify-content: center; min-height: 160px; }
-        .slot-container { width: 95%; height: 65px; background: #f1f5f9; border-radius: 16px; border: 3px solid #cbd5e1; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 5px 10px rgba(0,0,0,0.1); }
-        .slot-content { font-size: 22px; font-weight: 900; color: #1e293b; text-align: center; padding: 0 10px; }
+        .slot-container { width: 95%; height: 60px; background: #f1f5f9; border-radius: 16px; border: 3px solid #cbd5e1; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 5px 10px rgba(0,0,0,0.1); }
+        .slot-content { font-size: 20px; font-weight: 900; color: #1e293b; text-align: center; padding: 0 10px; width: 100%; display: flex; justify-content: center; align-items: center; }
         .slot-container.winner-highlight { background: var(--theme-grad); border-color: white; box-shadow: 0 0 20px var(--theme-main); }
-        .slot-container.winner-highlight .slot-content { color: white; font-size: 26px; animation: winnerPop 0.5s ease; }
+        .slot-container.winner-highlight .slot-content { color: white; font-size: 22px; animation: winnerPop 0.5s ease; justify-content: space-between; }
         @keyframes winnerPop { from { transform: scale(0.5); } to { transform: scale(1); } }
 
-        .chip { display: inline-block; background: white; border: 2px solid #e2e8f0; padding: 8px 12px; border-radius: 20px; margin: 4px; font-weight: 800; font-size: 13px; cursor: pointer; }
+        .chip { display: inline-block; background: white; border: 2px solid #e2e8f0; padding: 6px 10px; border-radius: 20px; margin: 4px; font-weight: 800; font-size: 12px; cursor: pointer; }
         .chip.done { background: #dcfce7; border-color: #86efac; }
         .report-section { background: rgba(255,255,255,0.95); border-radius: 18px; padding: 12px; margin-bottom: 12px; }
-        .report-title { font-weight: 900; margin-bottom: 8px; font-size: 15px;}
-
-        .wheel-wrap { position: relative; width: min(280px, 80vw); aspect-ratio: 1; margin: 5px auto 10px; }
-        .wheel-wrap canvas { width: 100%; height: 100%; display: block; border-radius: 50%; box-shadow: 0 0 0 6px #7e22ce, 0 0 0 10px #fbbf24, 0 10px 20px rgba(0,0,0,0.2); }
-        .wheel-pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 35px; z-index: 5; transform-origin: 50% 20%; }
-        .wheel-pointer.tick { animation: pointerTick 0.1s; }
-        @keyframes pointerTick { 0% { transform: translateX(-50%) rotate(0); } 50% { transform: translateX(-50%) rotate(-20deg); } 100% { transform: translateX(-50%) rotate(0); } }
-        .wheel-hub { position: absolute; top: 50%; left: 50%; width: 45px; height: 45px; transform: translate(-50%,-50%); border-radius: 50%; background: radial-gradient(circle, #fde68a, #f59e0b); border: 4px solid #7e22ce; z-index: 4; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .prize-result { min-height: 50px; font-size: 22px; font-weight: 900; color: #7e22ce; display: flex; align-items: center; justify-content: center; }
-
+        
         .light-grid { display: grid; grid-template-columns: 1fr; gap: 5px; background: rgba(255,255,255,0.95); padding: 12px; border-radius: 20px; border: 3px solid var(--theme-main); }
         .light-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #cbd5e1; gap: 5px; }
-        .light-name { width: 110px; font-weight: 800; font-size: 13px; color: #334155; display: flex; align-items: center; gap: 4px; }
-        .lights-container { display: flex; gap: 3px; flex: 1; align-items: center; flex-wrap: wrap; }
-        .light-bulb { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #cbd5e1; background: #f1f5f9; }
-        .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 5px #10b981; }
-        .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 5px #ef4444; }
-        .medal { font-size: 16px; }
+        .light-name { width: 110px; font-weight: 800; font-size: 12px; color: #334155; }
+        .lights-container { display: flex; gap: 3px; flex: 1; align-items: center; flex-wrap: wrap; justify-content: center;}
+        .light-bulb { width: 13px; height: 13px; border-radius: 50%; border: 2px solid #cbd5e1; background: #f1f5f9; }
+        .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 4px #10b981; }
+        .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 4px #ef4444; }
 
-        .class-progress-bar { width: 100%; height: 26px; background: #e2e8f0; border-radius: 14px; margin: 10px 0 4px; position: relative; overflow: hidden; border: 2px solid #cbd5e1; }
-        .class-progress-fill { height: 100%; background: repeating-linear-gradient(45deg, #3b82f6 0 10px, #10b981 10px 20px); width: 0%; transition: width 0.8s ease; }
-        .class-progress-text { position: absolute; width: 100%; text-align: center; font-weight: 900; font-size: 13px; line-height: 26px; color: #1e293b; top: 0; left: 0; text-shadow: 0 0 4px white; }
+        /* مدال جوایز و پروفایل */
+        #modal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 2800; padding: 15px; backdrop-filter: blur(4px); }
+        #modal.show { display: flex; }
+        #modal .box { background: white; border-radius: 25px; padding: 20px; max-width: 400px; width: 100%; border: 4px solid var(--theme-main); text-align: center; }
+        .prizes-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; max-height: 300px; overflow-y: auto; text-align: right; }
+        .prize-item { background: #f8fafc; padding: 8px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+
+        /* پروفایل دانش‌آموز */
+        .profile-card { background: white; border-radius: 25px; padding: 25px 15px; text-align: center; border: 4px solid var(--theme-main); box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-top: 15px; position: relative;}
+        .profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: var(--theme-grad); color: white; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; margin: -50px auto 15px; border: 6px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        .profile-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .p-stat { background: #f8fafc; padding: 10px; border-radius: 15px; border: 1px solid #e2e8f0; }
+        .p-stat b { display: block; font-size: 18px; color: var(--theme-main); }
+        .p-stat span { font-size: 11px; color: #64748b; font-weight: bold; }
+        .group-badge { background: #f59e0b; color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 5px; }
 
         #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 12px 24px; border-radius: 25px; font-weight: 800; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 2500; opacity: 0; transition: all 0.3s ease; text-align: center; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        
-        .float-text { position: fixed; z-index: 2600; font-weight: 900; font-size: 26px; pointer-events: none; animation: floatText 0.8s ease-out forwards; text-shadow: 0 2px 0 rgba(0,0,0,0.2); }
-        @keyframes floatText { from { transform: translate(-50%, 0) scale(0.6); opacity: 1; } to { transform: translate(-50%, -70px) scale(1.2); opacity: 0; } }
-
-        #backupBtn { background: #334155; color: white; border: none; padding: 8px 12px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 0 #1e293b; }
+        #backupBtn { background: #334155; color: white; border: none; padding: 8px 12px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 0 #1e293b; font-family: var(--font);}
         #backupBtn:active { transform: translateY(4px); box-shadow: none; }
     </style>
 </head>
@@ -162,62 +147,64 @@
 <canvas id="confetti"></canvas>
 <div id="toast">پیام سیستم</div>
 
+<!-- مودال جوایز -->
+<div id="modal">
+    <div class="box">
+        <h3 style="margin-top:0; color:var(--theme-main);">🎁 لیست جوایز گردونه</h3>
+        <div class="prizes-list" id="prizesListModal"></div>
+        <button class="btn-3d" style="width:100%; background: var(--danger); --theme-shadow: #b91c1c;" onclick="closeModal()">بستن</button>
+    </div>
+</div>
+
 <div class="container">
 
     <!-- انتخاب کلاس -->
     <div id="page-select" class="page active">
-        <div class="hero">
-            <div class="logo">🚀</div>
-            <h1>سامانه سوپراپ</h1>
-            <p>کلاس رو انتخاب کن و ماجراجویی رو شروع کن!</p>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 25px;">
-            <button class="btn-3d class-btn" style="background: var(--a-grad); box-shadow: 0 8px 0 var(--a-shadow);" onclick="openDashboard('classA')">
-                <span class="em">✏️</span><span>کلاس الف<small>چهارم ۱</small></span><span style="font-size:26px;">◀</span>
-            </button>
-            <button class="btn-3d class-btn" style="background: var(--b-grad); box-shadow: 0 8px 0 var(--b-shadow);" onclick="openDashboard('classB')">
-                <span class="em">📖</span><span>کلاس ب<small>چهارم ۲</small></span><span style="font-size:26px;">◀</span>
-            </button>
+        <div class="hero"><div class="logo">🚀</div><h1>سامانه سوپراپ</h1><p>کلاس رو انتخاب کن و شروع کن!</p></div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <button class="btn-3d class-btn" style="background: var(--a-grad); box-shadow: 0 8px 0 var(--a-shadow);" onclick="openDashboard('classA')"><span class="em">✏️</span><span>کلاس الف (۴/۱)</span></button>
+            <button class="btn-3d class-btn" style="background: var(--b-grad); box-shadow: 0 8px 0 var(--b-shadow);" onclick="openDashboard('classB')"><span class="em">📖</span><span>کلاس ب (۴/۲)</span></button>
         </div>
     </div>
 
     <!-- داشبورد اصلی -->
     <div id="page-dashboard" class="page">
         <div class="sub-header">
-            <h1 id="dashTitle" style="margin:0; color: var(--theme-main);">داشبورد</h1>
+            <h1 id="dashTitle">داشبورد</h1>
             <div style="display: flex; gap: 8px;">
-                <button id="backupBtn" onclick="downloadBackup()">💾 بک‌آپ JSON</button>
-                <button class="btn-3d" style="background: #64748b; padding: 8px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠 خروج</button>
+                <button id="backupBtn" onclick="downloadBackup()">💾 بک‌آپ</button>
+                <button class="btn-3d" style="background: #64748b; padding: 8px; --theme-shadow: #334155;" onclick="goToPage('page-select')">🏠</button>
             </div>
         </div>
         <div class="stats-strip">
             <div class="stat-pill"><b id="dashPresent">۰</b>حاضر امروز</div>
-            <div class="stat-pill"><b id="dashGreens">۰</b>چراغ سبز کلاس</div>
+            <div class="stat-pill"><b id="dashGreens">۰</b>چراغ کلاس</div>
             <div class="stat-pill"><b id="dashTotal">۰</b>دانش‌آموز</div>
         </div>
         <div class="dashboard-grid">
-            <div class="dash-card" style="--c1:#38bdf8; --c2:#2563eb;" onclick="goToPage('page-attendance')"><span class="icon">📋</span><span class="title">حضور و غیاب</span><span class="sub">اسکن یا لمس کن</span></div>
-            <div class="dash-card" style="--c1:#c084fc; --c2:#9333ea;" onclick="goToPage('page-points-menu')"><span class="icon">⭐️</span><span class="title">بانک امتیاز</span><span class="sub">چراغ سبز و جوایز</span></div>
-            <div class="dash-card" style="--c1:#22d3ee; --c2:#0284c7;" onclick="openDrawMenu('monitor')"><span class="icon">🤝</span><span class="title">همیار و مبصر</span><span class="sub">قرعه‌کشی هفته</span></div>
-            <div class="dash-card" style="--c1:#4ade80; --c2:#16a34a;" onclick="openDrawMenu('captain')"><span class="icon">⚽️</span><span class="title">کاپیتان ورزش</span><span class="sub">دو کاپیتان جدید</span></div>
+            <div class="dash-card" style="--c1:#38bdf8; --c2:#2563eb;" onclick="goToPage('page-attendance')"><span class="icon">📋</span><span class="title">حضور و غیاب</span></div>
+            <div class="dash-card" style="--c1:#c084fc; --c2:#9333ea;" onclick="goToPage('page-points-menu')"><span class="icon">⭐️</span><span class="title">بانک امتیاز و جوایز</span></div>
+            <div class="dash-card" style="--c1:#22d3ee; --c2:#0284c7;" onclick="openDrawMenu('monitor')"><span class="icon">🤝</span><span class="title">همیار و مبصر</span></div>
+            <div class="dash-card" style="--c1:#4ade80; --c2:#16a34a;" onclick="openDrawMenu('captain')"><span class="icon">⚽️</span><span class="title">کاپیتان ورزش</span></div>
+            <div class="dash-card" style="--c1:#f43f5e; --c2:#e11d48;" onclick="openGroupsPage()"><span class="icon">👥</span><span class="title">گروه‌بندی کلاس</span></div>
+            <div class="dash-card" style="--c1:#facc15; --c2:#eab308;" onclick="openProfilePage()"><span class="icon">👤</span><span class="title">پروفایل شخصی</span></div>
         </div>
     </div>
 
     <!-- حضور و غیاب -->
     <div id="page-attendance" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color: var(--theme-main);">📋 حضور و غیاب</h2><span id="attCount" class="student-id" style="font-size:13px;">۰ / ۰</span>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2>📋 حضور و غیاب</h2><span id="attCount" class="student-id">۰/۰</span>
         </div>
-        <div class="att-progress"><div id="attBar"></div></div>
         <div class="sync-bar">
             <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت ابری</button>
             <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال ابری</button>
         </div>
-        <button class="btn-3d" style="width: 100%; margin-bottom: 20px; font-size: 18px;" onclick="startNfcScan()">📱 اسکن NFC</button>
+        <button class="btn-3d" style="width: 100%; margin-bottom: 15px; font-size: 16px;" onclick="startNfcScan()">📱 اسکن NFC</button>
         <div class="action-bar">
-            <button class="btn-3d" style="background: #0ea5e9; --theme-shadow: #0284c7;" onclick="sendToCloud()">☁️ آرشیو بله</button>
-            <button class="btn-3d" style="background: #f59e0b; --theme-shadow: #b45309;" onclick="sendSmsToPrincipal()">📩 ناظم</button>
-            <button class="btn-3d" style="background: var(--danger); --theme-shadow: #b91c1c;" onclick="resetAttendance()">🔄 صفر</button>
+            <button class="btn-3d" style="background: #0ea5e9; --theme-shadow: #0284c7; padding:10px; font-size:12px;" onclick="sendToCloud()">☁️ آرشیو بله</button>
+            <button class="btn-3d" style="background: #f59e0b; --theme-shadow: #b45309; padding:10px; font-size:12px;" onclick="sendSmsToPrincipal()">📩 ناظم</button>
+            <button class="btn-3d" style="background: var(--danger); --theme-shadow: #b91c1c; padding:10px; font-size:12px;" onclick="resetAttendance()">🔄 صفر</button>
         </div>
         <div id="studentListAtt"></div>
     </div>
@@ -225,26 +212,26 @@
     <!-- منوی بانک امتیاز -->
     <div id="page-points-menu" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color: var(--theme-main);">⭐️ بانک امتیاز</h2>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2>⭐️ بانک امتیاز</h2>
         </div>
         <div class="dashboard-grid">
             <div class="dash-card" style="--c1:#34d399; --c2:#059669;" onclick="goToPage('page-points-register')"><span class="icon">🎯</span><span class="title">ثبت مثبت/منفی</span></div>
             <div class="dash-card" style="--c1:#fbbf24; --c2:#d97706;" onclick="openPointsReport()"><span class="icon">📊</span><span class="title">وضعیت کلاس</span></div>
-            <div class="dash-card" onclick="openRewardShop()" style="grid-column: span 2; border-color:#a855f7; --c1:#e879f9; --c2:#9333ea;"><span class="icon">🎁</span><span class="title">گردونه جوایز</span><span class="sub">با ۳ سبز بچرخون</span></div>
+            <div class="dash-card" onclick="openRewardShop()" style="grid-column: span 2; border-color:#a855f7; --c1:#e879f9; --c2:#9333ea;"><span class="icon">🎁</span><span class="title">گردونه جوایز (۳ سبز)</span></div>
         </div>
     </div>
 
     <!-- ثبت امتیاز -->
     <div id="page-points-register" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2>🎯 ثبت امتیاز</h2>
         </div>
         <div class="sync-bar">
             <button class="btn-3d" style="background: #8b5cf6; --theme-shadow: #5b21b6;" onclick="fetchData()">⬇️ دریافت</button>
             <button class="btn-3d" style="background: #14b8a6; --theme-shadow: #0f766e;" onclick="pushData()">⬆️ ارسال</button>
         </div>
-        <p class="tip">💡 برای پاک کردن اشتباه، روی عددِ سبز یا قرمز ضربه بزن.</p>
-        <button class="btn-3d" style="width: 100%; margin-bottom: 16px; font-size: 18px;" onclick="startNfcScan()">📱 NFC (+۱ سریع)</button>
+        <p style="background: #fffbeb; padding: 8px; border-radius: 10px; font-size: 11px; font-weight:bold; color: #b45309; text-align: center; border:1px dashed #f59e0b;">💡 برای پاک کردن اشتباه، روی عددِ سبز یا قرمز ضربه بزن.</p>
+        <button class="btn-3d" style="width: 100%; margin-bottom: 15px;" onclick="startNfcScan()">📱 NFC (+۱ سریع)</button>
         <div style="display: flex; gap: 10px; margin-bottom: 20px;">
             <button class="btn-3d" style="flex:1; background: linear-gradient(135deg,#34d399,#059669); --theme-shadow: #047857;" onclick="addScoreToAll(1)">+۱ به همه</button>
             <button class="btn-3d" style="flex:1; background: linear-gradient(135deg,#f87171,#dc2626); --theme-shadow: #b91c1c;" onclick="addScoreToAll(-1)">-۱ از همه</button>
@@ -252,17 +239,17 @@
         <div id="studentListPoints"></div>
     </div>
 
-    <!-- تابلوی افتخارات -->
+    <!-- گزارش امتیازات و نوار -->
     <div id="page-points-report" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">💡 تابلوی افتخارات</h2>
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2>💡 تابلوی افتخارات</h2>
             <button class="btn-3d" style="background: #8b5cf6; padding: 6px 12px; --theme-shadow: #5b21b6;" onclick="openPointsReport()">🔄 رفرش</button>
         </div>
         <div style="background: white; padding: 12px; border-radius: 20px; margin-bottom: 15px; border: 3px solid var(--theme-main);">
-            <h3 style="margin:0 0 4px 0; font-size:15px; text-align:center; font-weight:900;">🏆 جایزه بزرگ گروهی (۲۰۰تایی)</h3>
-            <div class="class-progress-bar">
-                <div class="class-progress-fill" id="classProgressFill"></div>
-                <div class="class-progress-text" id="classProgressText">0 / 200</div>
+            <h3 style="margin:0 0 4px 0; font-size:15px; text-align:center;">🏆 جایزه بزرگ گروهی (۲۰۰تایی)</h3>
+            <div style="width: 100%; height: 26px; background: #e2e8f0; border-radius: 14px; position: relative; overflow: hidden; border: 2px solid #cbd5e1; margin-top:10px;">
+                <div id="classProgressFill" style="height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); width: 0%; transition: width 0.8s ease;"></div>
+                <div id="classProgressText" style="position: absolute; width: 100%; text-align: center; font-weight: 900; font-size: 13px; line-height: 26px; color: #1e293b; top: 0; left: 0; text-shadow: 0 0 4px white;">0 / 200</div>
             </div>
         </div>
         <div class="light-grid" id="pointsChart"></div>
@@ -271,18 +258,12 @@
     <!-- گردونه جوایز -->
     <div id="page-reward-shop" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: #9333ea;">🎁 گردونه جوایز</h2>
+            <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="color: #9333ea; margin:0;">🎁 گردونه جوایز</h2>
+            <button class="btn-3d" style="background: #d8b4fe; color:#6b21a8; padding: 6px 10px; --theme-shadow:#c084fc; font-size:12px;" onclick="showPrizesModal()">📜 جوایز</button>
         </div>
-        <p class="tip" style="color: #7e22ce; border-color:#9333ea;">هر دانش‌آموزی که حداقل ۳ چراغ سبز داشته باشد، می‌تواند بلیت بخرد.</p>
-
-        <div class="draw-box reward-mode" id="rewardDrawBox" style="display:none;">
-            <h3 id="rewardTargetName" style="margin-top:0; color:#9333ea; font-weight:900;">گردونه برای: ؟</h3>
-            <div class="wheel-wrap">
-                <div class="wheel-pointer" id="wheelPointer">🔻</div>
-                <div class="wheel-hub">⭐</div>
-                <canvas id="wheelCanvas" width="500" height="500"></canvas>
-            </div>
-            <div class="prize-result" id="rewardResult">در حال چرخش...</div>
+        <div class="draw-box reward-mode" id="rewardDrawBox" style="display:none; padding:15px 10px;">
+            <h3 id="rewardTargetName" style="margin-top:0; color:#9333ea; font-size:16px;">گردونه برای: ؟</h3>
+            <div style="font-size:24px; font-weight:bold; color:#7e22ce; min-height:40px; display:flex; align-items:center; justify-content:center; background:#f3e8ff; border-radius:15px; border:2px dashed #c084fc; margin-bottom:10px;" id="rewardResult">در حال چرخش...</div>
         </div>
         <div id="rewardStudentList"></div>
     </div>
@@ -290,39 +271,38 @@
     <!-- منو قرعه‌کشی -->
     <div id="page-draw-menu" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 id="drawMenuTitle" style="margin:0; color: var(--theme-main);">انتخاب هوشمند</h2>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 id="drawMenuTitle" style="margin:0;">انتخاب هوشمند</h2>
         </div>
         <div class="dashboard-grid">
-            <div class="dash-card" onclick="goToPage('page-draw-play')" style="--c1:#fb7185; --c2:#e11d48;"><span class="icon">🎲</span><span class="title">قرعه‌کشی جدید</span></div>
-            <div class="dash-card" onclick="openDrawReport()" style="--c1:#94a3b8; --c2:#475569;"><span class="icon">⚙️</span><span class="title">گزارش و لیست‌ها</span></div>
+            <div class="dash-card" style="--c1:#fb7185; --c2:#e11d48;" onclick="goToPage('page-draw-play')"><span class="icon">🎲</span><span class="title">قرعه‌کشی جدید</span></div>
+            <div class="dash-card" style="--c1:#94a3b8; --c2:#475569;" onclick="openDrawReport()"><span class="icon">⚙️</span><span class="title">گزارش و لیست‌ها</span></div>
         </div>
     </div>
 
     <!-- انجام قرعه کشی -->
     <div id="page-draw-play" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="resetDraw(); goToPage('page-draw-menu')">➔</button><h2 id="drawPlayTitle" style="margin:0; color: var(--theme-main);">قرعه‌کشی</h2>
+            <button class="btn-back" onclick="resetDraw(); goToPage('page-draw-menu')">➔</button><h2 id="drawPlayTitle" style="margin:0;">قرعه‌کشی</h2>
         </div>
-        <div style="background: white; padding: 10px; border-radius: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; font-weight: 800; font-size:14px;">
+        <div style="background: white; padding: 10px; border-radius: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; font-weight: 800; font-size:13px;">
             <input type="checkbox" id="drawOnlyPresent" checked style="transform: scale(1.3); margin: 0 4px;">
             <label for="drawOnlyPresent">فقط حاضرین امروز شرکت کنند.</label>
         </div>
         <div class="draw-box" id="drawBox">
             <div class="draw-names" id="drawResult"></div>
         </div>
-        <button id="btnStartDraw" class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; padding: 15px; font-size: 20px;" onclick="startRoulette()">🎲 بچرخون!</button>
+        <button id="btnStartDraw" class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; padding: 15px; font-size: 18px;" onclick="startRoulette()">🎲 چرخاندن گردونه!</button>
         <div class="sync-bar" id="drawConfirmActions" style="display: none;">
             <button class="btn-3d" style="background: linear-gradient(135deg,#34d399,#059669); --theme-shadow: #047857;" onclick="saveDrawResult()">✅ تایید نهایی</button>
-            <button class="btn-3d" style="background: linear-gradient(135deg,#f87171,#dc2626); --theme-shadow: #b91c1c;" onclick="resetDraw()">🔄 لغو</button>
+            <button class="btn-3d" style="background: linear-gradient(135deg,#f87171,#dc2626); --theme-shadow: #b91c1c;" onclick="resetDraw()">🔄 لغو همه</button>
         </div>
     </div>
 
     <!-- گزارش قرعه‌کشی -->
     <div id="page-draw-report" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">مدیریت افراد</h2>
+            <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button><h2 style="margin:0;">مدیریت افراد</h2>
         </div>
-        <p class="tip" style="color: #854d0e; border-color:#fef08a;">💡 برای جابجایی دستی بین دو لیست، روی اسم‌ها بزن.</p>
         <div class="report-section">
             <div class="report-title" style="color: var(--success);">✅ قبلاً انتخاب شده‌اند</div>
             <div id="reportSelectedList"></div>
@@ -333,6 +313,32 @@
         </div>
     </div>
 
+    <!-- گروه‌ها -->
+    <div id="page-groups" class="page">
+        <div class="sub-header">
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color:var(--theme-main);">👥 مدیریت گروه‌ها</h2>
+        </div>
+        <p style="background: white; padding: 10px; border-radius: 10px; font-size: 12px; font-weight:bold; color: #475569;">با این دکمه‌ها می‌تونی به کل افراد یک گروه امتیاز بدی.</p>
+        <div id="groupsListContainer"></div>
+    </div>
+
+    <!-- پروفایل شخصی -->
+    <div id="page-profile" class="page">
+        <div class="sub-header">
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color:var(--theme-main);">👤 پروفایل شخصی</h2>
+        </div>
+        <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 16px;" onclick="startNfcScan()">📱 اسکن تگ دانش‌آموز</button>
+        
+        <div style="background:white; padding:15px; border-radius:15px; margin-bottom:15px;">
+            <label style="font-weight:bold; font-size:14px;">یا انتخاب از لیست:</label>
+            <select id="profileSelect" onchange="showProfile(this.value)" style="width:100%; padding:10px; border-radius:10px; margin-top:5px; font-family:var(--font); border:2px solid var(--theme-light); font-weight:bold;">
+                <option value="">-- انتخاب کن --</option>
+            </select>
+        </div>
+
+        <div id="profileCardContainer" style="display:none;"></div>
+    </div>
+
 </div>
 
 <script>
@@ -341,8 +347,16 @@
     const BALE_CHAT_ID = "4982879524";
     const PRINCIPAL_PHONE = "+989137450434";
 
+    const REWARD_PRIZES = ["🎁 کارت جایزه", "🔄 شانس دوباره", "💨 متاسفانه پوچ", "🏖️ بی‌تکلیف", "🛡️ کارت بخشش", "⚽️ کاپیتان", "🤝 مبصر", "🪑 صندلی دلخواه", "🎫 ۲+ اهدایی"];
+    const faNum = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+
+    // اطلاعات پایه با گروه و تولد
     const baseClassA = [{"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}];
     const baseClassB = [{"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}];
+
+    // اختصاص گروه‌های رندوم 1 تا 5 برای دموی کار و تنظیم فیلدهای تولد
+    baseClassA.forEach((s, i) => { s.group = (i%5)+1; s.birthMonth = 0; s.birthDay = 0; s.parentPhone = ""; });
+    baseClassB.forEach((s, i) => { s.group = (i%5)+1; s.birthMonth = 0; s.birthDay = 0; s.parentPhone = ""; });
 
     const defaultData = {
         classA: baseClassA.map(s => ({ ...s, present: false, scorePlus: 0, scoreMinus: 0 })),
@@ -355,90 +369,50 @@
     let currentClass = 'classA';
     let currentDrawType = 'monitor';
     let currentWinners = [];
+    let drawTimers = [];
 
-    const REWARD_PRIZES = ["🎁 کارت جایزه", "🔄 شانس دوباره", "💨 متاسفانه پوچ", "🏖️ بی‌تکلیف", "🛡️ کارت بخشش", "⚽️ کاپیتان", "🤝 مبصر", "🪑 صندلی دلخواه", "🎫 ۲+ اهدایی"];
-    const WHEEL_COLORS = ["#f43f5e", "#f59e0b", "#94a3b8", "#10b981", "#3b82f6", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316"];
-    const faNum = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
-
-    /* ---------- دانلود بک‌آپ آفلاین ---------- */
-    function downloadBackup() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
-        const downloadAnchorNode = document.createElement('a');
-        const date = new Date().toLocaleDateString('fa-IR').replace(/\//g, '-');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", `ClassBackup_${date}.json`);
-        document.body.appendChild(downloadAnchorNode); // لازم برای فایرفاکس
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
-        showToast("💾 فایل بک‌آپ دانلود شد");
-    }
-
-    /* ---------- انیمیشن و صدا (بهینه شده) ---------- */
+    // انیمیشن پس‌زمینه
     (function buildFloaties() {
-        const set = ['⭐', '✏️', '📚', '🎈', '💡'];
-        let h = ''; for (let i = 0; i < 8; i++) h += `<span class="floatie" style="left:${Math.random()*90}%; font-size:${20+Math.random()*20}px; animation-duration:${15+Math.random()*15}s; animation-delay:${-Math.random()*20}s">${set[i%set.length]}</span>`;
+        const set = ['⭐', '✏️', '📚', '🎈', '💡']; let h = ''; 
+        for (let i = 0; i < 8; i++) h += `<span class="floatie" style="left:${Math.random()*90}%; font-size:${20+Math.random()*20}px; animation-duration:${15+Math.random()*15}s; animation-delay:${-Math.random()*20}s">${set[i%set.length]}</span>`;
         document.getElementById('floaties').innerHTML = h;
     })();
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(type) {
         if (audioCtx.state === 'suspended') audioCtx.resume();
-        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-        o.connect(g); g.connect(audioCtx.destination);
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination);
         const t = audioCtx.currentTime;
         switch (type) {
-            case 'success': o.type = 'triangle'; o.frequency.setValueAtTime(600, t); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.15); o.start(t); o.stop(t + 0.15); break;
+            case 'success': o.type = 'triangle'; o.frequency.setValueAtTime(600, t); g.gain.setValueAtTime(0.4, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.15); o.start(t); o.stop(t + 0.15); break;
             case 'tick': o.type = 'square'; o.frequency.setValueAtTime(400, t); g.gain.setValueAtTime(0.1, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.05); o.start(t); o.stop(t + 0.05); break;
-            case 'pop': o.type = 'sine'; o.frequency.setValueAtTime(400, t); o.frequency.exponentialRampToValueAtTime(800, t+0.05); g.gain.setValueAtTime(0.2, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.05); o.start(t); o.stop(t + 0.05); break;
             case 'coin': o.type = 'square'; o.frequency.setValueAtTime(900, t); g.gain.setValueAtTime(0.2, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.1); o.start(t); o.stop(t + 0.1); break;
             case 'error': o.type = 'sawtooth'; o.frequency.setValueAtTime(150, t); g.gain.setValueAtTime(0.2, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.2); o.start(t); o.stop(t + 0.2); break;
             case 'tada': o.type = 'triangle'; o.frequency.setValueAtTime(500, t); g.gain.setValueAtTime(0.4, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.5); o.start(t); o.stop(t + 0.5); break;
         }
     }
 
-    let lastPointer = { x: innerWidth / 2, y: innerHeight / 3 };
-    document.addEventListener('pointerdown', e => {
-        lastPointer = { x: e.clientX, y: e.clientY };
-        if (e.target.closest('.btn-3d, .dash-card, .btn-back, .chip')) playBeep('pop');
-    });
-
-    const cv = document.getElementById('confetti'), cx = cv.getContext('2d');
-    let parts = [], confettiRaf = null;
-    function resizeCv() { cv.width = innerWidth; cv.height = innerHeight; }
-    resizeCv(); addEventListener('resize', resizeCv);
-    function confetti(count = 100) {
-        const colors = ['#f43f5e', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'];
-        for (let i = 0; i < count; i++) {
-            const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 8;
-            parts.push({ x: innerWidth/2, y: innerHeight*0.4, vx: Math.cos(a)*v, vy: Math.sin(a)*v - 4, w: 5+Math.random()*5, h: 5+Math.random()*5, c: colors[i%colors.length] });
-        }
-        if (!confettiRaf) confettiRaf = requestAnimationFrame(confettiLoop);
-    }
-    function confettiLoop() {
-        cx.clearRect(0, 0, cv.width, cv.height);
-        parts.forEach(p => { p.vy += 0.2; p.x += p.vx; p.y += p.vy; cx.fillStyle = p.c; cx.fillRect(p.x, p.y, p.w, p.h); });
-        parts = parts.filter(p => p.y < cv.height);
-        confettiRaf = parts.length ? requestAnimationFrame(confettiLoop) : null;
-        if (!parts.length) cx.clearRect(0, 0, cv.width, cv.height);
-    }
-
-    function floatText(text, color) {
-        const d = document.createElement('div'); d.className = 'float-text'; d.innerText = text; d.style.color = color;
-        d.style.left = lastPointer.x + 'px'; d.style.top = (lastPointer.y - 20) + 'px';
-        document.body.appendChild(d); setTimeout(() => d.remove(), 800);
-    }
-
     let toastTimer;
     function showToast(msg, isSuccess = true) { const t = document.getElementById("toast"); t.innerText = msg; t.style.background = isSuccess ? "#10b981" : "#ef4444"; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 1800); }
+    function closeModal() { document.getElementById('modal').classList.remove('show'); }
 
-    /* ---------- ناوبری ---------- */
+    /* ---------- دانلود بک‌آپ ---------- */
+    function downloadBackup() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+        const a = document.createElement('a');
+        const date = new Date().toLocaleDateString('fa-IR').replace(/\//g, '-');
+        a.href = dataStr; a.download = `ClassBackup_${date}.json`;
+        document.body.appendChild(a); a.click(); a.remove();
+        showToast("💾 فایل بک‌آپ دانلود شد");
+    }
+
     function changeBackground(pageId) {
-        const themeB = currentClass === 'classB' ? ' theme-b' : '';
         let cls = 'bg-dashboard';
         if (pageId === 'page-attendance') cls = 'bg-attendance';
-        if (pageId === 'page-draw-play' || pageId === 'page-draw-report' || pageId === 'page-draw-menu') cls = currentDrawType === 'captain' ? 'bg-captain' : 'bg-monitor';
+        if (pageId.includes('draw')) cls = currentDrawType === 'captain' ? 'bg-captain' : 'bg-monitor';
         if (pageId.includes('points') || pageId === 'page-reward-shop') cls = 'bg-points';
-        document.body.className = cls + themeB;
+        if (pageId === 'page-profile') cls = 'bg-profile';
+        document.body.className = cls + (currentClass === 'classB' ? ' theme-b' : '');
     }
 
     function goToPage(pageId) {
@@ -452,8 +426,7 @@
     }
 
     function openDashboard(className) {
-        currentClass = className; const r = document.documentElement;
-        const k = className === 'classA' ? 'a' : 'b';
+        currentClass = className; const r = document.documentElement; const k = className === 'classA' ? 'a' : 'b';
         ['main', 'grad', 'shadow', 'light'].forEach(n => r.style.setProperty('--theme-' + n, `var(--${k}-${n})`));
         document.getElementById('dashTitle').innerText = className === 'classA' ? "داشبورد الف ۴/۱" : "داشبورد ب ۴/۲";
         goToPage('page-dashboard');
@@ -467,14 +440,23 @@
     }
     function avatarHTML(s, i) { const hue = (i * 47) % 360; return `<span class="avatar" style="background:hsl(${hue},70%,60%)">${faNum(s.id.slice(1))}</span>`; }
 
-    /* ---------- همگام سازی ابری ---------- */
+    /* ---------- سرور ---------- */
     async function fetchData() {
         showToast("در حال دریافت...", true);
         try {
             let res = await fetch(WORKER_URL + "/api/data"); let data = await res.json();
             if (data && data.classA) {
-                data.classA.forEach(s => { if (s.scorePlus === undefined) { s.scorePlus = 0; s.scoreMinus = 0; } });
-                data.classB.forEach(s => { if (s.scorePlus === undefined) { s.scorePlus = 0; s.scoreMinus = 0; } });
+                // آپدیت ساختار دیتابیس قدیمی به جدید در صورت نیاز
+                data.classA.forEach((s,i) => { 
+                    if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} 
+                    if(s.group===undefined) s.group = baseClassA[i].group;
+                    if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0;
+                });
+                data.classB.forEach((s,i) => { 
+                    if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} 
+                    if(s.group===undefined) s.group = baseClassB[i].group;
+                    if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0;
+                });
                 db = data;
                 if (document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
                 if (document.getElementById('page-points-register').classList.contains('active')) renderPoints();
@@ -489,66 +471,53 @@
         let html = "", present = 0;
         db[currentClass].forEach((s, i) => {
             if (s.present) present++;
-            html += `<div class="student-card ${s.present ? 'is-in' : 'is-out'}" id="att-${i}">
+            html += `<div class="student-card ${s.present ? 'is-in' : 'is-out'}">
                 <div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div>
                 <button class="btn-3d present-btn ${s.present ? 'in' : 'out'}" onclick="togglePresent(${i})">${s.present ? '✔ حاضر' : '✖ غایب'}</button></div>`;
         });
         document.getElementById("studentListAtt").innerHTML = html;
-        const total = db[currentClass].length;
-        document.getElementById('attCount').innerText = `${faNum(present)} / ${faNum(total)}`;
-        document.getElementById('attBar').style.width = (total ? present / total * 100 : 0) + '%';
+        document.getElementById('attCount').innerText = `${faNum(present)} / ${faNum(db[currentClass].length)}`;
+        document.getElementById('attBar').style.width = (db[currentClass].length ? present / db[currentClass].length * 100 : 0) + '%';
     }
-    function togglePresent(i) {
-        db[currentClass][i].present = !db[currentClass][i].present; renderAttendance();
-        if (db[currentClass][i].present) { playBeep('success'); floatText('✔', '#10b981'); }
-        if (db[currentClass].every(s => s.present)) { playBeep('tada'); confetti(100); showToast('🎉 همه حاضرند!'); }
-    }
+    function togglePresent(i) { db[currentClass][i].present = !db[currentClass][i].present; renderAttendance(); if (db[currentClass][i].present) playBeep('success'); }
     function resetAttendance() { if (confirm("غایبین صفر شوند؟")) { db[currentClass].forEach(s => s.present = false); renderAttendance(); showToast("صفر شد"); } }
 
-    /* ---------- ثبت امتیاز ---------- */
+    /* ---------- ثبت امتیاز و 5 چراغ قرمز ---------- */
     function renderPoints() {
         let html = "";
         db[currentClass].forEach((s, i) => {
             let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0;
-            html += `
-                <div class="student-card">
-                    <div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div>
-                    <div class="score-controls">
-                        <button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">−</button>
+            html += `<div class="student-card"><div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div>
+                    <div class="score-controls"><button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">−</button>
                         <div class="score-display-group">
                             <span class="val-plus" onclick="reduceScore(${i}, 'plus')">${faNum(sp)}</span>
                             <span class="val-minus" onclick="reduceScore(${i}, 'minus')">${sm > 0 ? '-' + faNum(sm) : '۰'}</span>
-                        </div>
-                        <button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button>
-                    </div>
-                </div>`;
+                        </div><button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button></div></div>`;
         });
         document.getElementById("studentListPoints").innerHTML = html;
     }
 
     function changeScore(i, val) {
         const s = db[currentClass][i];
-        if (val > 0) { s.scorePlus++; playBeep('coin'); floatText('+۱', '#10b981'); renderPoints(); if (s.scorePlus % 10 === 0) { playBeep('tada'); confetti(80); showToast(`🌟 ${s.name} ۱۰ چراغ سبز شد!`); } } 
-        else { s.scoreMinus++; playBeep('error'); floatText('−۱', '#ef4444'); renderPoints(); if (s.scoreMinus >= 3) { alert(`🚨 اخطار: ${s.name} ۳ چراغ قرمز دریافت کرد.`); } }
+        if (val > 0) { s.scorePlus++; playBeep('coin'); renderPoints(); } 
+        else { s.scoreMinus++; playBeep('error'); renderPoints(); if (s.scoreMinus >= 5) alert(`🚨 اخطار: ${s.name} ۵ چراغ قرمز دریافت کرد.`); }
     }
-    function reduceScore(i, type) { const s = db[currentClass][i]; if (type === 'plus' && s.scorePlus > 0) { s.scorePlus--; playBeep('pop'); renderPoints(); } if (type === 'minus' && s.scoreMinus > 0) { s.scoreMinus--; playBeep('pop'); renderPoints(); } }
-    function addScoreToAll(val) { if (confirm(`آیا به همه ${val > 0 ? '+۱' : '-۱'} داده شود؟`)) { db[currentClass].forEach(s => { if (val > 0) s.scorePlus++; else s.scoreMinus++; }); renderPoints(); if (val > 0) { playBeep('tada'); confetti(80); showToast('⭐ یک چراغ سبز برای همه!'); } else { playBeep('error'); } } }
+    function reduceScore(i, type) { const s = db[currentClass][i]; if (type === 'plus' && s.scorePlus > 0) { s.scorePlus--; playBeep('tick'); renderPoints(); } if (type === 'minus' && s.scoreMinus > 0) { s.scoreMinus--; playBeep('tick'); renderPoints(); } }
+    function addScoreToAll(val) { if (confirm(`آیا به همه ${val > 0 ? '+۱' : '-۱'} داده شود؟`)) { db[currentClass].forEach(s => { if (val > 0) s.scorePlus++; else s.scoreMinus++; }); renderPoints(); if (val > 0) playBeep('success'); else playBeep('error'); } }
 
-    /* ---------- تابلوی افتخارات ---------- */
+    /* ---------- تابلوی افتخارات و نمودار ---------- */
     async function openPointsReport() {
         goToPage('page-points-report'); await fetchData();
         let totalClassScore = 0; let html = "";
-        const ranked = db[currentClass].map((s, idx) => ({ idx, sp: s.scorePlus || 0 })).sort((a, b) => b.sp - a.sp);
-        const medals = {}; ranked.slice(0, 3).forEach((r, k) => { if (r.sp > 0) medals[r.idx] = ['🥇', '🥈', '🥉'][k]; });
         db[currentClass].forEach((s, idx) => {
             let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0; totalClassScore += sp;
             let lightsHTML = "";
-            for (let i = 0; i < 3; i++) { lightsHTML += `<div class="light-bulb ${i < sm ? 'on-minus' : ''}"></div>`; }
+            for (let i = 0; i < 5; i++) { lightsHTML += `<div class="light-bulb ${i < sm ? 'on-minus' : ''}"></div>`; } // ارتقا به 5 چراغ قرمز
             lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 16px; margin: 0 4px;"></div>`;
             let displayGreen = sp % 10; if (displayGreen === 0 && sp > 0) displayGreen = 10;
             for (let i = 0; i < 10; i++) { lightsHTML += `<div class="light-bulb ${i < displayGreen ? 'on-plus' : ''}"></div>`; }
             let stars = Math.floor(sp / 10) > 0 ? (sp % 10 === 0 && sp > 0 ? Math.floor(sp / 10) - 1 : Math.floor(sp / 10)) : 0;
-            html += `<div class="light-row"><div class="light-name"><span class="medal">${medals[idx] || ''}</span>${s.name.split(" ")[0]} ${s.name.split(" ")[1] || ''}</div><div class="lights-container" dir="rtl">${lightsHTML} ${stars > 0 ? `🌟×${faNum(stars)}` : ''}</div><div style="font-weight:900; width:22px; color:var(--success)">${faNum(sp)}</div></div>`;
+            html += `<div class="light-row"><div class="light-name">${s.name.split(" ")[0]} ${s.name.split(" ")[1] || ''}</div><div class="lights-container" dir="rtl">${lightsHTML} ${stars > 0 ? `🌟×${faNum(stars)}` : ''}</div><div style="font-weight:900; width:22px; color:var(--success)">${faNum(sp)}</div></div>`;
         });
         document.getElementById("pointsChart").innerHTML = html;
         let percent = Math.min((totalClassScore / 200) * 100, 100);
@@ -556,67 +525,44 @@
         document.getElementById("classProgressText").innerText = `${faNum(totalClassScore)} / ۲۰۰ ${totalClassScore >= 200 ? '🏆' : ''}`;
     }
 
-    /* ---------- گردونه جوایز ---------- */
-    const wheelCanvas = document.getElementById('wheelCanvas');
-    let wheelRot = 0, wheelSpinning = false;
-    function drawWheel() {
-        const c = wheelCanvas, g = c.getContext('2d'), W = c.width, R = W / 2, n = REWARD_PRIZES.length, seg = Math.PI * 2 / n;
-        g.clearRect(0, 0, W, W);
-        for (let i = 0; i < n; i++) {
-            const a0 = -Math.PI / 2 + i * seg, a1 = a0 + seg;
-            g.beginPath(); g.moveTo(R, R); g.arc(R, R, R - 2, a0, a1); g.closePath();
-            g.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length]; g.fill();
-            g.lineWidth = 3; g.strokeStyle = 'white'; g.stroke();
-            g.save(); g.translate(R, R); g.rotate(a0 + seg / 2); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle='white';
-            g.font = '50px sans-serif'; g.fillText([...REWARD_PRIZES[i]][0] === '🏖' ? '🏖️' : REWARD_PRIZES[i].split(' ')[0], R * 0.65, 0);
-            g.restore();
-        }
+    /* ---------- گردونه جوایز و مودال لیست ---------- */
+    function showPrizesModal() {
+        let html = ""; REWARD_PRIZES.forEach(p => { html += `<div class="prize-item">${p}</div>`; });
+        document.getElementById('prizesListModal').innerHTML = html;
+        document.getElementById('modal').classList.add('show');
     }
-    drawWheel();
 
     function openRewardShop() {
         goToPage('page-reward-shop');
         let html = "";
         db[currentClass].forEach((s, i) => {
-            let sp = s.scorePlus || 0; let canBuy = sp >= 3 && !wheelSpinning;
+            let sp = s.scorePlus || 0; let canBuy = sp >= 3;
             html += `<div class="student-card"><div class="student-info"><span class="student-id" style="background:#f3e8ff; color:#9333ea;">${faNum(sp)} سبز</span><span class="student-name">${s.name}</span></div>
-                <button class="btn-3d" style="padding: 6px 12px; font-size:13px; background: ${canBuy ? '#a855f7' : '#cbd5e1'}; --theme-shadow: ${canBuy ? '#7e22ce' : '#94a3b8'};" ${canBuy ? '' : 'disabled'} onclick="buyTicket(${i})">🎟️ چرخش</button></div>`;
+                <button class="btn-3d" style="padding: 6px 12px; font-size:12px; background: ${canBuy ? 'linear-gradient(135deg,#c084fc,#9333ea)' : '#cbd5e1'}; --theme-shadow: ${canBuy ? '#7e22ce' : '#94a3b8'};" ${canBuy ? '' : 'disabled'} onclick="buyTicket(${i})">🎟️ چرخش</button></div>`;
         });
         document.getElementById("rewardStudentList").innerHTML = html;
         document.getElementById("rewardDrawBox").style.display = "none";
     }
 
     function buyTicket(i) {
-        if (wheelSpinning) return; const s = db[currentClass][i];
+        const s = db[currentClass][i];
         if (!confirm(`۳ امتیاز از "${s.name}" کسر شود؟`)) return;
         db[currentClass][i].scorePlus -= 3; pushData(); openRewardShop();
-
         const drawBox = document.getElementById("rewardDrawBox"); drawBox.style.display = "block";
         document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
         const resultEl = document.getElementById('rewardResult'); resultEl.innerText = 'در حال چرخش...';
         drawBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        const n = REWARD_PRIZES.length, seg = 360 / n, winner = Math.floor(Math.random() * n);
-        const target = 360 * 5 - (winner + 0.5) * seg; const total = target - (wheelRot % 360) + 360;
-        const dur = 4000, t0 = performance.now();
-        wheelSpinning = true; playBeep('whoosh');
-
-        function frame(now) {
-            const t = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - t, 3);
-            wheelRot = (wheelRot % 360) + total * e;
-            wheelCanvas.style.transform = `rotate(${wheelRot}deg)`;
-            if (t < 1) requestAnimationFrame(frame);
-            else {
-                wheelSpinning = false; wheelRot = wheelRot % 360; const prize = REWARD_PRIZES[winner];
-                if (prize.includes('پوچ')) { playBeep('error'); } else { playBeep('tada'); confetti(100); }
-                openRewardShop(); document.getElementById("rewardDrawBox").style.display = "block"; document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
-                resultEl.innerText = prize;
-            }
-        }
-        requestAnimationFrame(frame);
+        const n = REWARD_PRIZES.length;
+        let ticks = 0; const maxTicks = 35;
+        let inv = setInterval(() => {
+            playBeep('tick'); resultEl.innerText = REWARD_PRIZES[Math.floor(Math.random() * n)];
+            ticks++;
+            if (ticks >= maxTicks) { clearInterval(inv); playBeep('tada'); resultEl.innerText = REWARD_PRIZES[Math.floor(Math.random() * n)]; }
+        }, 80);
     }
 
-    /* ---------- قرعه‌کشی (مبصر و کاپیتان) ---------- */
+    /* ---------- قرعه‌کشی با قابلیت کنسل تکی ---------- */
     function openDrawMenu(type) {
         currentDrawType = type;
         document.getElementById('drawMenuTitle').innerText = type === 'monitor' ? '🤝 همیار و مبصر' : '⚽️ کاپیتان ورزش';
@@ -628,40 +574,75 @@
     function setupDrawPlayUI() {
         document.getElementById('btnStartDraw').style.display = 'flex'; document.getElementById('drawConfirmActions').style.display = 'none';
         const req = currentDrawType === 'captain' ? 2 : 1;
-        let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container"><div class="slot-content">؟</div></div>`;
+        let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container"><div class="slot-content" style="transform:translateY(0);">؟</div></div>`;
         document.getElementById('drawResult').innerHTML = html;
     }
-
-    let drawTimers = []; function clearDrawTimers() { drawTimers.forEach(t => clearTimeout(t)); drawTimers = []; }
 
     function startRoulette() {
         const historyList = db[currentDrawType + 'History'][currentClass];
         let eligible = db[currentClass].filter(s => !historyList.includes(s.name));
         if (document.getElementById('drawOnlyPresent').checked) eligible = eligible.filter(s => s.present);
-
+        
         const req = currentDrawType === 'captain' ? 2 : 1;
         if (eligible.length < req) { playBeep('error'); alert('⚠️ افراد کافی نیستند. تیک حاضرین را بردار یا لیست قبلی‌ها را پاک کن.'); return; }
 
-        clearDrawTimers(); document.getElementById('btnStartDraw').style.display = 'none';
+        clearDrawTimers(); document.getElementById('btnStartDraw').style.display = 'none'; document.getElementById('drawConfirmActions').style.display = 'none';
         currentWinners = [...eligible].sort(() => 0.5 - Math.random()).slice(0, req).map(s => s.name);
         
         let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container" id="slot-${i}"><div class="slot-content" id="slot-content-${i}">...</div></div>`;
-        document.getElementById('drawResult').innerHTML = html; playBeep('whoosh');
+        document.getElementById('drawResult').innerHTML = html; playBeep('success');
 
+        let animationsDone = 0;
         for (let i = 0; i < req; i++) {
-            const el = document.getElementById(`slot-content-${i}`); const D = 2500 + i * 1000, t0 = performance.now();
-            (function step() {
-                const t = performance.now() - t0;
-                if (t >= D) {
-                    el.innerText = currentWinners[i]; document.getElementById(`slot-${i}`).classList.add('winner-highlight'); playBeep('success');
-                    if (i === req - 1) { playBeep('tada'); confetti(100); document.getElementById('drawConfirmActions').style.display = 'grid'; }
-                    return;
+            const el = document.getElementById(`slot-content-${i}`); const slotDiv = document.getElementById(`slot-${i}`);
+            let ticks = 0; const maxTicks = 25 + (i * 10);
+            let inv = setInterval(() => {
+                el.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; playBeep('tick'); ticks++;
+                if (ticks >= maxTicks) {
+                    clearInterval(inv); el.innerText = currentWinners[i]; slotDiv.classList.add('winner-highlight');
+                    
+                    // افزودن دکمه رفرش تکی
+                    let btn = document.createElement('button'); btn.innerText = "🔄"; 
+                    btn.style.cssText = "position:absolute; left:10px; background:white; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.2);";
+                    btn.onclick = () => rerollSingle(i);
+                    slotDiv.appendChild(btn);
+
+                    animationsDone++;
+                    if (animationsDone === req) { playBeep('tada'); document.getElementById('drawConfirmActions').style.display = 'grid'; }
                 }
-                el.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; playBeep('tick');
-                drawTimers.push(setTimeout(step, 50 + Math.pow(t / D, 2) * 200));
-            })();
+            }, 60);
+            drawTimers.push(inv);
         }
     }
+
+    function rerollSingle(idx) {
+        const historyList = db[currentDrawType + 'History'][currentClass];
+        let eligible = db[currentClass].filter(s => !historyList.includes(s.name) && !currentWinners.includes(s.name)); // از برنده‌های فعلی هم نباشد
+        if (document.getElementById('drawOnlyPresent').checked) eligible = eligible.filter(s => s.present);
+        
+        if (eligible.length === 0) { showToast("فرد واجد شرایط دیگری در کلاس نیست!", false); return; }
+        
+        const el = document.getElementById(`slot-content-${idx}`);
+        const slotDiv = document.getElementById(`slot-${idx}`);
+        slotDiv.classList.remove('winner-highlight');
+        
+        // حذف دکمه رفرش قبلی
+        const oldBtn = slotDiv.querySelector('button'); if(oldBtn) oldBtn.remove();
+        
+        let newWinner = eligible[Math.floor(Math.random() * eligible.length)].name;
+        currentWinners[idx] = newWinner; // آپدیت آرایه برنده‌ها
+        
+        let ticks = 0; const maxTicks = 20;
+        let inv = setInterval(() => {
+            el.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; playBeep('tick'); ticks++;
+            if (ticks >= maxTicks) {
+                clearInterval(inv); el.innerText = currentWinners[idx]; slotDiv.classList.add('winner-highlight'); playBeep('success');
+                let btn = document.createElement('button'); btn.innerText = "🔄"; btn.style.cssText = "position:absolute; left:10px; background:white; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.2);"; btn.onclick = () => rerollSingle(idx); slotDiv.appendChild(btn);
+            }
+        }, 60);
+        drawTimers.push(inv);
+    }
+
     function resetDraw() { clearDrawTimers(); currentWinners = []; setupDrawPlayUI(); }
     function saveDrawResult() { const h = db[currentDrawType + 'History'][currentClass]; currentWinners.forEach(n => { if (!h.includes(n)) h.push(n); }); pushData(); playBeep('success'); showToast("✅ ثبت شد"); setTimeout(() => openDrawReport(), 800); }
 
@@ -673,7 +654,103 @@
         let rHTML = ""; all.filter(n => !h.includes(n)).forEach(n => { rHTML += `<div class="chip" onclick="toggleHistory('${n}')">⏳ ${n}</div>`; });
         document.getElementById('reportRemainingList').innerHTML = rHTML || "<p>خالی است</p>";
     }
-    function toggleHistory(n) { const h = db[currentDrawType + 'History'][currentClass]; const i = h.indexOf(n); if (i > -1) { h.splice(i, 1); showToast(`به انتظار رفت`); } else { h.push(n); showToast(`ثبت شد`); } pushData(); openDrawReport(); }
+    function toggleHistory(n) { const h = db[currentDrawType + 'History'][currentClass]; const i = h.indexOf(n); if (i > -1) h.splice(i, 1); else h.push(n); pushData(); openDrawReport(); }
+
+    /* ---------- گروه‌بندی ---------- */
+    function openGroupsPage() {
+        goToPage('page-groups');
+        let html = "";
+        // استخراج تمام گروه‌های موجود (معمولا 1 تا 5)
+        let groups = [...new Set(db[currentClass].map(s => s.group))].sort();
+        
+        groups.forEach(g => {
+            let members = db[currentClass].filter(s => s.group === g);
+            let gScore = members.reduce((a, s) => a + (s.scorePlus || 0), 0);
+            
+            let mHtml = members.map(m => `<span style="background:#e2e8f0; padding:4px 8px; border-radius:8px; font-size:11px;">${m.name.split(" ")[0]}</span>`).join(" ");
+            
+            html += `
+            <div style="background:white; border-radius:20px; padding:15px; margin-bottom:15px; border:2px solid var(--theme-main); box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #cbd5e1; padding-bottom:10px; margin-bottom:10px;">
+                    <h3 style="margin:0; color:var(--theme-main);">گروه ${g}</h3>
+                    <span style="font-weight:bold; background:var(--theme-light); color:var(--theme-main); padding:4px 10px; border-radius:10px;">امتیاز کل: ${faNum(gScore)}</span>
+                </div>
+                <div style="margin-bottom:15px; display:flex; flex-wrap:wrap; gap:5px;">${mHtml}</div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-3d" style="flex:1; background:var(--success); --theme-shadow:#059669; padding:8px; font-size:12px;" onclick="addScoreToGroup(${g}, 1)">+۱ به همه گروه</button>
+                    <button class="btn-3d" style="flex:1; background:var(--danger); --theme-shadow:#b91c1c; padding:8px; font-size:12px;" onclick="addScoreToGroup(${g}, -1)">-۱ از همه گروه</button>
+                </div>
+            </div>`;
+        });
+        document.getElementById('groupsListContainer').innerHTML = html;
+    }
+
+    function addScoreToGroup(g, val) {
+        if(confirm(`آیا به همه اعضای گروه ${g} مقدار ${val>0?'+۱':'-۱'} داده شود؟`)) {
+            db[currentClass].forEach(s => { if(s.group === g) { if(val>0) s.scorePlus++; else s.scoreMinus++; } });
+            pushData(); openGroupsPage(); if(val>0) playBeep('coin'); else playBeep('error');
+        }
+    }
+
+    /* ---------- پروفایل شخصی (محاسبه تاریخ تولد) ---------- */
+    function openProfilePage() {
+        goToPage('page-profile');
+        let sel = document.getElementById('profileSelect');
+        sel.innerHTML = '<option value="">-- انتخاب از لیست کلاس --</option>';
+        db[currentClass].forEach((s, i) => { sel.innerHTML += `<option value="${i}">${s.name}</option>`; });
+        document.getElementById('profileCardContainer').style.display = 'none';
+    }
+
+    function daysUntilBirthday(bm, bd) {
+        if (!bm || !bd) return "ثبت نشده";
+        // استفاده از شیء Date برای پیدا کردن روز و ماه شمسیِ امروز به کمک Intl
+        const today = new Date();
+        const parts = new Intl.DateTimeFormat('fa-IR-u-nu-latn', { month: 'numeric', day: 'numeric' }).formatToParts(today);
+        let currentM = parseInt(parts.find(p => p.type === 'month').value);
+        let currentD = parseInt(parts.find(p => p.type === 'day').value);
+        
+        function getDayOfYear(m, d) {
+            let days = 0; for(let i=1; i<m; i++) days += (i<=6 ? 31 : 30); return days + d;
+        }
+        
+        let cDay = getDayOfYear(currentM, currentD);
+        let bDay = getDayOfYear(bm, bd);
+        
+        if (bDay === cDay) return "🎉 امروز تولدشه!";
+        if (bDay > cDay) return faNum(bDay - cDay) + " روز مونده";
+        return faNum(365 - cDay + bDay) + " روز مونده"; // برای سال بعد
+    }
+
+    function showProfile(idx) {
+        if(idx === "") { document.getElementById('profileCardContainer').style.display = 'none'; return; }
+        const s = db[currentClass][idx];
+        const isMonitor = db.monitorHistory[currentClass].includes(s.name) ? '✅ بله' : '❌ خیر';
+        const isCaptain = db.captainHistory[currentClass].includes(s.name) ? '✅ بله' : '❌ خیر';
+        
+        let birthStr = (s.birthMonth && s.birthDay) ? `${faNum(s.birthMonth)}/${faNum(s.birthDay)}` : "ثبت نشده";
+        let countdown = daysUntilBirthday(s.birthMonth, s.birthDay);
+
+        let html = `
+        <div class="profile-card">
+            <div class="profile-avatar">${s.name.split("")[0]}</div>
+            <h2 style="margin:0; color:var(--theme-main);">${s.name}</h2>
+            <div class="group-badge">گروه ${faNum(s.group)}</div>
+            
+            <div class="profile-stats">
+                <div class="p-stat" style="border-color:#10b981; background:#ecfdf5;"><span>چراغ سبز (+)</span><b style="color:#10b981;">${faNum(s.scorePlus || 0)}</b></div>
+                <div class="p-stat" style="border-color:#ef4444; background:#fef2f2;"><span>چراغ قرمز (-)</span><b style="color:#ef4444;">${faNum(s.scoreMinus || 0)}</b></div>
+                
+                <div class="p-stat"><span>تاریخ تولد 🎂</span><b style="font-size:14px;">${birthStr}</b><span style="color:#f59e0b;">${countdown}</span></div>
+                <div class="p-stat"><span>تلفن ولی 📱</span><b style="font-size:14px; direction:ltr;">${s.parentPhone ? faNum(s.parentPhone) : 'ثبت نشده'}</b></div>
+
+                <div class="p-stat"><span>همیار شده؟ 🤝</span><b style="font-size:14px; color:#475569;">${isMonitor}</b></div>
+                <div class="p-stat"><span>کاپیتان شده؟ ⚽️</span><b style="font-size:14px; color:#475569;">${isCaptain}</b></div>
+            </div>
+        </div>`;
+        document.getElementById('profileCardContainer').innerHTML = html;
+        document.getElementById('profileCardContainer').style.display = 'block';
+        playBeep('success');
+    }
 
     /* ---------- NFC ---------- */
     let nfcCooldown = false;
@@ -687,8 +764,9 @@
                     let i = db[currentClass].findIndex(s => s.id === tagId);
                     if (i !== -1) {
                         nfcCooldown = true; setTimeout(() => { nfcCooldown = false; }, 1500);
-                        if (document.getElementById('page-attendance').classList.contains('active')) { if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); floatText('✔', '#10b981'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); } }
-                        else if (document.getElementById('page-points-register').classList.contains('active')) { changeScore(i, 1); }
+                        if (document.getElementById('page-attendance').classList.contains('active')) { if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); } }
+                        else if (document.getElementById('page-points-register').classList.contains('active')) { changeScore(i, 1); showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`); }
+                        else if (document.getElementById('page-profile').classList.contains('active')) { document.getElementById('profileSelect').value = i; showProfile(i); }
                     } else { playBeep('error'); showToast(`❌ تگ ناشناس`, false); }
                 });
             } catch (e) { playBeep('error'); showToast("خطا در سنسور", false); }
