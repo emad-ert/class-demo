@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت معاونت - حضور و غیاب هوشمند</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f1f5f9; --text: #1e293b; --card: #ffffff;
+            --primary: #0f172a; --primary-light: #e2e8f0;
+            --success: #10b981; --danger: #ef4444; --warning: #f59e0b;
+            --font: 'Vazirmatn', Tahoma, sans-serif;
+        }
+        body { font-family: var(--font); background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        .container { max-width: 800px; margin: 0 auto; padding-bottom: 50px; }
+        
+        .header { background: var(--primary); color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .header h1 { margin: 0 0 5px 0; font-size: 22px; font-weight: 900; }
+        .header p { margin: 0; color: #94a3b8; font-size: 13px; font-weight: bold; }
+
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 15px; font-family: var(--font); font-size: 18px; font-weight: 800; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; background: white; color: #64748b; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+
+        .monitor-card { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border: 2px solid #38bdf8; border-radius: 15px; padding: 15px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .monitor-info { display: flex; align-items: center; gap: 12px; }
+        .monitor-icon { font-size: 35px; }
+        .monitor-text h3 { margin: 0; font-size: 18px; color: #0284c7; }
+        .monitor-text p { margin: 0; font-size: 12px; color: #0369a1; font-weight: bold; }
+
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .btn { padding: 15px; font-family: var(--font); font-weight: bold; font-size: 15px; border: none; border-radius: 12px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s; }
+        .btn:active { transform: translateY(3px); box-shadow: none; }
+        .btn-scan { grid-column: span 2; background: linear-gradient(135deg, #8b5cf6, #6d28d9); font-size: 18px; padding: 20px; }
+        .btn-sync-down { background: #0ea5e9; }
+        .btn-sync-up { background: #10b981; }
+
+        .stats-bar { display: flex; justify-content: space-around; background: white; padding: 12px; border-radius: 12px; margin-bottom: 15px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        .student-list { display: grid; gap: 8px; }
+        .student-card { background: white; border-radius: 12px; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; transition: background 0.2s; }
+        .student-info { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 15px; color: #334155; }
+        .student-id { background: #f1f5f9; color: #64748b; padding: 3px 6px; border-radius: 6px; font-size: 12px; }
+        
+        .toggle-btn { padding: 8px 20px; font-family: var(--font); font-size: 14px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; min-width: 80px; }
+        .toggle-btn.present { background: #10b981; color: white; box-shadow: 0 3px 0 #059669; }
+        .toggle-btn.absent { background: #ef4444; color: white; box-shadow: 0 3px 0 #b91c1c; }
+        .toggle-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 12px 24px; border-radius: 20px; font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; transition: all 0.3s; }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div id="toast">پیام سیستم</div>
+
+<div class="container">
+    <div class="header">
+        <h1>پنل حضور و غیاب کلاس</h1>
+        <p>مخصوص کادر مدیریت و معلمان جایگزین</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" id="tab-A" onclick="switchClass('classA')">۴/۱ (الف)</button>
+        <button class="tab-btn" id="tab-B" onclick="switchClass('classB')">۴/۲ (ب)</button>
+    </div>
+
+    <div class="monitor-card">
+        <div class="monitor-info">
+            <span class="monitor-icon">👮‍♂️</span>
+            <div class="monitor-text">
+                <p>مبصر و همیار این هفته:</p>
+                <h3 id="currentMonitor">در حال بارگذاری...</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-grid">
+        <button class="btn btn-sync-down" onclick="fetchData()">⬇️ دریافت اطلاعات</button>
+        <button class="btn btn-sync-up" onclick="pushData()">⬆️ ثبت نهایی در سرور</button>
+        <button class="btn btn-scan" onclick="startNfcScan()">📱 روشن کردن اسکنر تگ (NFC)</button>
+    </div>
+
+    <div class="stats-bar">
+        <span style="color:#64748b">کل: <span id="stat-total">۰</span></span>
+        <span style="color:#10b981">حاضر: <span id="stat-present">۰</span></span>
+        <span style="color:#ef4444">غایب: <span id="stat-absent">۰</span></span>
+    </div>
+
+    <div class="student-list" id="studentList">
+        <!-- لیست دانش آموزان -->
+    </div>
+</div>
+
+<script>
+    const WORKER_URL = "https://class-backend.emad-ert-laptop.workers.dev";
+    let db = { classA: [], classB: [], monitorHistory: { classA: [], classB: [] } };
+    let currentClass = 'classA';
+
+    // سیستم صوتی
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep(type) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination);
+        const t = audioCtx.currentTime;
+        if (type === 'success') {
+            o.type = 'triangle'; o.frequency.setValueAtTime(600, t);
+            g.gain.setValueAtTime(0.4, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.15);
+            o.start(t); o.stop(t + 0.15);
+        } else {
+            o.type = 'sawtooth'; o.frequency.setValueAtTime(150, t);
+            g.gain.setValueAtTime(0.2, t); g.gain.exponentialRampToValueAtTime(0.01, t + 0.2);
+            o.start(t); o.stop(t + 0.2);
+        }
+    }
+
+    let toastTimer;
+    function showToast(msg, isSuccess = true) {
+        const t = document.getElementById("toast"); t.innerText = msg;
+        t.style.background = isSuccess ? "#10b981" : "#ef4444";
+        t.classList.add("show"); clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+    }
+
+    function switchClass(cls) {
+        currentClass = cls;
+        document.getElementById('tab-A').classList.remove('active');
+        document.getElementById('tab-B').classList.remove('active');
+        if(cls === 'classA') document.getElementById('tab-A').classList.add('active');
+        else document.getElementById('tab-B').classList.add('active');
+        renderUI();
+    }
+
+    async function fetchData() {
+        showToast("در حال دریافت اطلاعات...", true);
+        try {
+            let res = await fetch(WORKER_URL + "/api/data"); let data = await res.json();
+            if (data && data.classA) { db = data; renderUI(); showToast("✅ دریافت شد"); }
+        } catch (e) { showToast("خطا در ارتباط با سرور", false); }
+    }
+
+    async function pushData() {
+        showToast("در حال ارسال...", true);
+        try {
+            await fetch(WORKER_URL + "/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db) });
+            playBeep('success'); showToast("✅ با موفقیت ثبت شد");
+        } catch (e) { playBeep('error'); showToast("❌ خطا در ارسال", false); }
+    }
+
+    function renderUI() {
+        if (!db[currentClass] || db[currentClass].length === 0) {
+            document.getElementById("studentList").innerHTML = "<p style='text-align:center;'>اطلاعاتی یافت نشد. لطفاً دریافت اطلاعات را بزنید.</p>";
+            return;
+        }
+
+        // 1. نمایش مبصر فعلی (آخرین نفر در لیست تاریخچه)
+        const monitors = db.monitorHistory[currentClass];
+        if (monitors && monitors.length > 0) {
+            document.getElementById("currentMonitor").innerText = monitors[monitors.length - 1];
+        } else {
+            document.getElementById("currentMonitor").innerText = "تعیین نشده";
+        }
+
+        // 2. ساخت لیست حضور غیاب
+        let html = "";
+        let presentCount = 0;
+
+        db[currentClass].forEach((s, i) => {
+            if (s.present) presentCount++;
+            html += `
+                <div class="student-card" style="border-right: 4px solid ${s.present ? '#10b981' : '#ef4444'};">
+                    <div class="student-info">
+                        <span class="student-id">${s.id}</span>
+                        <span>${s.name}</span>
+                    </div>
+                    <button class="toggle-btn ${s.present ? 'present' : 'absent'}" onclick="togglePresent(${i})">
+                        ${s.present ? '✔ حاضر' : '✖ غایب'}
+                    </button>
+                </div>
+            `;
+        });
+
+        document.getElementById("studentList").innerHTML = html;
+        
+        // 3. آپدیت آمار
+        document.getElementById("stat-total").innerText = db[currentClass].length;
+        document.getElementById("stat-present").innerText = presentCount;
+        document.getElementById("stat-absent").innerText = db[currentClass].length - presentCount;
+    }
+
+    function togglePresent(i) {
+        db[currentClass][i].present = !db[currentClass][i].present;
+        renderUI();
+        if (db[currentClass][i].present) { playBeep('success'); } else { playBeep('error'); }
+        // ارسال خودکار برای امنیت بیشتر (اگر فراموش کردند دکمه ارسال را بزنند)
+        fetch(WORKER_URL + "/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db) });
+    }
+
+    // NFC اسکنر
+    let nfcCooldown = false;
+    async function startNfcScan() {
+        if ('NDEFReader' in window) {
+            try {
+                const ndef = new NDEFReader(); await ndef.scan();
+                playBeep('success'); showToast("✅ سنسور NFC روشن شد. تگ‌ها را نزدیک کنید.");
+                
+                ndef.addEventListener("reading", ({ message }) => {
+                    if (nfcCooldown) return;
+                    const tagId = new TextDecoder(message.records[0].encoding).decode(message.records[0].data).trim();
+                    let i = db[currentClass].findIndex(s => s.id === tagId);
+                    
+                    if (i !== -1) {
+                        nfcCooldown = true; setTimeout(() => { nfcCooldown = false; }, 1500);
+                        if (!db[currentClass][i].present) {
+                            db[currentClass][i].present = true;
+                            renderUI(); playBeep('success');
+                            showToast(`🟢 ${db[currentClass][i].name} حاضر شد`);
+                            // ذخیره خودکار
+                            fetch(WORKER_URL + "/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(db) });
+                        } else {
+                            showToast(`⚠️ ${db[currentClass][i].name} قبلاً حاضر خورده`, true);
+                        }
+                    } else {
+                        playBeep('error'); showToast(`❌ تگ ناشناس`, false);
+                    }
+                });
+            } catch (e) {
+                playBeep('error'); showToast("خطا در دسترسی به سنسور NFC", false);
+            }
+        } else {
+            alert("مرورگر دستگاه شما NFC را پشتیبانی نمی‌کند.");
+        }
+    }
+
+    // دریافت اطلاعات اولیه هنگام باز شدن صفحه
+    fetchData();
+</script>
+
+</body>
+</html>
