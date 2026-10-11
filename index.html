@@ -54,9 +54,11 @@
         .hero .logo { font-size: 60px; display: inline-block; animation: rocket 3s ease-in-out infinite; filter: drop-shadow(0 8px 8px rgba(79,70,229,0.3)); }
         @keyframes rocket { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-10px) rotate(4deg); } }
         .hero h1 { font-size: 32px; font-weight: 900; margin: 5px 0 0; background: linear-gradient(90deg, #4f46e5, #db2777, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero p { margin: 6px 0 0; color: #475569; font-weight: 600; font-size: 14px; }
-        .class-btn { padding: 22px 15px; font-size: 22px; border-radius: 25px; justify-content: space-between; margin-bottom: 20px;}
-        .class-btn .em { font-size: 45px; }
+        
+        /* دکمه‌های صفحه اول وسط‌چین و مرتب شدند */
+        .class-btn { padding: 30px 15px; font-size: 24px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;}
+        .class-btn .em { font-size: 55px; line-height: 1; }
+        .class-btn span { display: block; }
 
         .sub-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; background: rgba(255,255,255,0.95); padding: 12px; border-radius: 20px; border: 3px solid var(--theme-main); box-shadow: 0 6px 12px rgba(0,0,0,0.05); }
         .sub-header h1, .sub-header h2 { font-weight: 900; font-size: 18px; margin: 0; color: var(--theme-main); }
@@ -73,7 +75,6 @@
         .dash-card:active { transform: scale(0.95); }
         .dash-card .icon { width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 5px; background: linear-gradient(135deg, var(--c1), var(--c2)); box-shadow: 0 6px 0 rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3); }
         .dash-card .title { font-size: 14px; font-weight: 900; color: #1e293b; }
-        .dash-card .sub { font-size: 10px; color: #64748b; font-weight: 600; }
 
         .sync-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .action-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
@@ -96,13 +97,12 @@
         .score-display-group { display: flex; flex-direction: column; align-items: center; min-width: 35px; }
         .val-plus { color: var(--success); font-weight: 900; font-size: 16px; cursor: pointer; padding: 1px 4px; border-radius: 6px; }
         .val-minus { color: var(--danger); font-size: 12px; font-weight: 800; cursor: pointer; padding: 1px 4px; border-radius: 6px; }
-        
+
         .draw-box { background: white; border-radius: 25px; padding: 25px 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid var(--theme-main); position: relative; overflow: hidden; }
         .draw-box.captain-mode { border-color: #16a34a; }
         .draw-box.monitor-mode { border-color: #0284c7; }
         .draw-box.reward-mode { border-color: #9333ea; background: linear-gradient(to bottom, #fdf4ff, #fae8ff); }
-        .draw-names { display: flex; flex-direction: column; gap: 12px; align-items: center; justify-content: center; min-height: 160px; }
-        .slot-container { width: 95%; height: 60px; background: #f1f5f9; border-radius: 16px; border: 3px solid #cbd5e1; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 5px 10px rgba(0,0,0,0.1); }
+        .slot-container { width: 95%; height: 60px; background: #f1f5f9; border-radius: 16px; border: 3px solid #cbd5e1; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 5px 10px rgba(0,0,0,0.1); margin: 0 auto 10px;}
         .slot-content { font-size: 20px; font-weight: 900; color: #1e293b; text-align: center; padding: 0 10px; width: 100%; display: flex; justify-content: center; align-items: center; transition: transform 0.1s linear;}
         .slot-container.winner-highlight { background: var(--theme-grad); border-color: white; box-shadow: 0 0 20px var(--theme-main); }
         .slot-container.winner-highlight .slot-content { color: white; font-size: 22px; animation: winnerPop 0.5s ease; justify-content: space-between; }
@@ -120,11 +120,12 @@
         .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 4px #10b981; }
         .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 4px #ef4444; }
 
+        /* مودال عمومی و جایزه */
         #modal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 2800; padding: 15px; backdrop-filter: blur(4px); }
         #modal.show { display: flex; }
         #modal .box { background: white; border-radius: 25px; padding: 20px; max-width: 400px; width: 100%; border: 4px solid var(--theme-main); text-align: center; }
         .prizes-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; max-height: 300px; overflow-y: auto; text-align: right; }
-        .prize-item { background: #f8fafc; padding: 8px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .prize-item { background: #f8fafc; padding: 8px; border-radius: 12px; border: 2px solid #e2e8f0; font-size: 12px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; gap: 5px; }
 
         .profile-card { background: white; border-radius: 25px; padding: 25px 15px; text-align: center; border: 4px solid var(--theme-main); box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-top: 15px; position: relative;}
         .profile-avatar { width: 90px; height: 90px; border-radius: 50%; background: var(--theme-grad); color: white; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; margin: -50px auto 15px; border: 6px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
@@ -154,11 +155,12 @@
 <div id="toast">پیام سیستم</div>
 <input type="file" id="fileInput" accept=".json" style="display:none;" onchange="importBackup(event)">
 
-<!-- مودال جوایز -->
+<!-- مودال عمومی (برای جوایز و پروفایل گروه) -->
 <div id="modal">
-    <div class="box">
-        <h3 style="margin-top:0; color:var(--theme-main);">🎁 لیست جوایز گردونه</h3>
-        <div class="prizes-list" id="prizesListModal"></div>
+    <div class="box" id="modalBox">
+        <div class="em" id="modalEm" style="font-size:50px; margin-bottom:10px;">🎁</div>
+        <h3 id="modalTitle" style="margin-top:0; color:var(--theme-main);">عنوان</h3>
+        <div id="modalMsg" style="margin-bottom: 15px; font-size:13px; font-weight:bold; color:#475569;">پیام</div>
         <button class="btn-3d" style="width:100%; background: var(--danger); --theme-shadow: #b91c1c;" onclick="closeModal()">بستن</button>
     </div>
 </div>
@@ -330,9 +332,17 @@
     <!-- گروه‌ها -->
     <div id="page-groups" class="page">
         <div class="sub-header">
-            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color:var(--theme-main);">👥 مدیریت گروه‌ها</h2>
+            <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color:var(--theme-main);">👥 گروه‌بندی کلاس</h2>
         </div>
-        <p style="background: white; padding: 10px; border-radius: 10px; font-size: 12px; font-weight:bold; color: #475569;">با این دکمه‌ها می‌تونی به کل افراد یک گروه امتیاز بدی.</p>
+        
+        <div class="draw-box" style="border-color: #8b5cf6; margin-bottom: 15px; padding:20px 10px;">
+            <h3 style="margin:0 0 10px 0; color:#8b5cf6;">🎲 قرعه‌کشی گروهی (مسابقه/پرسش)</h3>
+            <div id="groupDrawResult" style="font-size:24px; font-weight:bold; color:#1e293b; min-height:80px; display:flex; flex-direction:column; justify-content:center; align-items:center;">؟</div>
+            <button class="btn-3d" style="background:linear-gradient(135deg, #a855f7, #7e22ce); width:100%; margin-top:15px; box-shadow: 0 4px 0 #6b21a8;" onclick="startGroupDraw()">چرخش گردونه گروه‌ها</button>
+        </div>
+
+        <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 16px;" onclick="startNfcScan()">📱 اسکن تگ (نمایش گروه من)</button>
+        
         <div id="groupsListContainer"></div>
     </div>
 
@@ -343,9 +353,9 @@
         </div>
         <button class="btn-3d" style="background: var(--theme-grad); width: 100%; margin-bottom: 20px; font-size: 16px;" onclick="startNfcScan()">📱 اسکن تگ دانش‌آموز</button>
         
-        <div style="background:white; padding:15px; border-radius:15px; margin-bottom:15px;">
-            <label style="font-weight:bold; font-size:14px;">یا انتخاب از لیست:</label>
-            <select id="profileSelect" onchange="showProfile(this.value)" style="width:100%; padding:10px; border-radius:10px; margin-top:5px; font-family:var(--font); border:2px solid var(--theme-light); font-weight:bold;">
+        <div style="background:white; padding:15px; border-radius:15px; margin-bottom:15px; border:2px solid #e2e8f0;">
+            <label style="font-weight:bold; font-size:14px;">یا انتخاب دستی از لیست:</label>
+            <select id="profileSelect" onchange="showProfile(this.value)" style="width:100%; padding:10px; border-radius:10px; margin-top:10px; font-family:var(--font); border:2px solid var(--theme-light); font-weight:bold; background:#f8fafc;">
                 <option value="">-- انتخاب کن --</option>
             </select>
         </div>
@@ -364,16 +374,26 @@
     const REWARD_PRIZES = ["🎁 کارت جایزه", "🔄 شانس دوباره", "💨 متاسفانه پوچ", "🏖️ بی‌تکلیف", "🛡️ کارت بخشش", "⚽️ کاپیتان", "🤝 مبصر", "🪑 صندلی دلخواه", "🎫 ۲+ اهدایی"];
     const faNum = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
 
-    // اطلاعات پایه با گروه بندی های دقیق استخراج شده از تصویر
     const baseClassA = [{"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}];
     const baseClassB = [{"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}];
 
-    // نگاشت دقیق گروه های کلاس الف از روی تصویر
+    // ترکیب دقیق گروه های کلاس الف استخراج شده از تصویر
     const groupMappingA = {
         "A01": 3, "A02": 1, "A03": 7, "A04": 4, "A05": 7, "A06": 4, "A07": 6,
-        "A08": 6, "A09": 4, "A10": 5, "A11": 1, "A12": 7, "A13": 2, "A14": 3,
+        "A08": 6, "A09": 4, "A10": 5, "A11": 1, "A12": 7, "A13": 3, "A14": 3,
         "A15": 5, "A16": 3, "A17": 2, "A18": 5, "A19": 2, "A20": 6, "A21": 1
     };
+
+    const GROUP_COLORS = [
+        { main: '#f43f5e', bg: '#ffe4e6' }, // 1: Rose
+        { main: '#f97316', bg: '#ffedd5' }, // 2: Orange
+        { main: '#10b981', bg: '#d1fae5' }, // 3: Emerald
+        { main: '#06b6d4', bg: '#cffafe' }, // 4: Cyan
+        { main: '#8b5cf6', bg: '#ede9fe' }, // 5: Violet
+        { main: '#ec4899', bg: '#fce7f3' }, // 6: Pink
+        { main: '#3b82f6', bg: '#dbeafe' }, // 7: Blue
+        { main: '#f59e0b', bg: '#fef3c7' }  // 8: Amber
+    ];
 
     baseClassA.forEach((s) => { s.group = groupMappingA[s.id] || 1; s.birthMonth = 0; s.birthDay = 0; s.parentPhone = ""; });
     baseClassB.forEach((s, i) => { s.group = (i%6)+1; s.birthMonth = 0; s.birthDay = 0; s.parentPhone = ""; });
@@ -394,7 +414,7 @@
     // انیمیشن پس‌زمینه
     (function buildFloaties() {
         const set = ['⭐', '✏️', '📚', '🎈', '💡']; let h = ''; 
-        for (let i = 0; i < 8; i++) h += `<span class="floatie" style="left:${Math.random()*90}%; font-size:${20+Math.random()*20}px; animation-duration:${15+Math.random()*15}s; animation-delay:${-Math.random()*20}s">${set[i%set.length]}</span>`;
+        for (let i = 0; i < 8; i++) h += `<span class="floatie" style="left:${Math.random()*90}%; font-size:${20+Math.random()*15}px; animation-duration:${18+Math.random()*10}s; animation-delay:${-Math.random()*20}s">${set[i%set.length]}</span>`;
         document.getElementById('floaties').innerHTML = h;
     })();
 
@@ -434,10 +454,7 @@
             try {
                 const importedData = JSON.parse(e.target.result);
                 if (importedData.classA && importedData.classB) {
-                    db = importedData;
-                    pushData(); 
-                    goToPage('page-dashboard');
-                    showToast("✅ بک‌آپ با موفقیت بازیابی شد", true);
+                    db = importedData; pushData(); goToPage('page-dashboard'); showToast("✅ بک‌آپ با موفقیت بازیابی شد", true);
                 } else alert("فایل بک‌آپ نامعتبر است.");
             } catch (err) { alert("خطا در خواندن فایل JSON. فایل خراب است."); }
         };
@@ -462,6 +479,7 @@
         if (pageId === 'page-attendance') renderAttendance();
         if (pageId === 'page-points-register') renderPoints();
         if (pageId === 'page-draw-play') setupDrawPlayUI();
+        if (pageId === 'page-groups') openGroupsPage();
     }
 
     function openDashboard(className) {
@@ -498,6 +516,7 @@
                 db = data;
                 if (document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
                 if (document.getElementById('page-points-register').classList.contains('active')) renderPoints();
+                if (document.getElementById('page-groups').classList.contains('active')) openGroupsPage();
                 playBeep('success'); showToast("✅ دریافت شد");
             }
         } catch (e) { playBeep('error'); showToast("خطا در اینترنت", false); }
@@ -542,18 +561,18 @@
     function reduceScore(i, type) { const s = db[currentClass][i]; if (type === 'plus' && s.scorePlus > 0) { s.scorePlus--; playBeep('success'); renderPoints(); } if (type === 'minus' && s.scoreMinus > 0) { s.scoreMinus--; playBeep('success'); renderPoints(); } }
     function addScoreToAll(val) { if (confirm(`آیا به همه ${val > 0 ? '+۱' : '-۱'} داده شود؟`)) { db[currentClass].forEach(s => { if (val > 0) s.scorePlus++; else s.scoreMinus++; }); renderPoints(); if (val > 0) playBeep('success'); else playBeep('error'); } }
 
-    /* ---------- تابلوی افتخارات و نمودار ---------- */
+    /* ---------- تابلوی افتخارات ---------- */
     async function openPointsReport() {
         goToPage('page-points-report'); await fetchData();
         let totalClassScore = 0; let html = "";
-        db[currentClass].forEach((s, idx) => {
+        db[currentClass].forEach((s) => {
             let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0; totalClassScore += sp;
             let lightsHTML = "";
             for (let i = 0; i < 5; i++) { lightsHTML += `<div class="light-bulb ${i < sm ? 'on-minus' : ''}"></div>`; }
             lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 16px; margin: 0 4px;"></div>`;
             let displayGreen = sp % 10; if (displayGreen === 0 && sp > 0) displayGreen = 10;
             for (let i = 0; i < 10; i++) { lightsHTML += `<div class="light-bulb ${i < displayGreen ? 'on-plus' : ''}"></div>`; }
-            html += `<div class="light-row"><div class="light-name">${s.name.split(" ")[0]} ${s.name.split(" ")[1] || ''}</div><div class="lights-container" dir="rtl">${lightsHTML}</div><div style="font-weight:900; width:22px; color:var(--success)">${faNum(sp)}</div></div>`;
+            html += `<div class="light-row"><div class="light-name">${s.name}</div><div class="lights-container" dir="rtl">${lightsHTML}</div><div style="font-weight:900; width:22px; color:var(--success)">${faNum(sp)}</div></div>`;
         });
         document.getElementById("pointsChart").innerHTML = html;
         let percent = Math.min((totalClassScore / 200) * 100, 100);
@@ -564,7 +583,9 @@
     /* ---------- گردونه جوایز ---------- */
     function showPrizesModal() {
         let html = ""; REWARD_PRIZES.forEach(p => { html += `<div class="prize-item">${p}</div>`; });
-        document.getElementById('prizesListModal').innerHTML = html;
+        document.getElementById('modalEm').innerText = '🎁';
+        document.getElementById('modalTitle').innerText = 'جوایز گردونه';
+        document.getElementById('modalMsg').innerHTML = `<div class="prizes-list">${html}</div>`;
         document.getElementById('modal').classList.add('show');
     }
 
@@ -582,49 +603,38 @@
     }
 
     function buyTicket(i) {
-        if (wheelSpinning) return;
-        const s = db[currentClass][i];
+        if (wheelSpinning) return; const s = db[currentClass][i];
         if (!confirm(`۳ امتیاز از "${s.name}" کسر شود؟`)) return;
-        db[currentClass][i].scorePlus -= 3; 
-        pushData(); openRewardShop();
+        db[currentClass][i].scorePlus -= 3; pushData(); openRewardShop();
 
         const drawBox = document.getElementById("rewardDrawBox"); drawBox.style.display = "block";
         document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
         const resultEl = document.getElementById('rewardResult'); resultEl.innerText = 'در حال چرخش...';
         drawBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        const n = REWARD_PRIZES.length;
-        let ticks = 0; const maxTicks = 35;
-        wheelSpinning = true;
+        const n = REWARD_PRIZES.length; let ticks = 0; const maxTicks = 35; wheelSpinning = true;
         
         let inv = setInterval(() => {
-            playBeep('tick'); resultEl.innerText = REWARD_PRIZES[Math.floor(Math.random() * n)];
-            ticks++;
+            playBeep('tick'); resultEl.innerText = REWARD_PRIZES[Math.floor(Math.random() * n)]; ticks++;
             if (ticks >= maxTicks) { 
-                clearInterval(inv); 
-                wheelSpinning = false;
+                clearInterval(inv); wheelSpinning = false;
                 let finalPrize = REWARD_PRIZES[Math.floor(Math.random() * n)];
-                resultEl.innerText = finalPrize;
                 
-                if(finalPrize.includes('پوچ')) {
-                    playBeep('error');
-                } else if(finalPrize.includes('شانس دوباره')) {
+                if(finalPrize.includes('پوچ')) { playBeep('error'); } 
+                else if(finalPrize.includes('شانس دوباره')) {
                     playBeep('tada');
-                    db[currentClass][i].scorePlus += 3; // بازگشت 3 امتیاز کسر شده
-                    pushData();
-                    showToast("🎉 یه شانس دوباره! امتیاز بلیت برگشت.", true);
-                } else {
-                    playBeep('tada');
-                }
-                openRewardShop(); // رفرش لیست برای آپدیت دکمه ها
-                document.getElementById("rewardDrawBox").style.display = "block";
+                    db[currentClass][i].scorePlus += 3; // بازگشت امتیاز
+                    pushData(); showToast("🎉 یه شانس دوباره! امتیاز بلیت برگشت.", true);
+                } else { playBeep('tada'); }
+                
+                openRewardShop(); document.getElementById("rewardDrawBox").style.display = "block";
                 document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
                 resultEl.innerText = finalPrize;
             }
         }, 80);
     }
 
-    /* ---------- قرعه‌کشی (مبصر و کاپیتان با تعویض تکی) ---------- */
+    /* ---------- قرعه‌کشی مبصر/کاپیتان ---------- */
     function openDrawMenu(type) {
         currentDrawType = type;
         document.getElementById('drawMenuTitle').innerText = type === 'monitor' ? '🤝 همیار و مبصر' : '⚽️ کاپیتان ورزش';
@@ -636,7 +646,7 @@
     function setupDrawPlayUI() {
         document.getElementById('btnStartDraw').style.display = 'flex'; document.getElementById('drawConfirmActions').style.display = 'none';
         const req = currentDrawType === 'captain' ? 2 : 1;
-        let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container"><div class="slot-content" style="transform:translateY(0);">؟</div></div>`;
+        let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container"><div class="slot-content">؟</div></div>`;
         document.getElementById('drawResult').innerHTML = html;
     }
 
@@ -663,14 +673,10 @@
                 el.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; ticks++;
                 if (ticks >= maxTicks) {
                     clearInterval(inv); el.innerText = currentWinners[i]; slotDiv.classList.add('winner-highlight');
-                    
-                    let btn = document.createElement('button'); btn.innerText = "🔄 عوض کن"; 
+                    let btn = document.createElement('button'); btn.innerText = "🔄 تعویض تکی"; 
                     btn.style.cssText = "position:absolute; left:10px; background:white; color:black; border:none; border-radius:10px; padding:5px; font-size:10px; cursor:pointer;";
-                    btn.onclick = () => rerollSingle(i);
-                    slotDiv.appendChild(btn);
-
-                    animationsDone++;
-                    if (animationsDone === req) { playBeep('success'); document.getElementById('drawConfirmActions').style.display = 'grid'; }
+                    btn.onclick = () => rerollSingle(i); slotDiv.appendChild(btn);
+                    animationsDone++; if (animationsDone === req) { playBeep('success'); document.getElementById('drawConfirmActions').style.display = 'grid'; }
                 }
             }, 60);
             drawTimers.push(inv);
@@ -683,20 +689,17 @@
         if (document.getElementById('drawOnlyPresent').checked) eligible = eligible.filter(s => s.present);
         if (eligible.length === 0) { showToast("فرد دیگری در کلاس نیست!", false); return; }
         
-        const el = document.getElementById(`slot-content-${idx}`);
-        const slotDiv = document.getElementById(`slot-${idx}`);
-        slotDiv.classList.remove('winner-highlight');
-        const oldBtn = slotDiv.querySelector('button'); if(oldBtn) oldBtn.remove();
+        const el = document.getElementById(`slot-content-${idx}`); const slotDiv = document.getElementById(`slot-${idx}`);
+        slotDiv.classList.remove('winner-highlight'); const oldBtn = slotDiv.querySelector('button'); if(oldBtn) oldBtn.remove();
         
-        let newWinner = eligible[Math.floor(Math.random() * eligible.length)].name;
-        currentWinners[idx] = newWinner; 
+        currentWinners[idx] = eligible[Math.floor(Math.random() * eligible.length)].name; 
         
         let ticks = 0; const maxTicks = 20;
         let inv = setInterval(() => {
             el.innerText = eligible[Math.floor(Math.random() * eligible.length)].name; ticks++;
             if (ticks >= maxTicks) {
                 clearInterval(inv); el.innerText = currentWinners[idx]; slotDiv.classList.add('winner-highlight'); playBeep('success');
-                let btn = document.createElement('button'); btn.innerText = "🔄 عوض کن"; btn.style.cssText = "position:absolute; left:10px; background:white; border:none; border-radius:10px; padding:5px; font-size:10px; cursor:pointer;"; btn.onclick = () => rerollSingle(idx); slotDiv.appendChild(btn);
+                let btn = document.createElement('button'); btn.innerText = "🔄 تعویض تکی"; btn.style.cssText = "position:absolute; left:10px; background:white; border:none; border-radius:10px; padding:5px; font-size:10px; cursor:pointer;"; btn.onclick = () => rerollSingle(idx); slotDiv.appendChild(btn);
             }
         }, 60);
         drawTimers.push(inv);
@@ -715,32 +718,33 @@
     }
     function toggleHistory(n) { const h = db[currentDrawType + 'History'][currentClass]; const i = h.indexOf(n); if (i > -1) h.splice(i, 1); else h.push(n); pushData(); openDrawReport(); }
 
-    /* ---------- گروه‌بندی ---------- */
+    /* ---------- گروه‌بندی کلاس ---------- */
     function openGroupsPage() {
-        goToPage('page-groups');
         let html = "";
-        let groups = [...new Set(db[currentClass].map(s => s.group))].sort((a,b) => a-b); // مرتب سازی عددی دقیق
+        let groups = [...new Set(db[currentClass].map(s => s.group))].sort((a,b) => a-b);
         
         groups.forEach(g => {
+            let color = GROUP_COLORS[(g-1) % GROUP_COLORS.length];
             let members = db[currentClass].filter(s => s.group === g);
             let gScore = members.reduce((a, s) => a + (s.scorePlus || 0), 0);
             
-            let mHtml = members.map(m => `<span style="background:#e2e8f0; padding:4px 8px; border-radius:8px; font-size:11px;">${m.name.split(" ")[0]}</span>`).join(" ");
+            let mHtml = members.map(m => `<div style="background:white; border: 1px solid ${color.main}; color:${color.main}; padding:6px 10px; border-radius:10px; font-size:13px; font-weight:bold; display:flex; justify-content:space-between; width:100%;"><span>${m.name}</span><span>⭐ ${faNum(m.scorePlus || 0)}</span></div>`).join("");
             
             html += `
-            <div style="background:white; border-radius:20px; padding:15px; margin-bottom:15px; border:2px solid var(--theme-main); box-shadow:0 4px 10px rgba(0,0,0,0.05);">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #cbd5e1; padding-bottom:10px; margin-bottom:10px;">
-                    <h3 style="margin:0; color:var(--theme-main);">گروه ${faNum(g)}</h3>
-                    <span style="font-weight:bold; background:var(--theme-light); color:var(--theme-main); padding:4px 10px; border-radius:10px;">امتیاز کل: ${faNum(gScore)}</span>
+            <div id="group-card-${g}" style="background:white; border-radius:20px; padding:15px; margin-bottom:15px; border:3px solid ${color.main}; box-shadow:0 6px 12px rgba(0,0,0,0.05); transition: transform 0.3s;">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px dashed ${color.main}; padding-bottom:10px; margin-bottom:10px;">
+                    <h3 style="margin:0; color:${color.main}; font-size:18px;">گروه ${faNum(g)}</h3>
+                    <span style="font-weight:bold; background:${color.bg}; color:${color.main}; padding:4px 10px; border-radius:10px; font-size:14px;">مجموع: ⭐ ${faNum(gScore)}</span>
                 </div>
-                <div style="margin-bottom:15px; display:flex; flex-wrap:wrap; gap:5px;">${mHtml}</div>
+                <div style="margin-bottom:15px; display:flex; flex-direction:column; gap:5px;">${mHtml}</div>
                 <div style="display:flex; gap:10px;">
-                    <button class="btn-3d" style="flex:1; background:var(--success); --theme-shadow:#059669; padding:8px; font-size:12px;" onclick="addScoreToGroup(${g}, 1)">+۱ به همه گروه</button>
-                    <button class="btn-3d" style="flex:1; background:var(--danger); --theme-shadow:#b91c1c; padding:8px; font-size:12px;" onclick="addScoreToGroup(${g}, -1)">-۱ از گروه</button>
+                    <button class="btn-3d" style="flex:1; background:${color.main}; padding:8px; font-size:12px; box-shadow:0 4px 0 rgba(0,0,0,0.2);" onclick="addScoreToGroup(${g}, 1)">+۱ به گروه</button>
+                    <button class="btn-3d" style="flex:1; background:#ef4444; padding:8px; font-size:12px; box-shadow:0 4px 0 #b91c1c;" onclick="addScoreToGroup(${g}, -1)">-۱ از گروه</button>
                 </div>
             </div>`;
         });
         document.getElementById('groupsListContainer').innerHTML = html;
+        document.getElementById('groupDrawResult').innerHTML = "؟"; // ریست گردونه
     }
 
     function addScoreToGroup(g, val) {
@@ -750,9 +754,58 @@
         }
     }
 
-    /* ---------- پروفایل شخصی (محاسبه تاریخ تولد) ---------- */
+    let groupDrawInterval;
+    function startGroupDraw() {
+        let groups = [...new Set(db[currentClass].map(s => s.group))].sort((a,b) => a-b);
+        if(groups.length === 0) return;
+        
+        const resultBox = document.getElementById('groupDrawResult');
+        let ticks = 0; const maxTicks = 25;
+        
+        playBeep('whoosh'); clearInterval(groupDrawInterval);
+        
+        groupDrawInterval = setInterval(() => {
+            let randG = groups[Math.floor(Math.random() * groups.length)];
+            resultBox.innerHTML = `<span style="font-size:35px; color:#8b5cf6;">گروه ${faNum(randG)}</span>`;
+            playBeep('tick'); ticks++;
+            
+            if(ticks >= maxTicks) {
+                clearInterval(groupDrawInterval); playBeep('tada');
+                let color = GROUP_COLORS[(randG-1) % GROUP_COLORS.length];
+                let members = db[currentClass].filter(s => s.group === randG);
+                let mHtml = members.map(m => `<div style="font-size:14px; margin:5px 0;">👤 ${m.name} (⭐ ${faNum(m.scorePlus || 0)})</div>`).join("");
+                
+                resultBox.innerHTML = `
+                    <div style="background:${color.bg}; color:${color.main}; padding:10px 20px; border-radius:15px; border:2px solid ${color.main}; width:100%;">
+                        <h3 style="margin:0 0 10px 0;">🎉 گروه ${faNum(randG)} 🎉</h3>
+                        ${mHtml}
+                    </div>`;
+            }
+        }, 80);
+    }
+
+    function showGroupModalForStudent(i) {
+        const s = db[currentClass][i]; const g = s.group;
+        let color = GROUP_COLORS[(g-1) % GROUP_COLORS.length];
+        let members = db[currentClass].filter(member => member.group === g);
+        let gScore = members.reduce((a, member) => a + (member.scorePlus || 0), 0);
+        
+        let mHtml = members.map(m => `<div class="prize-item" style="${m.name === s.name ? 'background:'+color.bg+'; border-color:'+color.main+';' : ''}">👤 ${m.name} <span style="direction:ltr;">⭐ ${faNum(m.scorePlus || 0)}</span></div>`).join("");
+        
+        document.getElementById('modalEm').innerText = '👥';
+        document.getElementById('modalTitle').innerText = `گروه ${faNum(g)}`;
+        document.getElementById('modalTitle').style.color = color.main;
+        document.getElementById('modalMsg').innerHTML = `
+            <div style="margin-bottom:10px; font-weight:bold; color:#475569;">سلام ${s.name.split(" ")[0]}! شما در گروه ${faNum(g)} هستید.</div>
+            <div style="background:${color.main}; color:white; padding:5px; border-radius:10px; margin-bottom:10px;">مجموع امتیاز گروه: ⭐ ${faNum(gScore)}</div>
+            <div style="display:flex; flex-direction:column; gap:5px;">${mHtml}</div>
+        `;
+        document.getElementById('modal').classList.add('show');
+        playBeep('success');
+    }
+
+    /* ---------- پروفایل شخصی (تولد) ---------- */
     function openProfilePage() {
-        goToPage('page-profile');
         let sel = document.getElementById('profileSelect');
         sel.innerHTML = '<option value="">-- انتخاب از لیست کلاس --</option>';
         db[currentClass].forEach((s, i) => { sel.innerHTML += `<option value="${i}">${s.name}</option>`; });
@@ -794,10 +847,8 @@
             <div class="profile-stats">
                 <div class="p-stat" style="border-color:#10b981; background:#ecfdf5;"><span>چراغ سبز (+)</span><b style="color:#10b981;">${faNum(s.scorePlus || 0)}</b></div>
                 <div class="p-stat" style="border-color:#ef4444; background:#fef2f2;"><span>چراغ قرمز (-)</span><b style="color:#ef4444;">${faNum(s.scoreMinus || 0)}</b></div>
-                
                 <div class="p-stat"><span>تاریخ تولد 🎂</span><b style="font-size:14px;">${birthStr}</b><span style="color:#f59e0b;">${countdown}</span></div>
                 <div class="p-stat"><span>تلفن ولی 📱</span><b style="font-size:14px; direction:ltr;">${s.parentPhone ? faNum(s.parentPhone) : 'ثبت نشده'}</b></div>
-
                 <div class="p-stat"><span>همیار شده؟ 🤝</span><b style="font-size:14px; color:#475569;">${isMonitor}</b></div>
                 <div class="p-stat"><span>کاپیتان شده؟ ⚽️</span><b style="font-size:14px; color:#475569;">${isCaptain}</b></div>
             </div>
@@ -822,6 +873,7 @@
                         if (document.getElementById('page-attendance').classList.contains('active')) { if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); } }
                         else if (document.getElementById('page-points-register').classList.contains('active')) { changeScore(i, 1); showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`); }
                         else if (document.getElementById('page-profile').classList.contains('active')) { document.getElementById('profileSelect').value = i; showProfile(i); }
+                        else if (document.getElementById('page-groups').classList.contains('active')) { showGroupModalForStudent(i); }
                     } else { playBeep('error'); showToast(`❌ تگ ناشناس`, false); }
                 });
             } catch (e) { playBeep('error'); showToast("خطا در سنسور", false); }
@@ -830,14 +882,14 @@
 
     async function sendToCloud() {
         const abs = db[currentClass].filter(s => !s.present);
-        let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass==='classA'?'الف':'ب'}\n📋 غایبین:\n` + (abs.length===0?"- همه حاضرند ✅":abs.map((s,i)=>`${i+1}. ${s.name}`).join('\n'));
+        let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass === 'classA' ? 'الف' : 'ب'}\n📋 غایبین:\n` + (abs.length === 0 ? "- همه حاضرند ✅" : abs.map((s, i) => `${i + 1}. ${s.name}`).join('\n'));
         showToast("ارسال...");
         try { await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) }); playBeep('success'); showToast("✅ در کانال ارسال شد"); }
         catch (e) { playBeep('error'); showToast("❌ خطا", false); }
     }
     function sendSmsToPrincipal() {
         const abs = db[currentClass].filter(s => !s.present);
-        let txt = `تاریخ: ${new Date().toLocaleDateString('fa-IR')}\nغایبین:\n` + (abs.length===0?"همه حاضرند":abs.map(s=>s.name).join('\n'));
+        let txt = `تاریخ: ${new Date().toLocaleDateString('fa-IR')}\nغایبین:\n` + (abs.length === 0 ? "همه حاضرند" : abs.map(s => s.name).join('\n'));
         window.location.href = `sms:${PRINCIPAL_PHONE}?body=${encodeURIComponent(txt)}`;
     }
 </script>
