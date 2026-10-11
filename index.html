@@ -55,7 +55,6 @@
         @keyframes rocket { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-10px) rotate(4deg); } }
         .hero h1 { font-size: 32px; font-weight: 900; margin: 5px 0 0; background: linear-gradient(90deg, #4f46e5, #db2777, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
         
-        /* دکمه‌های صفحه اول وسط‌چین و مرتب شدند */
         .class-btn { padding: 30px 15px; font-size: 24px; border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;}
         .class-btn .em { font-size: 55px; line-height: 1; }
         .class-btn span { display: block; }
@@ -97,7 +96,7 @@
         .score-display-group { display: flex; flex-direction: column; align-items: center; min-width: 35px; }
         .val-plus { color: var(--success); font-weight: 900; font-size: 16px; cursor: pointer; padding: 1px 4px; border-radius: 6px; }
         .val-minus { color: var(--danger); font-size: 12px; font-weight: 800; cursor: pointer; padding: 1px 4px; border-radius: 6px; }
-
+        
         .draw-box { background: white; border-radius: 25px; padding: 25px 10px; text-align: center; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 5px solid var(--theme-main); position: relative; overflow: hidden; }
         .draw-box.captain-mode { border-color: #16a34a; }
         .draw-box.monitor-mode { border-color: #0284c7; }
@@ -120,7 +119,6 @@
         .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 4px #10b981; }
         .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 4px #ef4444; }
 
-        /* مودال عمومی و جایزه */
         #modal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 2800; padding: 15px; backdrop-filter: blur(4px); }
         #modal.show { display: flex; }
         #modal .box { background: white; border-radius: 25px; padding: 20px; max-width: 400px; width: 100%; border: 4px solid var(--theme-main); text-align: center; }
@@ -155,7 +153,6 @@
 <div id="toast">پیام سیستم</div>
 <input type="file" id="fileInput" accept=".json" style="display:none;" onchange="importBackup(event)">
 
-<!-- مودال عمومی (برای جوایز و پروفایل گروه) -->
 <div id="modal">
     <div class="box" id="modalBox">
         <div class="em" id="modalEm" style="font-size:50px; margin-bottom:10px;">🎁</div>
@@ -167,7 +164,6 @@
 
 <div class="container">
 
-    <!-- انتخاب کلاس -->
     <div id="page-select" class="page active">
         <div class="hero"><div class="logo">🚀</div><h1>سامانه سوپراپ</h1></div>
         <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -180,7 +176,6 @@
         </div>
     </div>
 
-    <!-- داشبورد اصلی -->
     <div id="page-dashboard" class="page">
         <div class="sub-header">
             <h1 id="dashTitle" style="margin:0; color: var(--theme-main);">داشبورد</h1>
@@ -207,7 +202,6 @@
         </div>
     </div>
 
-    <!-- حضور و غیاب -->
     <div id="page-attendance" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color: var(--theme-main);">📋 حضور و غیاب</h2><span id="attCount" class="student-id">۰/۰</span>
@@ -225,7 +219,6 @@
         <div id="studentListAtt"></div>
     </div>
 
-    <!-- منوی بانک امتیاز -->
     <div id="page-points-menu" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color: var(--theme-main);">⭐️ بانک امتیاز</h2>
@@ -237,7 +230,6 @@
         </div>
     </div>
 
-    <!-- ثبت امتیاز -->
     <div id="page-points-register" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">🎯 ثبت امتیاز</h2>
@@ -255,7 +247,6 @@
         <div id="studentListPoints"></div>
     </div>
 
-    <!-- گزارش امتیازات و نوار -->
     <div id="page-points-report" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">💡 تابلوی افتخارات</h2>
@@ -271,7 +262,6 @@
         <div class="light-grid" id="pointsChart"></div>
     </div>
 
-    <!-- گردونه جوایز -->
     <div id="page-reward-shop" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="color: #9333ea; margin:0;">🎁 گردونه جوایز</h2>
@@ -284,7 +274,6 @@
         <div id="rewardStudentList"></div>
     </div>
 
-    <!-- منو قرعه‌کشی -->
     <div id="page-draw-menu" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 id="drawMenuTitle" style="margin:0;">انتخاب هوشمند</h2>
@@ -295,7 +284,6 @@
         </div>
     </div>
 
-    <!-- انجام قرعه کشی -->
     <div id="page-draw-play" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="resetDraw(); goToPage('page-draw-menu')">➔</button><h2 id="drawPlayTitle" style="margin:0;">قرعه‌کشی</h2>
@@ -313,7 +301,6 @@
         </div>
     </div>
 
-    <!-- گزارش قرعه‌کشی -->
     <div id="page-draw-report" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-draw-menu')">➔</button><h2 style="margin:0;">مدیریت افراد</h2>
@@ -329,7 +316,6 @@
         </div>
     </div>
 
-    <!-- گروه‌ها -->
     <div id="page-groups" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color:var(--theme-main);">👥 گروه‌بندی کلاس</h2>
@@ -346,7 +332,6 @@
         <div id="groupsListContainer"></div>
     </div>
 
-    <!-- پروفایل شخصی -->
     <div id="page-profile" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-dashboard')">➔</button><h2 style="margin:0; color:var(--theme-main);">👤 پروفایل شخصی</h2>
@@ -377,10 +362,10 @@
     const baseClassA = [{"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}];
     const baseClassB = [{"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}];
 
-    // ترکیب دقیق گروه های کلاس الف استخراج شده از تصویر
+    // نگاشت دقیق گروه‌های کلاس الف بر اساس تصویر شما
     const groupMappingA = {
         "A01": 3, "A02": 1, "A03": 7, "A04": 4, "A05": 7, "A06": 4, "A07": 6,
-        "A08": 6, "A09": 4, "A10": 5, "A11": 1, "A12": 7, "A13": 3, "A14": 3,
+        "A08": 6, "A09": 4, "A10": 5, "A11": 1, "A12": 7, "A13": 2, "A14": 3,
         "A15": 5, "A16": 3, "A17": 2, "A18": 5, "A19": 2, "A20": 6, "A21": 1
     };
 
@@ -411,7 +396,6 @@
     let currentWinners = [];
     let drawTimers = [];
 
-    // انیمیشن پس‌زمینه
     (function buildFloaties() {
         const set = ['⭐', '✏️', '📚', '🎈', '💡']; let h = ''; 
         for (let i = 0; i < 8; i++) h += `<span class="floatie" style="left:${Math.random()*90}%; font-size:${20+Math.random()*15}px; animation-duration:${18+Math.random()*10}s; animation-delay:${-Math.random()*20}s">${set[i%set.length]}</span>`;
@@ -439,42 +423,33 @@
     /* ---------- دانلود و ایمپورت بک‌آپ ---------- */
     function downloadBackup() {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
-        const a = document.createElement('a');
-        const date = new Date().toLocaleDateString('fa-IR').replace(/\//g, '-');
-        a.href = dataStr; a.download = `ClassBackup_${date}.json`;
-        document.body.appendChild(a); a.click(); a.remove();
-        showToast("💾 فایل بک‌آپ دانلود شد");
+        const a = document.createElement('a'); const date = new Date().toLocaleDateString('fa-IR').replace(/\//g, '-');
+        a.href = dataStr; a.download = `ClassBackup_${date}.json`; document.body.appendChild(a); a.click(); a.remove(); showToast("💾 فایل بک‌آپ دانلود شد");
     }
 
     function importBackup(event) {
-        const file = event.target.files[0];
-        if (!file) return;
+        const file = event.target.files[0]; if (!file) return;
         const reader = new FileReader();
         reader.onload = function(e) {
-            try {
-                const importedData = JSON.parse(e.target.result);
-                if (importedData.classA && importedData.classB) {
-                    db = importedData; pushData(); goToPage('page-dashboard'); showToast("✅ بک‌آپ با موفقیت بازیابی شد", true);
-                } else alert("فایل بک‌آپ نامعتبر است.");
-            } catch (err) { alert("خطا در خواندن فایل JSON. فایل خراب است."); }
+            try { const importedData = JSON.parse(e.target.result);
+                if (importedData.classA && importedData.classB) { db = importedData; pushData(); goToPage('page-dashboard'); showToast("✅ بازیابی شد", true); } 
+                else alert("فایل بک‌آپ نامعتبر است.");
+            } catch (err) { alert("خطا در خواندن فایل."); }
         };
         reader.readAsText(file);
     }
 
     /* ---------- ناوبری ---------- */
-    function changeBackground(pageId) {
+    function goToPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
         let cls = 'bg-dashboard';
         if (pageId === 'page-attendance') cls = 'bg-attendance';
         if (pageId.includes('draw')) cls = currentDrawType === 'captain' ? 'bg-captain' : 'bg-monitor';
         if (pageId.includes('points') || pageId === 'page-reward-shop') cls = 'bg-points';
         if (pageId === 'page-profile' || pageId === 'page-groups') cls = 'bg-profile';
         document.body.className = cls + (currentClass === 'classB' ? ' theme-b' : '');
-    }
-
-    function goToPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        changeBackground(pageId); window.scrollTo({ top: 0 });
+        window.scrollTo({ top: 0 });
         if (pageId === 'page-dashboard') updateDashStats();
         if (pageId === 'page-attendance') renderAttendance();
         if (pageId === 'page-points-register') renderPoints();
@@ -503,16 +478,8 @@
         try {
             let res = await fetch(WORKER_URL + "/api/data"); let data = await res.json();
             if (data && data.classA) {
-                data.classA.forEach((s,i) => { 
-                    if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} 
-                    if(s.group===undefined) s.group = baseClassA[i].group;
-                    if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0;
-                });
-                data.classB.forEach((s,i) => { 
-                    if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} 
-                    if(s.group===undefined) s.group = baseClassB[i].group;
-                    if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0;
-                });
+                data.classA.forEach((s,i) => { if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} if(s.group===undefined) s.group = baseClassA[i].group; if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0; });
+                data.classB.forEach((s,i) => { if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} if(s.group===undefined) s.group = baseClassB[i].group; if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0; });
                 db = data;
                 if (document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
                 if (document.getElementById('page-points-register').classList.contains('active')) renderPoints();
@@ -526,14 +493,8 @@
     /* ---------- حضور و غیاب ---------- */
     function renderAttendance() {
         let html = "", present = 0;
-        db[currentClass].forEach((s, i) => {
-            if (s.present) present++;
-            html += `<div class="student-card" style="border-right: 4px solid ${s.present ? '#10b981' : '#ef4444'};">
-                <div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div>
-                <button class="btn-3d present-btn ${s.present ? 'in' : 'out'}" onclick="togglePresent(${i})">${s.present ? '✔ حاضر' : '✖ غایب'}</button></div>`;
-        });
-        document.getElementById("studentListAtt").innerHTML = html;
-        document.getElementById('attCount').innerText = `${faNum(present)} / ${faNum(db[currentClass].length)}`;
+        db[currentClass].forEach((s, i) => { if (s.present) present++; html += `<div class="student-card" style="border-right: 4px solid ${s.present ? '#10b981' : '#ef4444'};"><div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div><button class="btn-3d present-btn ${s.present ? 'in' : 'out'}" onclick="togglePresent(${i})">${s.present ? '✔ حاضر' : '✖ غایب'}</button></div>`; });
+        document.getElementById("studentListAtt").innerHTML = html; document.getElementById('attCount').innerText = `${faNum(present)} / ${faNum(db[currentClass].length)}`;
     }
     function togglePresent(i) { db[currentClass][i].present = !db[currentClass][i].present; renderAttendance(); if (db[currentClass][i].present) playBeep('success'); }
     function resetAttendance() { if (confirm("غایبین صفر شوند؟")) { db[currentClass].forEach(s => s.present = false); renderAttendance(); showToast("صفر شد"); } }
@@ -543,21 +504,11 @@
         let html = "";
         db[currentClass].forEach((s, i) => {
             let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0;
-            html += `<div class="student-card"><div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div>
-                    <div class="score-controls"><button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">−</button>
-                        <div class="score-display-group">
-                            <span class="val-plus" onclick="reduceScore(${i}, 'plus')">${faNum(sp)}</span>
-                            <span class="val-minus" onclick="reduceScore(${i}, 'minus')">${sm > 0 ? '-' + faNum(sm) : '۰'}</span>
-                        </div><button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button></div></div>`;
+            html += `<div class="student-card"><div class="student-info">${avatarHTML(s, i)}<span class="student-name">${s.name}</span></div><div class="score-controls"><button class="btn-score btn-minus" onclick="changeScore(${i}, -1)">−</button><div class="score-display-group"><span class="val-plus" onclick="reduceScore(${i}, 'plus')">${faNum(sp)}</span><span class="val-minus" onclick="reduceScore(${i}, 'minus')">${sm > 0 ? '-' + faNum(sm) : '۰'}</span></div><button class="btn-score btn-plus" onclick="changeScore(${i}, 1)">+</button></div></div>`;
         });
         document.getElementById("studentListPoints").innerHTML = html;
     }
-
-    function changeScore(i, val) {
-        const s = db[currentClass][i];
-        if (val > 0) { s.scorePlus++; playBeep('success'); renderPoints(); } 
-        else { s.scoreMinus++; playBeep('error'); renderPoints(); if (s.scoreMinus >= 5) alert(`🚨 اخطار: ${s.name} ۵ چراغ قرمز دریافت کرد.`); }
-    }
+    function changeScore(i, val) { const s = db[currentClass][i]; if (val > 0) { s.scorePlus++; playBeep('success'); renderPoints(); } else { s.scoreMinus++; playBeep('error'); renderPoints(); if (s.scoreMinus >= 5) alert(`🚨 اخطار: ${s.name} ۵ چراغ قرمز دریافت کرد.`); } }
     function reduceScore(i, type) { const s = db[currentClass][i]; if (type === 'plus' && s.scorePlus > 0) { s.scorePlus--; playBeep('success'); renderPoints(); } if (type === 'minus' && s.scoreMinus > 0) { s.scoreMinus--; playBeep('success'); renderPoints(); } }
     function addScoreToAll(val) { if (confirm(`آیا به همه ${val > 0 ? '+۱' : '-۱'} داده شود؟`)) { db[currentClass].forEach(s => { if (val > 0) s.scorePlus++; else s.scoreMinus++; }); renderPoints(); if (val > 0) playBeep('success'); else playBeep('error'); } }
 
@@ -566,37 +517,32 @@
         goToPage('page-points-report'); await fetchData();
         let totalClassScore = 0; let html = "";
         db[currentClass].forEach((s) => {
-            let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0; totalClassScore += sp;
-            let lightsHTML = "";
-            for (let i = 0; i < 5; i++) { lightsHTML += `<div class="light-bulb ${i < sm ? 'on-minus' : ''}"></div>`; }
+            let sp = s.scorePlus || 0; let sm = s.scoreMinus || 0; totalClassScore += sp; let lightsHTML = "";
+            for (let i = 0; i < 5; i++) lightsHTML += `<div class="light-bulb ${i < sm ? 'on-minus' : ''}"></div>`;
             lightsHTML += `<div style="width: 2px; background: #94a3b8; height: 16px; margin: 0 4px;"></div>`;
             let displayGreen = sp % 10; if (displayGreen === 0 && sp > 0) displayGreen = 10;
-            for (let i = 0; i < 10; i++) { lightsHTML += `<div class="light-bulb ${i < displayGreen ? 'on-plus' : ''}"></div>`; }
-            html += `<div class="light-row"><div class="light-name">${s.name}</div><div class="lights-container" dir="rtl">${lightsHTML}</div><div style="font-weight:900; width:22px; color:var(--success)">${faNum(sp)}</div></div>`;
+            for (let i = 0; i < 10; i++) lightsHTML += `<div class="light-bulb ${i < displayGreen ? 'on-plus' : ''}"></div>`;
+            html += `<div class="light-row"><div class="light-name">${s.name.split(" ")[0]} ${s.name.split(" ")[1] || ''}</div><div class="lights-container" dir="rtl">${lightsHTML}</div><div style="font-weight:900; width:22px; color:var(--success)">${faNum(sp)}</div></div>`;
         });
         document.getElementById("pointsChart").innerHTML = html;
-        let percent = Math.min((totalClassScore / 200) * 100, 100);
-        document.getElementById("classProgressFill").style.width = percent + "%";
+        document.getElementById("classProgressFill").style.width = Math.min((totalClassScore / 200) * 100, 100) + "%";
         document.getElementById("classProgressText").innerText = `${faNum(totalClassScore)} / ۲۰۰`;
     }
 
-    /* ---------- گردونه جوایز ---------- */
+    /* ---------- گردونه جوایز (با رفع باگ بازگشت امتیاز) ---------- */
     function showPrizesModal() {
         let html = ""; REWARD_PRIZES.forEach(p => { html += `<div class="prize-item">${p}</div>`; });
-        document.getElementById('modalEm').innerText = '🎁';
-        document.getElementById('modalTitle').innerText = 'جوایز گردونه';
+        document.getElementById('modalEm').innerText = '🎁'; document.getElementById('modalTitle').innerText = 'جوایز گردونه';
         document.getElementById('modalMsg').innerHTML = `<div class="prizes-list">${html}</div>`;
         document.getElementById('modal').classList.add('show');
     }
 
     let wheelSpinning = false;
     function openRewardShop() {
-        goToPage('page-reward-shop');
-        let html = "";
+        goToPage('page-reward-shop'); let html = "";
         db[currentClass].forEach((s, i) => {
             let sp = s.scorePlus || 0; let canBuy = sp >= 3 && !wheelSpinning;
-            html += `<div class="student-card"><div class="student-info"><span class="student-id" style="background:#f3e8ff; color:#9333ea;">${faNum(sp)} سبز</span><span class="student-name">${s.name}</span></div>
-                <button class="btn-3d" style="padding: 6px 12px; font-size:12px; background: ${canBuy ? 'linear-gradient(135deg,#c084fc,#9333ea)' : '#cbd5e1'}; --theme-shadow: ${canBuy ? '#7e22ce' : '#94a3b8'};" ${canBuy ? '' : 'disabled'} onclick="buyTicket(${i})">🎟️ چرخش</button></div>`;
+            html += `<div class="student-card"><div class="student-info"><span class="student-id" style="background:#f3e8ff; color:#9333ea;">${faNum(sp)} سبز</span><span class="student-name">${s.name}</span></div><button class="btn-3d" style="padding: 6px 12px; font-size:12px; background: ${canBuy ? 'linear-gradient(135deg,#c084fc,#9333ea)' : '#cbd5e1'}; --theme-shadow: ${canBuy ? '#7e22ce' : '#94a3b8'};" ${canBuy ? '' : 'disabled'} onclick="buyTicket(${i})">🎟️ چرخش</button></div>`;
         });
         document.getElementById("rewardStudentList").innerHTML = html;
         if(!wheelSpinning) document.getElementById("rewardDrawBox").style.display = "none";
@@ -605,36 +551,38 @@
     function buyTicket(i) {
         if (wheelSpinning) return; const s = db[currentClass][i];
         if (!confirm(`۳ امتیاز از "${s.name}" کسر شود؟`)) return;
+        
         db[currentClass][i].scorePlus -= 3; pushData(); openRewardShop();
-
+        
         const drawBox = document.getElementById("rewardDrawBox"); drawBox.style.display = "block";
         document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
         const resultEl = document.getElementById('rewardResult'); resultEl.innerText = 'در حال چرخش...';
         drawBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        const n = REWARD_PRIZES.length; let ticks = 0; const maxTicks = 35; wheelSpinning = true;
+        const n = REWARD_PRIZES.length; let ticks = 0; wheelSpinning = true;
         
         let inv = setInterval(() => {
             playBeep('tick'); resultEl.innerText = REWARD_PRIZES[Math.floor(Math.random() * n)]; ticks++;
-            if (ticks >= maxTicks) { 
+            if (ticks >= 35) { 
                 clearInterval(inv); wheelSpinning = false;
                 let finalPrize = REWARD_PRIZES[Math.floor(Math.random() * n)];
                 
                 if(finalPrize.includes('پوچ')) { playBeep('error'); } 
                 else if(finalPrize.includes('شانس دوباره')) {
                     playBeep('tada');
-                    db[currentClass][i].scorePlus += 3; // بازگشت امتیاز
+                    db[currentClass][i].scorePlus += 3; // بازگشت امتیاز کسر شده برای شانس دوباره!
                     pushData(); showToast("🎉 یه شانس دوباره! امتیاز بلیت برگشت.", true);
                 } else { playBeep('tada'); }
                 
-                openRewardShop(); document.getElementById("rewardDrawBox").style.display = "block";
+                openRewardShop(); // دکمه‌ها را آپدیت می‌کند (اگر شانس دوباره بود دکمه‌اش باز فعال می‌شود)
+                document.getElementById("rewardDrawBox").style.display = "block";
                 document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
                 resultEl.innerText = finalPrize;
             }
         }, 80);
     }
 
-    /* ---------- قرعه‌کشی مبصر/کاپیتان ---------- */
+    /* ---------- قرعه‌کشی (مبصر و کاپیتان با تعویض تکی) ---------- */
     function openDrawMenu(type) {
         currentDrawType = type;
         document.getElementById('drawMenuTitle').innerText = type === 'monitor' ? '🤝 همیار و مبصر' : '⚽️ کاپیتان ورزش';
@@ -645,8 +593,7 @@
 
     function setupDrawPlayUI() {
         document.getElementById('btnStartDraw').style.display = 'flex'; document.getElementById('drawConfirmActions').style.display = 'none';
-        const req = currentDrawType === 'captain' ? 2 : 1;
-        let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container"><div class="slot-content">؟</div></div>`;
+        const req = currentDrawType === 'captain' ? 2 : 1; let html = ""; for (let i = 0; i < req; i++) html += `<div class="slot-container"><div class="slot-content" style="transform:translateY(0);">؟</div></div>`;
         document.getElementById('drawResult').innerHTML = html;
     }
 
@@ -691,7 +638,6 @@
         
         const el = document.getElementById(`slot-content-${idx}`); const slotDiv = document.getElementById(`slot-${idx}`);
         slotDiv.classList.remove('winner-highlight'); const oldBtn = slotDiv.querySelector('button'); if(oldBtn) oldBtn.remove();
-        
         currentWinners[idx] = eligible[Math.floor(Math.random() * eligible.length)].name; 
         
         let ticks = 0; const maxTicks = 20;
@@ -709,8 +655,7 @@
     function saveDrawResult() { const h = db[currentDrawType + 'History'][currentClass]; currentWinners.forEach(n => { if (!h.includes(n)) h.push(n); }); pushData(); playBeep('success'); showToast("✅ ثبت شد"); setTimeout(() => openDrawReport(), 800); }
 
     function openDrawReport() {
-        goToPage('page-draw-report');
-        const h = db[currentDrawType + 'History'][currentClass]; const all = db[currentClass].map(s => s.name);
+        goToPage('page-draw-report'); const h = db[currentDrawType + 'History'][currentClass]; const all = db[currentClass].map(s => s.name);
         let sHTML = ""; h.forEach(n => { sHTML += `<div class="chip done" onclick="toggleHistory('${n}')">✅ ${n}</div>`; });
         document.getElementById('reportSelectedList').innerHTML = sHTML || "<p>خالی است</p>";
         let rHTML = ""; all.filter(n => !h.includes(n)).forEach(n => { rHTML += `<div class="chip" onclick="toggleHistory('${n}')">⏳ ${n}</div>`; });
@@ -744,7 +689,7 @@
             </div>`;
         });
         document.getElementById('groupsListContainer').innerHTML = html;
-        document.getElementById('groupDrawResult').innerHTML = "؟"; // ریست گردونه
+        document.getElementById('groupDrawResult').innerHTML = "؟";
     }
 
     function addScoreToGroup(g, val) {
@@ -758,28 +703,20 @@
     function startGroupDraw() {
         let groups = [...new Set(db[currentClass].map(s => s.group))].sort((a,b) => a-b);
         if(groups.length === 0) return;
-        
         const resultBox = document.getElementById('groupDrawResult');
         let ticks = 0; const maxTicks = 25;
-        
         playBeep('whoosh'); clearInterval(groupDrawInterval);
         
         groupDrawInterval = setInterval(() => {
             let randG = groups[Math.floor(Math.random() * groups.length)];
             resultBox.innerHTML = `<span style="font-size:35px; color:#8b5cf6;">گروه ${faNum(randG)}</span>`;
             playBeep('tick'); ticks++;
-            
             if(ticks >= maxTicks) {
                 clearInterval(groupDrawInterval); playBeep('tada');
                 let color = GROUP_COLORS[(randG-1) % GROUP_COLORS.length];
                 let members = db[currentClass].filter(s => s.group === randG);
                 let mHtml = members.map(m => `<div style="font-size:14px; margin:5px 0;">👤 ${m.name} (⭐ ${faNum(m.scorePlus || 0)})</div>`).join("");
-                
-                resultBox.innerHTML = `
-                    <div style="background:${color.bg}; color:${color.main}; padding:10px 20px; border-radius:15px; border:2px solid ${color.main}; width:100%;">
-                        <h3 style="margin:0 0 10px 0;">🎉 گروه ${faNum(randG)} 🎉</h3>
-                        ${mHtml}
-                    </div>`;
+                resultBox.innerHTML = `<div style="background:${color.bg}; color:${color.main}; padding:10px 20px; border-radius:15px; border:2px solid ${color.main}; width:100%;"><h3 style="margin:0 0 10px 0;">🎉 گروه ${faNum(randG)} 🎉</h3>${mHtml}</div>`;
             }
         }, 80);
     }
@@ -789,22 +726,14 @@
         let color = GROUP_COLORS[(g-1) % GROUP_COLORS.length];
         let members = db[currentClass].filter(member => member.group === g);
         let gScore = members.reduce((a, member) => a + (member.scorePlus || 0), 0);
-        
         let mHtml = members.map(m => `<div class="prize-item" style="${m.name === s.name ? 'background:'+color.bg+'; border-color:'+color.main+';' : ''}">👤 ${m.name} <span style="direction:ltr;">⭐ ${faNum(m.scorePlus || 0)}</span></div>`).join("");
         
-        document.getElementById('modalEm').innerText = '👥';
-        document.getElementById('modalTitle').innerText = `گروه ${faNum(g)}`;
-        document.getElementById('modalTitle').style.color = color.main;
-        document.getElementById('modalMsg').innerHTML = `
-            <div style="margin-bottom:10px; font-weight:bold; color:#475569;">سلام ${s.name.split(" ")[0]}! شما در گروه ${faNum(g)} هستید.</div>
-            <div style="background:${color.main}; color:white; padding:5px; border-radius:10px; margin-bottom:10px;">مجموع امتیاز گروه: ⭐ ${faNum(gScore)}</div>
-            <div style="display:flex; flex-direction:column; gap:5px;">${mHtml}</div>
-        `;
-        document.getElementById('modal').classList.add('show');
-        playBeep('success');
+        document.getElementById('modalEm').innerText = '👥'; document.getElementById('modalTitle').innerText = `گروه ${faNum(g)}`; document.getElementById('modalTitle').style.color = color.main;
+        document.getElementById('modalMsg').innerHTML = `<div style="margin-bottom:10px; font-weight:bold; color:#475569;">سلام ${s.name.split(" ")[0]}! شما در گروه ${faNum(g)} هستید.</div><div style="background:${color.main}; color:white; padding:5px; border-radius:10px; margin-bottom:10px;">مجموع امتیاز گروه: ⭐ ${faNum(gScore)}</div><div style="display:flex; flex-direction:column; gap:5px;">${mHtml}</div>`;
+        document.getElementById('modal').classList.add('show'); playBeep('success');
     }
 
-    /* ---------- پروفایل شخصی (تولد) ---------- */
+    /* ---------- پروفایل شخصی ---------- */
     function openProfilePage() {
         let sel = document.getElementById('profileSelect');
         sel.innerHTML = '<option value="">-- انتخاب از لیست کلاس --</option>';
@@ -814,16 +743,10 @@
 
     function daysUntilBirthday(bm, bd) {
         if (!bm || !bd) return "ثبت نشده";
-        const today = new Date();
-        const parts = new Intl.DateTimeFormat('fa-IR-u-nu-latn', { month: 'numeric', day: 'numeric' }).formatToParts(today);
-        let currentM = parseInt(parts.find(p => p.type === 'month').value);
-        let currentD = parseInt(parts.find(p => p.type === 'day').value);
-        
+        const today = new Date(); const parts = new Intl.DateTimeFormat('fa-IR-u-nu-latn', { month: 'numeric', day: 'numeric' }).formatToParts(today);
+        let currentM = parseInt(parts.find(p => p.type === 'month').value); let currentD = parseInt(parts.find(p => p.type === 'day').value);
         function getDayOfYear(m, d) { let days = 0; for(let i=1; i<m; i++) days += (i<=6 ? 31 : 30); return days + d; }
-        
-        let cDay = getDayOfYear(currentM, currentD);
-        let bDay = getDayOfYear(bm, bd);
-        
+        let cDay = getDayOfYear(currentM, currentD); let bDay = getDayOfYear(bm, bd);
         if (bDay === cDay) return "🎉 امروز تولدشه!";
         if (bDay > cDay) return faNum(bDay - cDay) + " روز مونده";
         return faNum(365 - cDay + bDay) + " روز مونده";
@@ -834,16 +757,13 @@
         const s = db[currentClass][idx];
         const isMonitor = db.monitorHistory[currentClass].includes(s.name) ? '✅ بله' : '❌ خیر';
         const isCaptain = db.captainHistory[currentClass].includes(s.name) ? '✅ بله' : '❌ خیر';
-        
         let birthStr = (s.birthMonth && s.birthDay) ? `${faNum(s.birthMonth)}/${faNum(s.birthDay)}` : "ثبت نشده";
         let countdown = daysUntilBirthday(s.birthMonth, s.birthDay);
 
         let html = `
         <div class="profile-card">
-            <div class="profile-avatar">${s.name.split("")[0]}</div>
-            <h2 style="margin:0; color:var(--theme-main);">${s.name}</h2>
+            <div class="profile-avatar">${s.name.split("")[0]}</div><h2 style="margin:0; color:var(--theme-main);">${s.name}</h2>
             <div class="group-badge">گروه ${faNum(s.group)}</div>
-            
             <div class="profile-stats">
                 <div class="p-stat" style="border-color:#10b981; background:#ecfdf5;"><span>چراغ سبز (+)</span><b style="color:#10b981;">${faNum(s.scorePlus || 0)}</b></div>
                 <div class="p-stat" style="border-color:#ef4444; background:#fef2f2;"><span>چراغ قرمز (-)</span><b style="color:#ef4444;">${faNum(s.scoreMinus || 0)}</b></div>
