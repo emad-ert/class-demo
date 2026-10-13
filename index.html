@@ -64,7 +64,7 @@
         .btn-back { background: var(--theme-grad); color: white; border: none; width: 44px; height: 44px; border-radius: 14px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 0 var(--theme-shadow); flex-shrink: 0; }
         .btn-back:active { transform: translateY(4px); box-shadow: none; }
 
-        /* نوار همگام سازی */
+        /* نوار همگام سازی جهانی */
         .global-sync-bar { display: flex; gap: 6px; margin-bottom: 15px; background: rgba(255,255,255,0.85); padding: 8px; border-radius: 16px; border: 2px solid rgba(255,255,255,0.6); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .btn-sync { flex: 1; padding: 8px 2px; border-radius: 12px; border: none; cursor: pointer; color: white; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font); font-weight:800; font-size:10px; text-align:center; transition: transform 0.1s;}
         .btn-sync .ic { font-size: 18px; line-height: 1; }
@@ -128,6 +128,7 @@
         .light-bulb.on-plus { background: #10b981; border-color: #059669; box-shadow: 0 0 4px #10b981; }
         .light-bulb.on-minus { background: #ef4444; border-color: #b91c1c; box-shadow: 0 0 4px #ef4444; }
 
+        /* مودال عمومی (برای جوایز و پروفایل گروه) */
         #modal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 2800; padding: 15px; backdrop-filter: blur(4px); }
         #modal.show { display: flex; }
         #modal .box { background: white; border-radius: 25px; padding: 20px; max-width: 400px; width: 100%; border: 4px solid var(--theme-main); text-align: center; }
@@ -269,7 +270,7 @@
         <div id="studentListPoints"></div>
     </div>
 
-    <!-- گزارش امتیازات و نوار -->
+    <!-- گزارش امتیازات -->
     <div id="page-points-report" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">💡 تابلوی افتخارات</h2>
@@ -412,6 +413,7 @@
                 <option value="">-- انتخاب کن --</option>
             </select>
         </div>
+
         <div id="profileCardContainer" style="display:none;"></div>
     </div>
 
@@ -509,6 +511,7 @@
         if (pageId === 'page-attendance') renderAttendance();
         if (pageId === 'page-points-register') renderPoints();
         if (pageId === 'page-draw-play') setupDrawPlayUI();
+        if (pageId === 'page-groups') openGroupsPage(false);
     }
 
     function openGroupsPage(isClick = true) {
@@ -558,18 +561,28 @@
     }
     function avatarHTML(s, i) { const hue = (i * 47) % 360; return `<span class="avatar" style="background:hsl(${hue},70%,60%)">${faNum(s.id.slice(1))}</span>`; }
 
-    /* ---------- سرور با رفع باگ کش ---------- */
+    /* ---------- سرور با رفع باگ کش و اجبار گروه ---------- */
     async function fetchData() {
         showToast("در حال دریافت ابری...", true);
         try {
-            // ترفند Cache-busting برای جلوگیری از خواندن اطلاعات قدیمی توسط مرورگر
-            let res = await fetch(WORKER_URL + "/api/data?t=" + new Date().getTime(), { cache: 'no-store' });
+            // اضافه کردن تاریخ برای جلوگیری از کش مرورگر
+            let res = await fetch(WORKER_URL + "/api/data?t=" + new Date().getTime(), { cache: 'no-store' }); 
             if(!res.ok) throw new Error('ارتباط برقرار نشد');
             let data = await res.json();
             
             if (data && data.classA) {
-                data.classA.forEach((s,i) => { if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} if(s.group===undefined) s.group = groupMappingA[s.id] || 1; if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0; });
-                data.classB.forEach((s,i) => { if(s.scorePlus===undefined){s.scorePlus=0;s.scoreMinus=0;} if(s.group===undefined) s.group = groupMappingB[s.id] || 1; if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0; });
+                // اعمال اجباری و دائمی گروه ها (حذف شرط undefined بودن گروه)
+                data.classA.forEach((s,i) => { 
+                    if(s.scorePlus===undefined){s.scorePlus=0; s.scoreMinus=0;} 
+                    s.group = groupMappingA[s.id] || 1; // اجباری
+                    if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0; 
+                });
+                data.classB.forEach((s,i) => { 
+                    if(s.scorePlus===undefined){s.scorePlus=0; s.scoreMinus=0;} 
+                    s.group = groupMappingB[s.id] || 1; // اجباری
+                    if(s.birthMonth===undefined) s.birthMonth=0; if(s.birthDay===undefined) s.birthDay=0; 
+                });
+                
                 db = data;
                 if (document.getElementById('page-attendance').classList.contains('active')) renderAttendance();
                 if (document.getElementById('page-points-register').classList.contains('active')) renderPoints();
@@ -635,7 +648,7 @@
         document.getElementById("classProgressText").innerText = `${faNum(totalClassScore)} / ۲۰۰`;
     }
 
-    /* ---------- گردونه جوایز با رفع باگ شانس دوباره ---------- */
+    /* ---------- گردونه جوایز با بازگشت امتیاز در شانس دوباره ---------- */
     function showPrizesModal() {
         let html = ""; REWARD_PRIZES.forEach(p => { html += `<div class="prize-item">${p}</div>`; });
         document.getElementById('modalEm').innerText = '🎁'; document.getElementById('modalTitle').innerText = 'جوایز گردونه';
@@ -674,7 +687,7 @@
                 if(finalPrize.includes('پوچ')) { playBeep('error'); } 
                 else if(finalPrize.includes('شانس دوباره')) {
                     playBeep('tada'); 
-                    db[currentClass][i].scorePlus += 3; // بازگشت 3 امتیاز
+                    db[currentClass][i].scorePlus += 3; // بازگشت امتیاز
                     pushData(); showToast("🎉 یه شانس دوباره! امتیاز بلیت برگشت.", true);
                 } else { playBeep('tada'); }
                 
@@ -728,7 +741,8 @@
                     btn.onclick = () => rerollSingle(i); slotDiv.appendChild(btn);
                     animationsDone++; if (animationsDone === req) { playBeep('success'); document.getElementById('drawConfirmActions').style.display = 'grid'; }
                 }
-            }, 60); drawTimers.push(inv);
+            }, 60);
+            drawTimers.push(inv);
         }
     }
 
@@ -749,7 +763,8 @@
                 clearInterval(inv); el.innerText = currentWinners[idx]; slotDiv.classList.add('winner-highlight'); playBeep('success');
                 let btn = document.createElement('button'); btn.innerText = "🔄 تعویض تکی"; btn.style.cssText = "position:absolute; left:10px; background:white; border:none; border-radius:10px; padding:5px; font-size:10px; cursor:pointer;"; btn.onclick = () => rerollSingle(idx); slotDiv.appendChild(btn);
             }
-        }, 60); drawTimers.push(inv);
+        }, 60);
+        drawTimers.push(inv);
     }
 
     function resetDraw() { drawTimers.forEach(t => clearInterval(t)); drawTimers = []; currentWinners = []; setupDrawPlayUI(); }
@@ -764,7 +779,7 @@
     }
     function toggleHistory(n) { const h = db[currentDrawType + 'History'][currentClass]; const i = h.indexOf(n); if (i > -1) h.splice(i, 1); else h.push(n); pushData(); openDrawReport(); }
 
-    /* ---------- منطق گروه‌ها (Group Draw) ---------- */
+    /* ---------- منطق گروه‌ها (مسابقه گروهی) ---------- */
     function addScoreToGroup(g, val) {
         if(confirm(`آیا به همه اعضای گروه ${g} مقدار ${val>0?'+۱':'-۱'} داده شود؟`)) {
             db[currentClass].forEach(s => { if(s.group === g) { if(val>0) s.scorePlus++; else s.scoreMinus++; } });
