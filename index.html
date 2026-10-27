@@ -102,7 +102,6 @@
 
         .chip { display: inline-block; background: white; border: 2px solid #e2e8f0; padding: 6px 10px; border-radius: 20px; margin: 4px; font-weight: 800; font-size: 12px; cursor: pointer; }
         .chip.done { background: #dcfce7; border-color: #86efac; }
-        .report-section { background: rgba(255,255,255,0.95); border-radius: 18px; padding: 12px; margin-bottom: 12px; }
         
         .light-grid { display: grid; grid-template-columns: 1fr; gap: 5px; background: rgba(255,255,255,0.95); padding: 12px; border-radius: 20px; border: 3px solid var(--theme-main); }
         .light-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed #cbd5e1; gap: 5px; }
@@ -115,27 +114,28 @@
         #modal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); display: none; align-items: center; justify-content: center; z-index: 2800; padding: 15px; backdrop-filter: blur(4px); }
         #modal.show { display: flex; }
         #modal .box { background: white; border-radius: 25px; padding: 20px; max-width: 400px; width: 100%; border: 4px solid var(--theme-main); text-align: center; }
-
-        /* استایل ارزشیابی */
+        
         .eval-input-group { background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 2px solid #e2e8f0; }
         .eval-select, .eval-text { width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #cbd5e1; font-family: var(--font); font-weight: bold; margin-bottom: 10px; }
         .grade-pad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 15px; }
         .g-btn { padding: 10px; border-radius: 10px; border: 2px solid #cbd5e1; background: #f1f5f9; font-weight: 900; font-size: 16px; cursor: pointer; transition: all 0.2s; }
         .g-btn.active { background: #6366f1; color: white; border-color: #4338ca; box-shadow: 0 4px 0 #4338ca; transform: translateY(-2px); }
         .mod-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; margin-bottom: 15px; }
-        
-        /* حالت چاپ */
-        @media print {
-            body * { visibility: hidden; }
-            #print-container, #print-container * { visibility: visible; }
-            #print-container { position: absolute; left: 0; top: 0; width: 100%; direction: rtl; font-family: Tahoma; }
-            .print-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            .print-table th, .print-table td { border: 1px solid #000; padding: 8px; text-align: center; }
-            .print-table th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; }
-        }
 
         #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #1e293b; color: white; padding: 12px 24px; border-radius: 25px; font-weight: 800; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 2500; opacity: 0; transition: all 0.3s ease; text-align: center; }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* استایل اختصاصی پرینت و PDF */
+        #print-container { display: none; }
+        @media print {
+            body { background: white !important; color: black !important; }
+            /* مخفی کردن تمام المان‌های صفحه به جز ظرف پرینت */
+            .container, #toast, #modal, #floaties, canvas, .global-sync-bar { display: none !important; }
+            #print-container { display: block !important; width: 100%; direction: rtl; }
+            .print-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-family: Tahoma, sans-serif; }
+            .print-table th, .print-table td { border: 1px solid #333; padding: 10px; text-align: center; font-size: 14px; }
+            .print-table th { background-color: #f1f5f9 !important; -webkit-print-color-adjust: exact; color-adjust: exact; font-weight: bold; }
+        }
     </style>
 </head>
 <body class="bg-dashboard">
@@ -145,17 +145,17 @@
 <div id="toast">پیام سیستم</div>
 <input type="file" id="fileInput" accept=".json" style="display:none;" onchange="importBackup(event)">
 
-<!-- مودال عمومی -->
 <div id="modal">
     <div class="box" id="modalBox">
         <div class="em" id="modalEm" style="font-size:50px; margin-bottom:10px;">🎁</div>
         <h3 id="modalTitle" style="margin-top:0; color:var(--theme-main);">عنوان</h3>
-        <div id="modalMsg" style="margin-bottom: 15px; font-size:13px; font-weight:bold; color:#475569;">پیام</div>
+        <div id="modalMsg" style="margin-bottom: 15px; font-size:13px; font-weight:bold; color:#475569; text-align:right;">پیام</div>
         <button class="btn-3d" style="width:100%; background: var(--danger); --theme-shadow: #b91c1c;" onclick="closeModal()">بستن</button>
     </div>
 </div>
 
-<div id="print-container" style="display:none;"></div>
+<!-- کانتینر مخصوص خروجی چاپ/PDF -->
+<div id="print-container"></div>
 
 <div class="container">
 
@@ -223,7 +223,7 @@
                 <option value="هدیه‌های آسمان">هدیه‌های آسمان</option>
                 <option value="املا/انشا">املا/انشا</option>
             </select>
-            <input type="text" id="evalDesc" class="eval-text" placeholder="شرح پرسش (مثلا: صفحه ۲۴)">
+            <input type="text" id="evalDesc" class="eval-text" placeholder="شرح پرسش (مثلا: درس سوم)">
         </div>
 
         <div class="stats-strip">
@@ -322,7 +322,7 @@
         <div id="studentListPoints"></div>
     </div>
 
-    <!-- گزارش امتیازات و نوار -->
+    <!-- گزارش امتیازات -->
     <div id="page-points-report" class="page">
         <div class="sub-header">
             <button class="btn-back" onclick="goToPage('page-points-menu')">➔</button><h2 style="margin:0; color: var(--theme-main);">💡 تابلوی افتخارات</h2>
@@ -359,7 +359,6 @@
         <div class="draw-box reward-mode" id="rewardDrawBox" style="display:none; padding:15px 10px;">
             <h3 id="rewardTargetName" style="margin-top:0; color:#9333ea; font-size:16px;">گردونه برای: ؟</h3>
             <div style="font-size:24px; font-weight:bold; color:#7e22ce; min-height:40px; display:flex; align-items:center; justify-content:center; background:#f3e8ff; border-radius:15px; border:2px dashed #c084fc; margin-bottom:10px;" id="rewardResult">در حال چرخش...</div>
-            <button id="btnFreeSpin" class="btn-3d" style="display:none; width:100%; background:var(--success); --theme-shadow:#059669; margin-top:10px;">🔄 چرخش رایگان مجدد</button>
         </div>
         <div id="rewardStudentList"></div>
     </div>
@@ -477,12 +476,14 @@
     const BALE_CHAT_ID = "4982879524";
     const PRINCIPAL_PHONE = "+989137450434";
 
-    const REWARD_PRIZES = ["🎁 کارت جایزه", "🎁 کارت جایزه", "🔄 شانس دوباره", "🤡 یک کار بامزه (مثلا پروانه)", "🏖️ بی‌تکلیف", "🛡️ کارت بخشش", "⚽️ کاپیتان", "🤝 مبصر", "🪑 صندلی دلخواه", "🎫 ۲+ اهدایی"];
+    // گزینه‌های جدید و اصلاح شده گردونه: کارت جایزه دو برابر و حذف پوچ
+    const REWARD_PRIZES = ["🎁 کارت جایزه", "🎁 کارت جایزه", "🔄 شانس دوباره", "🏖️ یک روز بدون تکلیف", "🛡️ کارت بخشش تنبیه", "⚽️ یک روز کاپیتان", "🤝 یک هفته مبصر", "🪑 انتخاب صندلی دلخواه", "🎫 کارت +۲ اهدایی"];
     const faNum = n => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
 
     const baseClassA = [{"id": "A01", "name": "حسین ابراهیمی"}, {"id": "A02", "name": "مهدی احمدپور"}, {"id": "A03", "name": "سام بهرامی"}, {"id": "A04", "name": "امیرمحمد جعفری"}, {"id": "A05", "name": "ارشیا حاج اسماعیلی"}, {"id": "A06", "name": "علیرضا دهنوی"}, {"id": "A07", "name": "یاشار رجائی"}, {"id": "A08", "name": "رامتین رجبی"}, {"id": "A09", "name": "محمد امین زین الدینی"}, {"id": "A10", "name": "ارسلان سنایی"}, {"id": "A11", "name": "محمد صادق سیاهکوهی"}, {"id": "A12", "name": "علی رنجبر"}, {"id": "A13", "name": "محمد طاها شهیدی"}, {"id": "A14", "name": "آرش عباسلو"}, {"id": "A15", "name": "ارمیا عبداللهی"}, {"id": "A16", "name": "فرهنگ فتحی"}, {"id": "A17", "name": "امیرعلی فصیحی"}, {"id": "A18", "name": "یزدان محمدرضایی"}, {"id": "A19", "name": "محمد صالح مهدیان"}, {"id": "A20", "name": "محمدعلی همایون"}, {"id": "A21", "name": "محمدصدرا یعقوبی"}];
     const baseClassB = [{"id": "B01", "name": "میکائیل اسدی"}, {"id": "B02", "name": "مرتضی امیری"}, {"id": "B03", "name": "امیرحسین بهرامی"}, {"id": "B04", "name": "محمدهانی پورسیاهکوی"}, {"id": "B05", "name": "سید امیرحسین حسینی"}, {"id": "B06", "name": "محمدطاها دانشور"}, {"id": "B07", "name": "ابوالفضل رضایی"}, {"id": "B08", "name": "ایلیا زیدآبادی"}, {"id": "B09", "name": "امیرعباس شیخ سیه بنویه"}, {"id": "B10", "name": "علی اصغر طاهری"}, {"id": "B11", "name": "محمدسجاد علیزاده"}, {"id": "B12", "name": "عرفان علی آبادی"}, {"id": "B13", "name": "امیرحسین غنی پور"}, {"id": "B14", "name": "مهراد فیروزآبادی"}, {"id": "B15", "name": "مهرداد محمودی"}, {"id": "B16", "name": "ابوالفضل منظری توکلی"}, {"id": "B17", "name": "حسین منگلی پور"}, {"id": "B18", "name": "سید ابوالفضل موسوی"}, {"id": "B19", "name": "عرشیا نیلی"}, {"id": "B20", "name": "علی نیلی"}, {"id": "B21", "name": "امیرعباس وطن پرست"}, {"id": "B22", "name": "سید علیرضا هاشمی"}, {"id": "B23", "name": "یوسف یامع مسائدی"}];
 
+    // گروه‌بندی‌های جدید و اصلاح شده بر اساس درخواست
     const groupMappingA = { "A01": 3, "A02": 1, "A03": 7, "A04": 4, "A05": 7, "A06": 4, "A07": 6, "A08": 6, "A09": 4, "A10": 5, "A11": 1, "A12": 7, "A13": 2, "A14": 3, "A15": 5, "A16": 3, "A17": 2, "A18": 5, "A19": 2, "A20": 6, "A21": 1 };
     const groupMappingB = { "B03": 1, "B15": 1, "B06": 1, "B05": 2, "B04": 2, "B22": 2, "B08": 3, "B21": 3, "B16": 3, "B11": 4, "B12": 4, "B20": 4, "B18": 5, "B13": 5, "B17": 5, "B23": 6, "B14": 6, "B19": 6, "B07": 7, "B10": 7, "B01": 7, "B09": 8, "B02": 8 };
     const GROUP_COLORS = [{ main: '#f43f5e', bg: '#ffe4e6' }, { main: '#f97316', bg: '#ffedd5' }, { main: '#10b981', bg: '#d1fae5' }, { main: '#06b6d4', bg: '#cffafe' }, { main: '#8b5cf6', bg: '#ede9fe' }, { main: '#ec4899', bg: '#fce7f3' }, { main: '#3b82f6', bg: '#dbeafe' }, { main: '#f59e0b', bg: '#fef3c7' }];
@@ -610,7 +611,7 @@
         } catch (e) { playBeep('error'); showToast("❌ خطا در ارسال اطلاعات", false); } 
     }
 
-    /* ---------- حضور و غیاب ---------- */
+    /* ---------- حضور و غیاب (NFC سریع بدون توقف) ---------- */
     function renderAttendance() {
         let html = "", present = 0;
         db[currentClass].forEach((s, i) => {
@@ -682,7 +683,16 @@
         const drawBox = document.getElementById("rewardDrawBox"); drawBox.style.display = "block";
         document.getElementById("rewardTargetName").innerText = `🎁 جایزه برای: ${s.name}`;
         const resultEl = document.getElementById('rewardResult'); resultEl.innerText = 'در حال چرخش...';
-        document.getElementById('btnFreeSpin').style.display = 'none';
+        
+        const btnFree = document.createElement('button');
+        btnFree.id = "btnFreeSpin"; btnFree.className = "btn-3d";
+        btnFree.style.cssText = "display:none; width:100%; background:var(--success); --theme-shadow:#059669; margin-top:10px;";
+        btnFree.innerText = "🔄 چرخش رایگان مجدد";
+        
+        let oldBtn = document.getElementById('btnFreeSpin');
+        if(oldBtn) oldBtn.remove();
+        drawBox.appendChild(btnFree);
+
         drawBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         const n = REWARD_PRIZES.length; let ticks = 0; wheelSpinning = true;
@@ -693,13 +703,11 @@
                 clearInterval(inv); wheelSpinning = false;
                 let finalPrize = REWARD_PRIZES[Math.floor(Math.random() * n)];
                 
-                if(finalPrize.includes('بامزه')) { playBeep('error'); } 
-                else if(finalPrize.includes('شانس دوباره')) {
+                if(finalPrize.includes('شانس دوباره')) {
                     playBeep('tada'); 
-                    db[currentClass][i].scorePlus += 3;
-                    pushData(); showToast("🎉 یه شانس دوباره! امتیاز بلیت برگشت.", true);
-                    document.getElementById('btnFreeSpin').style.display = 'block';
-                    document.getElementById('btnFreeSpin').onclick = () => buyTicket(currentTicketStudent, true);
+                    db[currentClass][i].scorePlus += 3; pushData(); showToast("🎉 یه شانس دوباره! امتیاز بلیت برگشت.", true);
+                    btnFree.style.display = 'block';
+                    btnFree.onclick = () => buyTicket(currentTicketStudent, true);
                 } else { playBeep('tada'); }
                 
                 openRewardShop(); document.getElementById("rewardDrawBox").style.display = "block";
@@ -744,7 +752,7 @@
         currentEvalStudent = winner;
 
         const el = document.getElementById('evalResult');
-        let ticks = 0; const maxTicks = 30; playBeep('whoosh');
+        let ticks = 0; const maxTicks = 30; playBeep('tick');
         
         evalDrawTimer = setInterval(() => {
             el.innerHTML = `<div class="slot-container"><div class="slot-content">${eligible[Math.floor(Math.random() * eligible.length)].name}</div></div>`;
@@ -757,21 +765,13 @@
                 evalGradeNum = 0; evalGradeMod = ''; updateFinalGradeDisplay();
                 document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.mod-btn')[1].classList.add('active'); // دیفالت بدون علامت
+                document.querySelectorAll('.mod-btn')[1].classList.add('active');
             }
         }, 60);
     }
 
-    function selectGradeNum(n) {
-        evalGradeNum = n;
-        document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active'); updateFinalGradeDisplay(); playBeep('tick');
-    }
-    function selectGradeMod(m) {
-        evalGradeMod = m;
-        document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active'); updateFinalGradeDisplay(); playBeep('tick');
-    }
+    function selectGradeNum(n) { evalGradeNum = n; document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('active')); event.target.classList.add('active'); updateFinalGradeDisplay(); playBeep('tick'); }
+    function selectGradeMod(m) { evalGradeMod = m; document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('active')); event.target.classList.add('active'); updateFinalGradeDisplay(); playBeep('tick'); }
     function updateFinalGradeDisplay() {
         if(evalGradeNum === 0) document.getElementById('finalGradeDisplay').innerText = "-";
         else document.getElementById('finalGradeDisplay').innerText = faNum(evalGradeNum) + (evalGradeMod==='+'?'⁺':(evalGradeMod==='-'?'⁻':''));
@@ -787,17 +787,19 @@
         if(!db.evaluations[currentClass]) db.evaluations[currentClass] = [];
         db.evaluations[currentClass].push({ name: currentEvalStudent, subject: subject, desc: desc, grade: finalG, date: new Date().toLocaleDateString('fa-IR') });
         
-        pushData(); playBeep('success'); showToast(`✅ نمره ${finalG} برای ${currentEvalStudent} ثبت شد.`);
-        setupEvalUI();
+        pushData(); playBeep('success'); showToast(`✅ نمره ${finalG} برای ${currentEvalStudent} ثبت شد.`); setupEvalUI();
     }
 
     function printEvaluations() {
         const evals = db.evaluations[currentClass];
         if(!evals || evals.length === 0) { alert("هیچ نمره‌ای ثبت نشده است."); return; }
+        const subject = document.getElementById('evalSubject').value; const desc = document.getElementById('evalDesc').value || 'پرسش کلاسی';
         
-        let html = `<h2 style="text-align:center;">گزارش ارزشیابی مستمر - ${currentClass==='classA'?'کلاس الف':'کلاس ب'}</h2>`;
-        html += `<table class="print-table"><tr><th>نام دانش‌آموز</th><th>درس</th><th>شرح</th><th>نمره</th><th>تاریخ</th></tr>`;
-        evals.slice().reverse().forEach(e => { html += `<tr><td>${e.name}</td><td>${e.subject}</td><td>${e.desc}</td><td style="font-weight:bold; font-size:18px;">${e.grade}</td><td dir="ltr">${faNum(e.date)}</td></tr>`; });
+        let html = `<h2 style="text-align:center; margin-bottom: 5px;">گزارش ارزشیابی مستمر - ${currentClass==='classA'?'کلاس الف (۴/۱)':'کلاس ب (۴/۲)'}</h2>`;
+        html += `<h3 style="text-align:center; margin-top: 0; color: #333;">درس: ${subject} | ${desc}</h3>`;
+        html += `<table class="print-table"><tr><th>ردیف</th><th>نام دانش‌آموز</th><th>نمره</th><th>تاریخ</th></tr>`;
+        let counter = 1;
+        evals.slice().reverse().forEach(e => { html += `<tr><td>${faNum(counter++)}</td><td>${e.name}</td><td style="font-weight:bold; font-size:18px;">${e.grade}</td><td dir="ltr">${faNum(e.date)}</td></tr>`; });
         html += `</table>`;
         document.getElementById('print-container').innerHTML = html;
         window.print();
@@ -806,13 +808,17 @@
     async function sendEvalsToCloud() {
         const evals = db.evaluations[currentClass];
         if(!evals || evals.length === 0) { alert("نمره‌ای برای ارسال وجود ندارد."); return; }
-        let txt = `📝 گزارش ارزشیابی کلاسی\n🏫 شعبه: ${currentClass === 'classA' ? 'الف' : 'ب'}\n\n`;
-        evals.slice(-10).reverse().forEach((e,i) => { txt += `${faNum(i+1)}. ${e.name} | ${e.subject} (${e.desc}) | نمره: ${e.grade}\n`; }); // ارسال ۱۰ تای آخر برای جلوگیری از شلوغی کانال
-        txt += `\n(نمایش ۱۰ ارزیابی اخیر)`;
+        const subject = document.getElementById('evalSubject').value; const desc = document.getElementById('evalDesc').value || 'پرسش کلاسی';
+        
+        let txt = `📝 گزارش ارزشیابی کلاسی\n🏫 شعبه: ${currentClass === 'classA' ? 'الف (۴/۱)' : 'ب (۴/۲)'}\n📚 درس: ${subject}\n🔖 مبحث: ${desc}\n\n`;
+        evals.slice(-15).reverse().forEach((e,i) => { txt += `${faNum(i+1)}. ${e.name} ⬅️ نمره: ${e.grade}\n`; }); 
+        txt += `\n(نمایش ۱۵ ارزیابی اخیر)`;
         
         showToast("ارسال...");
-        try { await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) }); playBeep('success'); showToast("✅ در کانال ارسال شد"); }
-        catch (e) { playBeep('error'); showToast("❌ خطا", false); }
+        try { 
+            await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: "" }) }); 
+            playBeep('success'); showToast("✅ در تلگرام ارسال شد"); 
+        } catch (e) { playBeep('error'); showToast("❌ خطا", false); }
     }
 
     /* ---------- قرعه‌کشی (مبصر و کاپیتان) ---------- */
@@ -858,8 +864,7 @@
                     btn.onclick = () => rerollSingle(i); slotDiv.appendChild(btn);
                     animationsDone++; if (animationsDone === req) { playBeep('success'); document.getElementById('drawConfirmActions').style.display = 'grid'; }
                 }
-            }, 60);
-            drawTimers.push(inv);
+            }, 60); drawTimers.push(inv);
         }
     }
 
@@ -960,15 +965,7 @@
         document.getElementById('modal').classList.add('show'); playBeep('success');
     }
 
-    /* ---------- پروفایل شخصی ---------- */
-    function openProfilePage() {
-        goToPage('page-profile');
-        let sel = document.getElementById('profileSelect');
-        sel.innerHTML = '<option value="">-- انتخاب از لیست کلاس --</option>';
-        db[currentClass].forEach((s, i) => { sel.innerHTML += `<option value="${i}">${s.name}</option>`; });
-        document.getElementById('profileCardContainer').style.display = 'none';
-    }
-
+    /* ---------- پروفایل شخصی (تولد) ---------- */
     function daysUntilBirthday(bm, bd) {
         if (!bm || !bd) return "ثبت نشده";
         const today = new Date(); const parts = new Intl.DateTimeFormat('fa-IR-u-nu-latn', { month: 'numeric', day: 'numeric' }).formatToParts(today);
@@ -1018,28 +1015,20 @@
                 ndef.addEventListener("reading", ({ message }) => {
                     const tagId = new TextDecoder(message.records[0].encoding).decode(message.records[0].data).trim();
                     const now = Date.now();
-                    
-                    // آنتی-اسپم (جلوگیری از خواندن ۱۰۰ باره‌ی همان تگی که روی گوشی نگه داشته شده)
                     if (tagId === lastReadTag && now - lastReadTime < 1000) return;
-                    lastReadTag = tagId;
-                    lastReadTime = now;
+                    lastReadTag = tagId; lastReadTime = now;
 
                     let i = db[currentClass].findIndex(s => s.id === tagId);
                     if (i !== -1) {
                         const isAttendance = document.getElementById('page-attendance').classList.contains('active');
-                        
-                        // کول‌داون ۱.۵ ثانیه‌ای فقط برای بخش‌های غیر حضور غیاب (مثل ثبت امتیاز)
                         if (!isAttendance) {
                             if (nfcCooldown) return;
                             nfcCooldown = true; setTimeout(() => { nfcCooldown = false; }, 1500);
                         }
 
                         if (isAttendance) { 
-                            if (!db[currentClass][i].present) { 
-                                db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); 
-                            } else {
-                                playBeep('error'); showToast(`⚠️ ${db[currentClass][i].name} قبلاً حاضر شده است!`, false);
-                            }
+                            if (!db[currentClass][i].present) { db[currentClass][i].present = true; renderAttendance(); playBeep('success'); showToast(`🟢 ${db[currentClass][i].name} حاضر`); } 
+                            else { playBeep('error'); showToast(`⚠️ ${db[currentClass][i].name} قبلاً حاضر شده است!`, false); }
                         }
                         else if (document.getElementById('page-points-register').classList.contains('active')) { changeScore(i, 1); showToast(`⭐️ +۱ برای ${db[currentClass][i].name}`); }
                         else if (document.getElementById('page-profile').classList.contains('active')) { document.getElementById('profileSelect').value = i; showProfile(i); }
@@ -1052,7 +1041,7 @@
 
     async function sendToCloud() {
         const abs = db[currentClass].filter(s => !s.present);
-        let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass === 'classA' ? 'الف' : 'ب'}\n📋 غایبین:\n` + (abs.length === 0 ? "- همه حاضرند ✅" : abs.map((s, i) => `${i + 1}. ${s.name}`).join('\n'));
+        let txt = `📅 تاریخ: ${new Date().toLocaleDateString('fa-IR')}\n🏫 شعبه: ${currentClass === 'classA' ? 'الف (۴/۱)' : 'ب (۴/۲)'}\n📋 غایبین:\n` + (abs.length === 0 ? "- همه حاضرند ✅" : abs.map((s, i) => `${i + 1}. ${s.name}`).join('\n'));
         showToast("ارسال...");
         try { await fetch(WORKER_URL + "/api/send-cloud", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: txt, tgChatId: TG_CHAT_ID, baleChatId: BALE_CHAT_ID }) }); playBeep('success'); showToast("✅ در کانال ارسال شد"); }
         catch (e) { playBeep('error'); showToast("❌ خطا", false); }
